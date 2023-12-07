@@ -14,25 +14,33 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     transform: translate(-50%);
     width: 100svw;
     height: 100svh;
-    color: greenyellow;
-    background: radial-gradient(black, forestgreen 200%);
+    color: white;
+    background: radial-gradient(rgb(70, 70, 70), black);
     z-index: 1; 
     p {
+        background: linear-gradient(grey -50%, black 20%, grey 150%);
         padding: 20px;
-        border-radius: 50%;
+        border-radius: 20px;
         font-size: 30px;
         border: none;
-        box-shadow: 0 0 50px 50px rgb(3, 3, 63);
+        box-shadow: 0 0 100px 20px silver;
+    }
+    button {
+        padding: 10px;
+        border-radius: 10px;
+        font-size: 20px;
+        background: linear-gradient(darkgreen, lightgreen);
+        margin-top: 20svh;
     } 
     
 }
 
-
 .taskCard:hover {
-    box-shadow: 5px 5px 5px red;
+    box-shadow: 5px 5px 5px cyan;
 }
 
 .taskContainer {

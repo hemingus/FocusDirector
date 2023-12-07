@@ -3,18 +3,16 @@
 import TaskCard from './TaskCard'
 import '../styles/styles.scss'
 import { useState } from 'react'
+import { TaskEntity } from './TaskCard'
 
-type TaskListProps = {
-    tasks: string[]
-}
-
-const TaskList: React.FC<TaskListProps> = ({tasks}) => {
-    const [listed, setListed] = useState<string[]>(tasks)
+const TaskWindow: React.FC<{ tasks: TaskEntity[] }> = ({tasks}) => {
+    const [listed, setListed] = useState<TaskEntity[]>(tasks)
     const [description, setDescription] = useState<string>('')
 
     const submitNewTask = () => {
         if (description.trim() !== '') {
-            setListed([...listed, description])
+            let newTask: TaskEntity = {description: description, isComplete: false, subTasks: []}
+            setListed([...listed, newTask])
             setDescription('')
         }
     }
@@ -35,8 +33,8 @@ const TaskList: React.FC<TaskListProps> = ({tasks}) => {
             <ul>
                 {listed.map((task, index) => (
                     <li key={index}>
-                        <TaskCard description={task} />
-                        <button onClick={() => handleRemoveTask(index)}>Remove</button>
+                        <TaskCard description={task.description} isComplete={task.isComplete} subTasks={task.subTasks}/>
+                        <button onClick={() => handleRemoveTask(index)}>❌</button>
                     </li>
                 ))}
                 <div>
@@ -46,8 +44,7 @@ const TaskList: React.FC<TaskListProps> = ({tasks}) => {
                     value={description}
                     onChange={handleChange}
                     placeholder="Describe step"
-                    >
-                    </input>
+                    />
                     <button onClick={submitNewTask}>Add Step</button>
                 </div>
             </ul>
@@ -57,4 +54,4 @@ const TaskList: React.FC<TaskListProps> = ({tasks}) => {
     )
 }
 
-export default TaskList
+export default TaskWindow
