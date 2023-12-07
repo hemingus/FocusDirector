@@ -11,7 +11,7 @@ const TaskWindow: React.FC<{ tasks: TaskEntity[] }> = ({tasks}) => {
 
     const submitNewTask = () => {
         if (description.trim() !== '') {
-            let newTask: TaskEntity = {description: description, isComplete: false, subTasks: []}
+            let newTask: TaskEntity = {description: description, isComplete: false}
             setListed([...listed, newTask])
             setDescription('')
         }
@@ -27,13 +27,18 @@ const TaskWindow: React.FC<{ tasks: TaskEntity[] }> = ({tasks}) => {
         setListed(updatedList)
     }
 
+    const taskCardContent = (index: number, description: string) => {
+        let content = `${index + 1}. ${description}`
+        return content
+    } 
+
     return (
         <>
         <div className="taskContainer">
             <ul>
                 {listed.map((task, index) => (
                     <li key={index}>
-                        <TaskCard description={task.description} isComplete={task.isComplete} subTasks={task.subTasks}/>
+                        <TaskCard description={taskCardContent(index, task.description)} isComplete={task.isComplete} subTasks={task.subTasks}/>
                         <button onClick={() => handleRemoveTask(index)}>❌</button>
                     </li>
                 ))}

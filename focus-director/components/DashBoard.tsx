@@ -17,7 +17,7 @@ const tasks: TaskEntity[] = [{
             ]
         },
         {
-            description: "subtask 1",
+            description: "subtask 2",
             isComplete: false
         }
     ]},

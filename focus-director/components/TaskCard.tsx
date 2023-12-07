@@ -45,7 +45,7 @@ const TaskCard: React.FC<TaskEntity> = ({description, isComplete, subTasks}) => 
             </div>
         )
     }
-    
+
     if (focused) {
         return (
             <div className="taskCardFocused" onClick={() => setFocused(false)}>
