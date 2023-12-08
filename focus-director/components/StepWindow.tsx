@@ -1,20 +1,20 @@
 "use client";
 
-import TaskCard from './TaskCard'
+import StepCard from './StepCard'
 import '../styles/styles.scss'
 import { useState } from 'react'
-import { Task, SubTask, Step } from './TaskTypes'
+import { Step } from './TaskTypes'
 
 
 
-const TaskWindow: React.FC<{ tasks: Task[] }> = ({tasks}) => {
-    const [listed, setListed] = useState<Task[]>(tasks)
+const StepWindow: React.FC<{ steps: Step[] }> = ({steps}) => {
+    const [listed, setListed] = useState<Step[]>(steps)
     const [description, setDescription] = useState<string>('')
 
     const submitNewTask = () => {
         if (description.trim() !== '') {
-            let newTask: Task = {description: description, isComplete: false, subTasks: []}
-            setListed([...listed, newTask])
+            let newStep: Step = {description: description, isComplete: false}
+            setListed([...listed, newStep])
             setDescription('')
         }
     }
@@ -40,7 +40,7 @@ const TaskWindow: React.FC<{ tasks: Task[] }> = ({tasks}) => {
             <ul>
                 {listed.map((task, index) => (
                     <li key={index}>
-                        <TaskCard description={taskCardContent(index, task.description)} isComplete={task.isComplete} subTasks={task.subTasks}/>
+                        <StepCard description={taskCardContent(index, task.description)} isComplete={task.isComplete} />
                         <button onClick={() => handleRemoveTask(index)}>❌</button>
                     </li>
                 ))}
@@ -61,4 +61,4 @@ const TaskWindow: React.FC<{ tasks: Task[] }> = ({tasks}) => {
     )
 }
 
-export default TaskWindow
+export default StepWindow

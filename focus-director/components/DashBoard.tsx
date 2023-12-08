@@ -1,24 +1,43 @@
 import TaskWindow from './TaskWindow'
-import { TaskEntity } from './TaskCard'
+import { Task } from './TaskTypes'
 
 
-const tasks: TaskEntity[] = [{
+const tasks: Task[] = [{
     description: "Make a plan 1 and a diagram for how a basic version of the App looks like", 
     isComplete: false, 
     subTasks: [
         {
             description: "subtask 1",
             isComplete: false,
-            subTasks: [
+            steps: [
                 {
-                    description: "sub of subtask 1",
+                    description: "step 1",
+                    isComplete: false
+                },
+                {
+                    description: "step 2",
+                    isComplete: false
+                },
+                {
+                    description: "step 3",
                     isComplete: false
                 }
             ]
         },
         {
             description: "subtask 2",
-            isComplete: false
+            isComplete: false,
+            steps: []
+        },
+        {
+            description: "subtask 3",
+            isComplete: false,
+            steps: [
+                {
+                    description: "step 1",
+                    isComplete: false
+                }
+            ]
         }
     ]},
     {
@@ -27,16 +46,23 @@ const tasks: TaskEntity[] = [{
     subTasks: [
         {
             description: "subtask 1",
-            isComplete: false
+            isComplete: false,
+            steps: []
         }
     ]},
+    {
+    description: "Make a plan 2 and a diagram for how a basic version of the App looks like", 
+    isComplete: false, 
+    subTasks: []
+    },
     {
     description: "Make a plan 3 and a diagram for how a basic version of the App looks like", 
     isComplete: false, 
     subTasks: [
         {
             description: "subtask 1",
-            isComplete: false
+            isComplete: false,
+            steps: []
         }
     ]}]
 

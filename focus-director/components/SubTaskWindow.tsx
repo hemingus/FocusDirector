@@ -1,20 +1,20 @@
 "use client";
 
-import TaskCard from './TaskCard'
+import SubTaskCard from './SubTaskCard'
 import '../styles/styles.scss'
 import { useState } from 'react'
-import { Task, SubTask, Step } from './TaskTypes'
+import { SubTask } from './TaskTypes'
 
 
 
-const TaskWindow: React.FC<{ tasks: Task[] }> = ({tasks}) => {
-    const [listed, setListed] = useState<Task[]>(tasks)
+const SubTaskWindow: React.FC<{ subTasks: SubTask[] }> = ({subTasks}) => {
+    const [listed, setListed] = useState<SubTask[]>(subTasks)
     const [description, setDescription] = useState<string>('')
 
     const submitNewTask = () => {
         if (description.trim() !== '') {
-            let newTask: Task = {description: description, isComplete: false, subTasks: []}
-            setListed([...listed, newTask])
+            let newSubTask: SubTask = {description: description, isComplete: false, steps: []}
+            setListed([...listed, newSubTask])
             setDescription('')
         }
     }
@@ -38,9 +38,9 @@ const TaskWindow: React.FC<{ tasks: Task[] }> = ({tasks}) => {
         <>
         <div className="taskContainer">
             <ul>
-                {listed.map((task, index) => (
+                {listed.map((subTask, index) => (
                     <li key={index}>
-                        <TaskCard description={taskCardContent(index, task.description)} isComplete={task.isComplete} subTasks={task.subTasks}/>
+                        <SubTaskCard description={taskCardContent(index, subTask.description)} isComplete={subTask.isComplete} steps={subTask.steps}/>
                         <button onClick={() => handleRemoveTask(index)}>❌</button>
                     </li>
                 ))}
@@ -61,4 +61,4 @@ const TaskWindow: React.FC<{ tasks: Task[] }> = ({tasks}) => {
     )
 }
 
-export default TaskWindow
+export default SubTaskWindow
