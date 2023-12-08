@@ -51,7 +51,7 @@ const SubTaskCard: React.FC<SubTask> = ({description, isComplete, steps}) => {
     }
     return (
         <>
-            <div className="taskCard">
+            <div className="subTaskCard">
                 <p>{description}</p>
             </div>
             {renderSubtasks()}
