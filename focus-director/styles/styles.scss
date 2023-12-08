@@ -1,10 +1,24 @@
 
 
 .taskCard {
-    color: rgb(21, 255, 0);
+    color: white;
     display: block;
     padding: 10px;
-    background: linear-gradient(blue, lightblue);
+    background: linear-gradient(black, gray);
+}
+
+.subTaskCard {
+    color: white;
+    display: block;
+    padding: 10px;
+    background: linear-gradient(darkred, darkorange);
+}
+
+.stepCard {
+    color: white;
+    display: block;
+    padding: 10px;
+    background: linear-gradient(darkgreen, forestgreen);
 }
 
 .taskCardFocused {
@@ -45,12 +59,12 @@
 
 .taskContainer {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     background: lightslategrey;
     ul {
         list-style: none;
         padding: 20px;
-        background: linear-gradient(lightgreen, black, lightblue);
+        background: url("/assets/mars-surface.jpg");
         display: grid;
         gap: 10px;
     }

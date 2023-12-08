@@ -18,7 +18,7 @@ const StepCard: React.FC<Step> = ({description, isComplete}) => {
     }
     return (
         <>
-            <div className="taskCard">
+            <div className="stepCard">
                 <p>{description}</p>
                 <button onClick={() => setFocused(true)}>Focus</button>
             </div>
