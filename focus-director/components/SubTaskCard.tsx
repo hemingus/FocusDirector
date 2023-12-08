@@ -1,12 +1,11 @@
 "use client";
 
 import '../styles/styles.scss'
-import TaskWindow from './TaskWindow'
-import SubTaskWindow from './SubTaskWindow';
+import StepWindow from './StepWindow'
 import { useState } from 'react'
-import { Task } from './TaskTypes'
+import { SubTask } from './TaskTypes'
 
-const TaskCard: React.FC<Task> = ({description, isComplete, subTasks}) => {
+const SubTaskCard: React.FC<SubTask> = ({description, isComplete, steps}) => {
     const [completed, setCompleted] = useState(isComplete)
     const [focused, setFocused] = useState(false)
     const [showSubtasks, setShowSubtasks] = useState(false)
@@ -14,15 +13,15 @@ const TaskCard: React.FC<Task> = ({description, isComplete, subTasks}) => {
     const toggleSubtasks = () => {
         setShowSubtasks(!showSubtasks)
         console.log(showSubtasks)
-        console.log(subTasks)
+        console.log(steps)
     }
 
     const renderSubtasks = () => {
-        if (showSubtasks && subTasks && subTasks.length > 0) {
+        if (showSubtasks && steps && steps.length > 0) {
             return (
             <div>
                 <button onClick={() => toggleSubtasks()}>Hide</button>
-                <SubTaskWindow subTasks={subTasks} />  
+                <StepWindow steps={steps} />  
             </div>
             )
         }
@@ -30,7 +29,7 @@ const TaskCard: React.FC<Task> = ({description, isComplete, subTasks}) => {
     }
 
     const renderButton = () => {
-        if (!showSubtasks && subTasks && subTasks.length > 0) {
+        if (!showSubtasks && steps && steps.length > 0) {
             return (
                 <button onClick={() => toggleSubtasks()}>Expand</button>
             )
@@ -60,4 +59,4 @@ const TaskCard: React.FC<Task> = ({description, isComplete, subTasks}) => {
     )
 }
 
-export default TaskCard
+export default SubTaskCard
