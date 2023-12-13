@@ -1,5 +1,6 @@
 import TaskWindow from './TaskWindow'
 import { Task } from './TaskTypes'
+import '../styles/styles.scss'
 
 
 const tasks: Task[] = [{
@@ -70,8 +71,11 @@ const DashBoard = () => {
     return (
         <div>
             <h2>DASHBOARD</h2>
-            <section> TASKS:
+            <section className="taskSection">
+                <div>
+                <h3 style={{color: "white"}}>Tasks:</h3>
                 <TaskWindow tasks={tasks} />
+                </div>
             </section>
         </div>
     )

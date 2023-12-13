@@ -3,24 +3,22 @@
 import '../styles/styles.scss'
 import StepWindow from './StepWindow'
 import { useState } from 'react'
-import { SubTask } from './TaskTypes'
+import { Subtask } from './TaskTypes'
 
-const SubTaskCard: React.FC<SubTask> = ({description, isComplete, steps}) => {
+const SubTaskCard: React.FC<Subtask> = ({description, isComplete, steps}) => {
     const [completed, setCompleted] = useState(isComplete)
     const [focused, setFocused] = useState(false)
     const [showSubtasks, setShowSubtasks] = useState(false)
 
     const toggleSubtasks = () => {
         setShowSubtasks(!showSubtasks)
-        console.log(showSubtasks)
-        console.log(steps)
     }
 
     const renderSubtasks = () => {
-        if (showSubtasks && steps && steps.length > 0) {
+        if (showSubtasks && steps) {
             return (
             <div>
-                <button onClick={() => toggleSubtasks()}>Hide</button>
+                <button onClick={() => toggleSubtasks()}>Hide steps</button>
                 <StepWindow steps={steps} />  
             </div>
             )
@@ -29,9 +27,9 @@ const SubTaskCard: React.FC<SubTask> = ({description, isComplete, steps}) => {
     }
 
     const renderButton = () => {
-        if (!showSubtasks && steps && steps.length > 0) {
+        if (!showSubtasks && steps) {
             return (
-                <button onClick={() => toggleSubtasks()}>Expand</button>
+                <button onClick={() => toggleSubtasks()}>Show steps</button>
             )
         }
         return (
@@ -53,8 +51,9 @@ const SubTaskCard: React.FC<SubTask> = ({description, isComplete, steps}) => {
         <>
             <div className="subTaskCard">
                 <p>{description}</p>
+                {renderSubtasks()}
             </div>
-            {renderSubtasks()}
+            
         </>
     )
 }
