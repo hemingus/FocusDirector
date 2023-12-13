@@ -36,7 +36,7 @@ const StepWindow: React.FC<{ steps: Step[] }> = ({steps}) => {
 
     return (
         <>
-        <div className="taskContainer">
+        <div className="taskContainer" style={{border: 'solid', borderColor: 'yellow', backgroundImage: 'linear-gradient(to right, #ff0000, #0000ff)'}}>
             <ul>
                 {listed.map((task, index) => (
                     <li key={index}>

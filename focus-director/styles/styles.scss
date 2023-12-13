@@ -1,26 +1,89 @@
 
+// Containers & sections
 
+$taskContainer-color: rgb(255, 0, 212);
+
+.taskSection {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    background: black;
+}
+
+.taskContainer {
+    display: grid;
+    grid-template-columns: 1fr;
+    background: lightslategrey;
+    ul {
+        list-style: none;
+        padding: 20px 20px 0 50px;
+        background: linear-gradient($taskContainer-color -200%, black);
+        display: grid;
+        gap: 10px;
+        cursor: pointer;
+    }
+}
+
+
+// CARDS
+
+// Task
 .taskCard {
+    font-size: 20px;
+    font-weight: 800;
     color: white;
     display: block;
     padding: 10px;
-    background: linear-gradient(black, gray);
+    background: linear-gradient(black, darkred);
 }
 
+.taskCard button {
+    background: radial-gradient(black, darkred);
+    color: white;
+}
+
+.taskCard:hover {
+    box-shadow: 5px 5px 5px cyan;
+}
+
+// Subtask
 .subTaskCard {
+    font-size: 18px;
+    font-weight: 600;
     color: white;
     display: block;
-    padding: 10px;
-    background: linear-gradient(darkred, darkorange);
+    padding: 7px;
+    background: linear-gradient(black, darkorange);
 }
 
+.subTaskCard button {
+    background: radial-gradient(black, darkorange);
+    color: white;
+}
+
+.subTaskCard:hover {
+    box-shadow: 5px 5px 5px cyan;
+}
+
+// Step
 .stepCard {
+    font-size: 16px;
+    font-weight: 400;
     color: white;
     display: block;
-    padding: 10px;
-    background: linear-gradient(darkgreen, forestgreen);
+    padding: 4px;
+    background: linear-gradient(black , yellow 150%);
 }
 
+.stepCard button {
+    background: radial-gradient(black, yellow);
+    color: white;
+}
+
+.stepCard:hover {
+    box-shadow: 5px 5px 5px cyan;
+}
+
+// Focused card
 .taskCardFocused {
     position: absolute;
     top: 0%;
@@ -51,21 +114,4 @@
         margin-top: 20svh;
     } 
     
-}
-
-.taskCard:hover {
-    box-shadow: 5px 5px 5px cyan;
-}
-
-.taskContainer {
-    display: grid;
-    grid-template-columns: 1fr;
-    background: lightslategrey;
-    ul {
-        list-style: none;
-        padding: 20px;
-        background: url("/assets/mars-surface.jpg");
-        display: grid;
-        gap: 10px;
-    }
 }

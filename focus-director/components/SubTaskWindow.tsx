@@ -3,17 +3,17 @@
 import SubTaskCard from './SubTaskCard'
 import '../styles/styles.scss'
 import { useState } from 'react'
-import { SubTask } from './TaskTypes'
+import { Subtask } from './TaskTypes'
 
 
 
-const SubTaskWindow: React.FC<{ subTasks: SubTask[] }> = ({subTasks}) => {
-    const [listed, setListed] = useState<SubTask[]>(subTasks)
+const SubTaskWindow: React.FC<{ subTasks: Subtask[] }> = ({subTasks}) => {
+    const [listed, setListed] = useState<Subtask[]>(subTasks)
     const [description, setDescription] = useState<string>('')
 
     const submitNewTask = () => {
         if (description.trim() !== '') {
-            let newSubTask: SubTask = {description: description, isComplete: false, steps: []}
+            let newSubTask: Subtask = {description: description, isComplete: false, steps: []}
             setListed([...listed, newSubTask])
             setDescription('')
         }
@@ -36,7 +36,7 @@ const SubTaskWindow: React.FC<{ subTasks: SubTask[] }> = ({subTasks}) => {
 
     return (
         <>
-        <div className="taskContainer">
+        <div className="taskContainer" style={{border: 'solid', borderColor: 'darkorange'}}>
             <ul>
                 {listed.map((subTask, index) => (
                     <li key={index}>
@@ -45,14 +45,14 @@ const SubTaskWindow: React.FC<{ subTasks: SubTask[] }> = ({subTasks}) => {
                     </li>
                 ))}
                 <div>
-                    <label>Create new step</label>
+                    <label>New subtask:</label>
                     <input
                     type="text"
                     value={description}
                     onChange={handleChange}
-                    placeholder="Describe step"
+                    placeholder="Describe subtask"
                     />
-                    <button onClick={submitNewTask}>Add Step</button>
+                    <button onClick={submitNewTask}>Add subtask</button>
                 </div>
             </ul>
         </div>

@@ -3,13 +3,18 @@
 import '../styles/styles.scss'
 import TaskWindow from './TaskWindow'
 import SubTaskWindow from './SubTaskWindow';
-import { useState } from 'react'
-import { Task } from './TaskTypes'
+import { useState, useEffect } from 'react'
+import { Task, Subtask } from './TaskTypes'
 
 const TaskCard: React.FC<Task> = ({description, isComplete, subTasks}) => {
     const [completed, setCompleted] = useState(isComplete)
     const [focused, setFocused] = useState(false)
+    const [subTaskList, setSubTaskList] = useState<Subtask[]>(subTasks)
     const [showSubtasks, setShowSubtasks] = useState(false)
+
+    useEffect(() => {
+        setSubTaskList(subTasks)
+    }, [])
 
     const toggleSubtasks = () => {
         setShowSubtasks(!showSubtasks)
@@ -18,11 +23,11 @@ const TaskCard: React.FC<Task> = ({description, isComplete, subTasks}) => {
     }
 
     const renderSubtasks = () => {
-        if (showSubtasks && subTasks && subTasks.length > 0) {
+        if (showSubtasks && subTaskList) {
             return (
             <div>
-                <button onClick={() => toggleSubtasks()}>Hide</button>
-                <SubTaskWindow subTasks={subTasks} />  
+                <button onClick={() => toggleSubtasks()}>Hide subtasks</button>
+                <SubTaskWindow subTasks={subTaskList} />  
             </div>
             )
         }
@@ -30,9 +35,9 @@ const TaskCard: React.FC<Task> = ({description, isComplete, subTasks}) => {
     }
 
     const renderButton = () => {
-        if (!showSubtasks && subTasks && subTasks.length > 0) {
+        if (!showSubtasks && subTaskList) {
             return (
-                <button onClick={() => toggleSubtasks()}>Expand</button>
+                <button onClick={() => toggleSubtasks()}>Show subtasks</button>
             )
         }
         return (
@@ -54,8 +59,9 @@ const TaskCard: React.FC<Task> = ({description, isComplete, subTasks}) => {
         <>
             <div className="taskCard">
                 <p>{description}</p>
+                {renderSubtasks()}
             </div>
-            {renderSubtasks()}
+            
         </>
     )
 }

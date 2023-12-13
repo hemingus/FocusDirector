@@ -3,7 +3,7 @@
 import TaskCard from './TaskCard'
 import '../styles/styles.scss'
 import { useState } from 'react'
-import { Task, SubTask, Step } from './TaskTypes'
+import { Task } from './TaskTypes'
 
 
 
@@ -24,37 +24,35 @@ const TaskWindow: React.FC<{ tasks: Task[] }> = ({tasks}) => {
     }
 
     const handleRemoveTask = (index: number) => {
-        const updatedList = [...listed]
-        updatedList.splice(index, 1)
+        const updatedList = [...listed.slice(0, index), ...listed.slice(index + 1)]; 
         setListed(updatedList)
     }
 
-    const taskCardContent = (index: number, description: string) => {
+    const indexedDescription = (index: number, description: string) => {
         let content = `${index + 1}. ${description}`
         return content
     } 
 
+
     return (
         <>
-        <div className="taskContainer">
+        <div className="taskContainer" style={{border: 'solid', borderColor: 'darkred'}}>
             <ul>
                 {listed.map((task, index) => (
                     <li key={index}>
-                        <TaskCard description={taskCardContent(index, task.description)} isComplete={task.isComplete} subTasks={task.subTasks}/>
+                        <TaskCard description={indexedDescription(index, task.description)} isComplete={task.isComplete} subTasks={task.subTasks}/>
                         <button onClick={() => handleRemoveTask(index)}>❌</button>
                     </li>
                 ))}
-                <div>
-                    <label>Create new step</label>
-                    <input
-                    type="text"
-                    value={description}
-                    onChange={handleChange}
-                    placeholder="Describe step"
-                    />
-                    <button onClick={submitNewTask}>Add Step</button>
-                </div>
             </ul>
+            <label style={{color: "darkred"}}>New task:</label>
+            <input
+            type="text"
+            value={description}
+            onChange={handleChange}
+            placeholder="Describe task"
+            />
+            <button onClick={submitNewTask}>Add task</button>
         </div>
 
         </>
