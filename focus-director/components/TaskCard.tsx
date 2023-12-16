@@ -14,7 +14,7 @@ const TaskCard: React.FC<Task> = ({description, isComplete, subTasks}) => {
 
     useEffect(() => {
         setSubTaskList(subTasks)
-    }, [])
+    }, [subTasks])
 
     const toggleSubtasks = () => {
         setShowSubtasks(!showSubtasks)

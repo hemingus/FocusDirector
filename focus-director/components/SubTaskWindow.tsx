@@ -2,7 +2,7 @@
 
 import SubTaskCard from './SubTaskCard'
 import '../styles/styles.scss'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Subtask } from './TaskTypes'
 
 
@@ -10,6 +10,10 @@ import { Subtask } from './TaskTypes'
 const SubTaskWindow: React.FC<{ subTasks: Subtask[] }> = ({subTasks}) => {
     const [listed, setListed] = useState<Subtask[]>(subTasks)
     const [description, setDescription] = useState<string>('')
+
+    useEffect(() => {
+        setListed(subTasks)
+    }, [subTasks])
 
     const submitNewTask = () => {
         if (description.trim() !== '') {

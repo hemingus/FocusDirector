@@ -24,7 +24,7 @@ const TaskWindow: React.FC<{ tasks: Task[] }> = ({tasks}) => {
     }
 
     const handleRemoveTask = (index: number) => {
-        const updatedList = [...listed.slice(0, index), ...listed.slice(index + 1)]; 
+        const updatedList = listed.filter((_, i) => i !== index);
         setListed(updatedList)
     }
 

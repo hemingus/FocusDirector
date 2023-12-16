@@ -8,19 +8,19 @@ const tasks: Task[] = [{
     isComplete: false, 
     subTasks: [
         {
-            description: "subtask 1",
+            description: "subtask 1 (task 1)",
             isComplete: false,
             steps: [
                 {
-                    description: "step 1",
+                    description: "step 1 (subtask 1, task 1)",
                     isComplete: false
                 },
                 {
-                    description: "step 2",
+                    description: "step 2 (subtask 1, task 1)",
                     isComplete: false
                 },
                 {
-                    description: "step 3",
+                    description: "step 3 (subtask 1, task 1)",
                     isComplete: false
                 }
             ]
@@ -35,7 +35,7 @@ const tasks: Task[] = [{
             isComplete: false,
             steps: [
                 {
-                    description: "step 1",
+                    description: "step 1 (subtask 3, task 1)",
                     isComplete: false
                 }
             ]
@@ -46,22 +46,22 @@ const tasks: Task[] = [{
     isComplete: false, 
     subTasks: [
         {
-            description: "subtask 1",
+            description: "subtask 1 (task 2)",
             isComplete: false,
             steps: []
         }
     ]},
     {
-    description: "Make a plan 2 and a diagram for how a basic version of the App looks like", 
+    description: "Make a plan 3 and a diagram for how a basic version of the App looks like", 
     isComplete: false, 
     subTasks: []
     },
     {
-    description: "Make a plan 3 and a diagram for how a basic version of the App looks like", 
+    description: "Make a plan 4 and a diagram for how a basic version of the App looks like", 
     isComplete: false, 
     subTasks: [
         {
-            description: "subtask 1",
+            description: "subtask 1 (task 4)",
             isComplete: false,
             steps: []
         }
