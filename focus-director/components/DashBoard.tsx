@@ -2,8 +2,7 @@ import TaskWindow from './TaskWindow'
 import { Task } from './TaskTypes'
 import '../styles/styles.scss'
 
-
-const tasks: Task[] = [{
+const tasksSample: Task[] = [{
     description: "Make a plan 1 and a diagram for how a basic version of the App looks like", 
     isComplete: false, 
     subTasks: [
@@ -68,13 +67,14 @@ const tasks: Task[] = [{
     ]}]
 
 const DashBoard = () => {
+
     return (
         <div>
             <h2>DASHBOARD</h2>
             <section className="taskSection">
                 <div>
                 <h3 style={{color: "white"}}>Tasks:</h3>
-                <TaskWindow tasks={tasks} />
+                <TaskWindow />
                 </div>
             </section>
         </div>

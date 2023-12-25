@@ -2,30 +2,91 @@
 
 import TaskCard from './TaskCard'
 import '../styles/styles.scss'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Task } from './TaskTypes'
 
 
 
-const TaskWindow: React.FC<{ tasks: Task[] }> = ({tasks}) => {
-    const [listed, setListed] = useState<Task[]>(tasks)
-    const [description, setDescription] = useState<string>('')
+const TaskWindow: React.FC = () => {
+    const [tasks, setTasks] = useState<Array<any>>([])
+    const [taskDescription, setTaskDescription] = useState<string>('')
+
+    const getTasks = async (url = "https://hemingmusicapi.azurewebsites.net/TaskEntity") => {
+        try {
+            await fetch(url, {method: 'GET'})
+            .then(response => response.json())
+            .then(data => {
+                setTasks(data)
+                console.log(data)})
+            .catch(error => {
+                console.error(error)
+            })
+            
+        }
+        catch (err: any) {
+            alert(err.message)
+        }
+    }
+
+    const addTask = async (url: string) => {
+        const newTask = {
+            description: taskDescription
+        }
+        try {
+            await fetch(url, {
+                method: 'POST', 
+                headers: {
+                "Content-Type": "application/json"
+                }, 
+                body: JSON.stringify(newTask)
+            })
+            getTasks()
+        }
+        catch (err: any) {
+            alert(err.message)
+        }
+    }
+
+    const deleteTask = async (url: string) => {
+        try {
+            await fetch(url, {
+                method: 'DELETE' 
+            })
+            getTasks()
+        }
+        catch (err: any) {
+            alert(err.message)
+        }
+    }
+
+    useEffect(() => {
+        getTasks();
+    }, [])
 
     const submitNewTask = () => {
-        if (description.trim() !== '') {
-            let newTask: Task = {description: description, isComplete: false, subTasks: []}
-            setListed([...listed, newTask])
-            setDescription('')
+        if (taskDescription.trim() !== '') {
+            addTask("https://hemingmusicapi.azurewebsites.net/TaskEntity")
+            .then((response) => {
+                console.log(response);
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
         }
     }
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setDescription(event.target.value);
+        setTaskDescription(event.target.value);
     }
 
-    const handleRemoveTask = (index: number) => {
-        const updatedList = listed.filter((_, i) => i !== index);
-        setListed(updatedList)
+    const handleRemoveTask = (taskId: string) => {
+        deleteTask(`https://hemingmusicapi.azurewebsites.net/TaskEntity/${taskId}`)
+        .then((response) => {
+            console.log(response);
+        })
+        .catch((error) => {
+            console.error("Error:", error);
+        });
     }
 
     const indexedDescription = (index: number, description: string) => {
@@ -38,17 +99,17 @@ const TaskWindow: React.FC<{ tasks: Task[] }> = ({tasks}) => {
         <>
         <div className="taskContainer" style={{border: 'solid', borderColor: 'darkred'}}>
             <ul>
-                {listed.map((task, index) => (
+                {tasks.map((task, index) => (
                     <li key={index}>
                         <TaskCard description={indexedDescription(index, task.description)} isComplete={task.isComplete} subTasks={task.subTasks}/>
-                        <button onClick={() => handleRemoveTask(index)}>❌</button>
+                        <button onClick={() => handleRemoveTask(task.id)}>❌</button>
                     </li>
                 ))}
             </ul>
             <label style={{color: "darkred"}}>New task:</label>
             <input
             type="text"
-            value={description}
+            value={taskDescription}
             onChange={handleChange}
             placeholder="Describe task"
             />

@@ -1,8 +1,9 @@
 // Task types
 
-export type Step = {
+export type Task = {
     description: string
     isComplete: boolean
+    subTasks: Subtask[]
 }
 
 export type Subtask = {
@@ -11,8 +12,9 @@ export type Subtask = {
     steps: Step[]
 }
 
-export type Task = {
+export type Step = {
     description: string
     isComplete: boolean
-    subTasks: Subtask[]
 }
+
+
