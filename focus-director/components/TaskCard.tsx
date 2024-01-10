@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react'
 import { Task, Subtask } from './TaskTypes'
 
 
-const TaskCard: React.FC<Task> = ({taskId, description, isComplete, subtasks}) => {
+const TaskCard: React.FC<Task> = ({id, description, isComplete, subtasks}) => {
     const [completed, setCompleted] = useState(isComplete)
     const [focused, setFocused] = useState(false)
     const [subtaskList, setSubtaskList] = useState<Subtask[]>(subtasks)
@@ -30,7 +30,7 @@ const TaskCard: React.FC<Task> = ({taskId, description, isComplete, subtasks}) =
             return (
             <div>
                 <button onClick={() => toggleSubtasks()}>Hide subtasks</button>
-                <SubtaskWindow taskId={taskId} subtasks={subtaskList} />  
+                <SubtaskWindow taskId={id} subtasks={subtaskList} />  
             </div>
             )
         }

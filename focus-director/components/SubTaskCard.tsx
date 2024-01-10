@@ -5,7 +5,7 @@ import StepWindow from './StepWindow'
 import { useState } from 'react'
 import { Subtask } from './TaskTypes'
 
-const SubtaskCard: React.FC<Subtask> = ({description, isComplete, steps}) => {
+const SubtaskCard: React.FC<Subtask> = ({taskId, id, description, isComplete, steps}) => {
     const [completed, setCompleted] = useState(isComplete)
     const [focused, setFocused] = useState(false)
     const [showSubtasks, setShowSubtasks] = useState(false)
@@ -19,7 +19,7 @@ const SubtaskCard: React.FC<Subtask> = ({description, isComplete, steps}) => {
             return (
             <div>
                 <button onClick={() => toggleSubtasks()}>Hide steps</button>
-                <StepWindow steps={steps} />  
+                <StepWindow taskId={taskId} subtaskId={id} steps={steps} />  
             </div>
             )
         }

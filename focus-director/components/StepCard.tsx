@@ -4,7 +4,7 @@ import '../styles/styles.scss'
 import { useState } from 'react'
 import { Step } from './TaskTypes'
 
-const StepCard: React.FC<Step> = ({description, isComplete}) => {
+const StepCard: React.FC<Step> = ({taskId, subtaskId, id, description, isComplete}) => {
     const [completed, setCompleted] = useState(isComplete)
     const [focused, setFocused] = useState(false)
 

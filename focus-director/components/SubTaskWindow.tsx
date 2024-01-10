@@ -62,7 +62,7 @@ const SubtaskWindow: React.FC<{ taskId: string, subtasks: Subtask[] }> = ({taskI
             <ul>
                 {subtaskList.map((subtask, index) => (
                     <li key={index}>
-                        <SubtaskCard id={subtask.id} description={cardContent(index, subtask.description)} isComplete={subtask.isComplete} steps={subtask.steps}/>
+                        <SubtaskCard taskId={taskId} id={subtask.id} description={cardContent(index, subtask.description)} isComplete={subtask.isComplete} steps={subtask.steps}/>
                         <button onClick={() => handleRemoveSubtask(subtask.id)}>❌</button>
                     </li>
                 ))}
