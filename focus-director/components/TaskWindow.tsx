@@ -4,7 +4,7 @@ import TaskCard from './TaskCard'
 import '../styles/styles.scss'
 import { useState, useEffect } from 'react'
 import { Task } from './TaskTypes'
-
+import {deleteTask, updateTaskStatus, addTask} from './API_methods'
 
 
 const TaskWindow: React.FC = () => {
@@ -12,62 +12,27 @@ const TaskWindow: React.FC = () => {
     const [taskDescription, setTaskDescription] = useState<string>('')
 
     const getTasks = async (url = "https://hemingmusicapi.azurewebsites.net/TaskEntity") => {
-        try {
-            await fetch(url, {method: 'GET'})
-            .then(response => response.json())
-            .then(data => {
-                setTasks(data)
-                console.log(data)})
-            .catch(error => {
-                console.error(error)
-            })
-            
-        }
-        catch (err: any) {
-            alert(err.message)
-        }
-    }
-
-    const addTask = async (url: string) => {
-        const newTask = {
-            description: taskDescription
-        }
-        try {
-            await fetch(url, {
-                method: 'POST', 
-                headers: {
-                "Content-Type": "application/json"
-                }, 
-                body: JSON.stringify(newTask)
-            })
-            getTasks()
-        }
-        catch (err: any) {
-            alert(err.message)
-        }
-    }
-
-    const deleteTask = async (url: string) => {
-        try {
-            await fetch(url, {
-                method: 'DELETE' 
-            })
-            getTasks()
-        }
-        catch (err: any) {
-            alert(err.message)
-        }
+        await fetch(url, {method: 'GET'})
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+            setTasks(data)
+        })
+        .catch(err => {
+            console.error(err)
+        })
     }
 
     useEffect(() => {
-        getTasks();
+        getTasks()
     }, [])
 
     const submitNewTask = () => {
         if (taskDescription.trim() !== '') {
-            addTask("https://hemingmusicapi.azurewebsites.net/TaskEntity")
+            addTask("https://hemingmusicapi.azurewebsites.net/TaskEntity", taskDescription)
             .then((response) => {
                 console.log(response);
+                getTasks();
             })
             .catch((error) => {
                 console.error("Error:", error);
@@ -89,6 +54,16 @@ const TaskWindow: React.FC = () => {
         });
     }
 
+    const handleUpdateTask = (taskId: string, status: boolean) => {
+        updateTaskStatus(`https://hemingmusicapi.azurewebsites.net/TaskEntity/${taskId}`, status)
+        .then((response) => {
+            console.log(response);
+            getTasks();
+        })
+        .catch((error) => {
+            console.error("Error:", error);
+        });
+    } 
     const indexedDescription = (index: number, description: string) => {
         let content = `${index + 1}. ${description}`
         return content
@@ -101,8 +76,9 @@ const TaskWindow: React.FC = () => {
             <ul>
                 {tasks.map((task, index) => (
                     <li key={index}>
-                        <TaskCard description={indexedDescription(index, task.description)} isComplete={task.isComplete} subTasks={task.subTasks}/>
+                        <TaskCard taskId={task.id} description={indexedDescription(index, task.description)} isComplete={task.isComplete} subtasks={task.subtasks}/>
                         <button onClick={() => handleRemoveTask(task.id)}>❌</button>
+                        <button onClick={() => handleUpdateTask(task.id, true)}>Completed</button>
                     </li>
                 ))}
             </ul>

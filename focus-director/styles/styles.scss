@@ -36,6 +36,15 @@ $taskContainer-color: rgb(255, 0, 212);
     background: linear-gradient(black, darkred);
 }
 
+.taskCardCompleted {
+    font-size: 20px;
+    font-weight: 800;
+    color: white;
+    display: block;
+    padding: 10px;
+    background: linear-gradient(black, darkgreen);
+}
+
 .taskCard button {
     background: radial-gradient(black, darkred);
     color: white;
