@@ -5,16 +5,14 @@ import '../styles/styles.scss'
 import { useState } from 'react'
 import { Step } from './TaskTypes'
 
-
-
 const StepWindow: React.FC<{ steps: Step[] }> = ({steps}) => {
-    const [listed, setListed] = useState<Step[]>(steps)
+    const [stepList, setStepList] = useState<Step[]>(steps)
     const [description, setDescription] = useState<string>('')
 
     const submitNewTask = () => {
         if (description.trim() !== '') {
             let newStep: Step = {description: description, isComplete: false}
-            setListed([...listed, newStep])
+            setStepList([...stepList, newStep])
             setDescription('')
         }
     }
@@ -24,12 +22,12 @@ const StepWindow: React.FC<{ steps: Step[] }> = ({steps}) => {
     }
 
     const handleRemoveTask = (index: number) => {
-        const updatedList = [...listed]
+        const updatedList = [...stepList]
         updatedList.splice(index, 1)
-        setListed(updatedList)
+        setStepList(updatedList)
     }
 
-    const taskCardContent = (index: number, description: string) => {
+    const cardContent = (index: number, description: string) => {
         let content = `${index + 1}. ${description}`
         return content
     } 
@@ -38,9 +36,9 @@ const StepWindow: React.FC<{ steps: Step[] }> = ({steps}) => {
         <>
         <div className="taskContainer" style={{border: 'solid', borderColor: 'yellow', backgroundImage: 'linear-gradient(to right, #ff0000, #0000ff)'}}>
             <ul>
-                {listed.map((task, index) => (
+                {stepList.map((step, index) => (
                     <li key={index}>
-                        <StepCard description={taskCardContent(index, task.description)} isComplete={task.isComplete} />
+                        <StepCard description={cardContent(index, step.description)} isComplete={step.isComplete} />
                         <button onClick={() => handleRemoveTask(index)}>❌</button>
                     </li>
                 ))}

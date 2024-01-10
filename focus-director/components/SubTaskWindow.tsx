@@ -1,6 +1,6 @@
 "use client";
 
-import SubTaskCard from './SubTaskCard'
+import SubtaskCard from './SubtaskCard'
 import '../styles/styles.scss'
 import { useState, useEffect } from 'react'
 import { Subtask } from './TaskTypes'
@@ -8,13 +8,13 @@ import { addSubtask, deleteSubtask } from './API_methods'
 
 
 
-const SubTaskWindow: React.FC<{ taskId: string, subTasks: Subtask[] }> = ({taskId, subTasks}) => {
-    const [listed, setListed] = useState<Subtask[]>(subTasks)
+const SubtaskWindow: React.FC<{ taskId: string, subtasks: Subtask[] }> = ({taskId, subtasks}) => {
+    const [subtaskList, setSubtaskList] = useState<Subtask[]>(subtasks)
     const [description, setDescription] = useState<string>('')
 
     useEffect(() => {
-        setListed(subTasks)
-    }, [subTasks])
+        setSubtaskList(subtasks)
+    }, [subtasks])
 
     const getSubtasks = async () => {
         try {
@@ -22,7 +22,7 @@ const SubTaskWindow: React.FC<{ taskId: string, subTasks: Subtask[] }> = ({taskI
                 method: 'GET'
             })
             .then(response => response.json())
-            .then(data => setListed(data))
+            .then(data => setSubtaskList(data))
             .catch(err => {
                 console.error(err)
             })
@@ -32,7 +32,7 @@ const SubTaskWindow: React.FC<{ taskId: string, subTasks: Subtask[] }> = ({taskI
         }
     }
 
-    const submitNewTask = async () => {
+    const submitNewSubtask = async () => {
         if (description.trim() !== '') {
             await addSubtask(taskId, description)
             await getSubtasks()
@@ -44,14 +44,14 @@ const SubTaskWindow: React.FC<{ taskId: string, subTasks: Subtask[] }> = ({taskI
         setDescription(event.target.value);
     }
 
-    const handleRemoveTask = async (subtaskId: string) => {
-        console.log(listed)
+    const handleRemoveSubtask = async (subtaskId: string) => {
+        console.log(subtaskList)
         console.log(`taskId: ${taskId} subtaskId: ${subtaskId}`)
         await deleteSubtask(taskId, subtaskId)
         await getSubtasks()
     }
 
-    const taskCardContent = (index: number, description: string) => {
+    const cardContent = (index: number, description: string) => {
         let content = `${index + 1}. ${description}`
         return content
     } 
@@ -60,10 +60,10 @@ const SubTaskWindow: React.FC<{ taskId: string, subTasks: Subtask[] }> = ({taskI
         <>
         <div className="taskContainer" style={{border: 'solid', borderColor: 'darkorange'}}>
             <ul>
-                {listed.map((subTask, index) => (
+                {subtaskList.map((subtask, index) => (
                     <li key={index}>
-                        <SubTaskCard id={subTask.id} description={taskCardContent(index, subTask.description)} isComplete={subTask.isComplete} steps={subTask.steps}/>
-                        <button onClick={() => handleRemoveTask(subTask.id)}>❌</button>
+                        <SubtaskCard id={subtask.id} description={cardContent(index, subtask.description)} isComplete={subtask.isComplete} steps={subtask.steps}/>
+                        <button onClick={() => handleRemoveSubtask(subtask.id)}>❌</button>
                     </li>
                 ))}
                 <div>
@@ -74,7 +74,7 @@ const SubTaskWindow: React.FC<{ taskId: string, subTasks: Subtask[] }> = ({taskI
                     onChange={handleChange}
                     placeholder="Describe subtask"
                     />
-                    <button onClick={submitNewTask}>Add subtask</button>
+                    <button onClick={submitNewSubtask}>Add subtask</button>
                 </div>
             </ul>
         </div>
@@ -83,4 +83,4 @@ const SubTaskWindow: React.FC<{ taskId: string, subTasks: Subtask[] }> = ({taskI
     )
 }
 
-export default SubTaskWindow
+export default SubtaskWindow
