@@ -1,4 +1,5 @@
 
+// task methods
 
 export const addTask = async (url: string, text: string) => {
     const newTask = {
@@ -47,6 +48,8 @@ export const updateTaskStatus = async (url: string, status: boolean) => {
     }
 }
 
+// subtask methods
+
 export const addSubtask = async (taskId: string, text: string) => {
     const subtaskToAdd = {
         Description: text
@@ -68,6 +71,37 @@ export const addSubtask = async (taskId: string, text: string) => {
 export const deleteSubtask = async (taskId: string, subtaskId: string) => {
     try {
         await fetch(`https://hemingmusicapi.azurewebsites.net/taskentity/${taskId}/subtask/${subtaskId}`, {
+            method: 'DELETE'
+        })
+    }
+    catch (err: any) {
+        alert(err.message)
+    }
+}
+
+// step methods
+
+export const addStep = async (taskId: string, subtaskId: string, text: string) => {
+    const stepToAdd = {
+        Description: text
+    }
+    try {
+        await fetch(`https://hemingmusicapi.azurewebsites.net/taskentity/${taskId}/subtask/${subtaskId}/step`, {
+            method: 'PATCH',
+            headers: {
+                "Content-Type": "application/json"
+                }, 
+            body: JSON.stringify(stepToAdd)
+        })
+    }
+    catch (err: any) {
+        alert(err.message)
+    }
+}
+
+export const deleteStep = async (taskId: string, subtaskId: string, stepId: string) => {
+    try {
+        await fetch(`https://hemingmusicapi.azurewebsites.net/taskentity/${taskId}/subtask/${subtaskId}/step/${stepId}`, {
             method: 'DELETE'
         })
     }

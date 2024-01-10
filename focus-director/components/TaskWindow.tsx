@@ -76,7 +76,7 @@ const TaskWindow: React.FC = () => {
             <ul>
                 {tasks.map((task, index) => (
                     <li key={index}>
-                        <TaskCard taskId={task.id} description={indexedDescription(index, task.description)} isComplete={task.isComplete} subtasks={task.subtasks}/>
+                        <TaskCard id={task.id} description={indexedDescription(index, task.description)} isComplete={task.isComplete} subtasks={task.subtasks}/>
                         <button onClick={() => handleRemoveTask(task.id)}>❌</button>
                         <button onClick={() => handleUpdateTask(task.id, true)}>Completed</button>
                     </li>
