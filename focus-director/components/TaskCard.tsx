@@ -2,7 +2,7 @@
 
 import '../styles/styles.scss'
 import TaskWindow from './TaskWindow'
-import SubTaskWindow from './SubTaskWindow';
+import SubtaskWindow from './SubtaskWindow';
 import { useState, useEffect } from 'react'
 import { Task, Subtask } from './TaskTypes'
 
@@ -10,11 +10,11 @@ import { Task, Subtask } from './TaskTypes'
 const TaskCard: React.FC<Task> = ({taskId, description, isComplete, subtasks}) => {
     const [completed, setCompleted] = useState(isComplete)
     const [focused, setFocused] = useState(false)
-    const [subTaskList, setSubTaskList] = useState<Subtask[]>(subtasks)
+    const [subtaskList, setSubtaskList] = useState<Subtask[]>(subtasks)
     const [showSubtasks, setShowSubtasks] = useState(false)
 
     useEffect(() => {
-        setSubTaskList(subtasks)
+        setSubtaskList(subtasks)
     }, [subtasks])
 
 
@@ -26,11 +26,11 @@ const TaskCard: React.FC<Task> = ({taskId, description, isComplete, subtasks}) =
     }
 
     const renderSubtasks = () => {
-        if (showSubtasks && subTaskList) {
+        if (showSubtasks && subtaskList) {
             return (
             <div>
                 <button onClick={() => toggleSubtasks()}>Hide subtasks</button>
-                <SubTaskWindow taskId={taskId} subTasks={subTaskList} />  
+                <SubtaskWindow taskId={taskId} subtasks={subtaskList} />  
             </div>
             )
         }
@@ -38,7 +38,7 @@ const TaskCard: React.FC<Task> = ({taskId, description, isComplete, subtasks}) =
     }
 
     const renderButton = () => {
-        if (!showSubtasks && subTaskList) {
+        if (!showSubtasks && subtaskList) {
             return (
                 <button onClick={() => toggleSubtasks()}>Show subtasks</button>
             )
