@@ -6,20 +6,23 @@ import SubTaskWindow from './SubTaskWindow';
 import { useState, useEffect } from 'react'
 import { Task, Subtask } from './TaskTypes'
 
-const TaskCard: React.FC<Task> = ({description, isComplete, subTasks}) => {
+
+const TaskCard: React.FC<Task> = ({taskId, description, isComplete, subtasks}) => {
     const [completed, setCompleted] = useState(isComplete)
     const [focused, setFocused] = useState(false)
-    const [subTaskList, setSubTaskList] = useState<Subtask[]>(subTasks)
+    const [subTaskList, setSubTaskList] = useState<Subtask[]>(subtasks)
     const [showSubtasks, setShowSubtasks] = useState(false)
 
     useEffect(() => {
-        setSubTaskList(subTasks)
-    }, [subTasks])
+        setSubTaskList(subtasks)
+    }, [subtasks])
+
+
 
     const toggleSubtasks = () => {
         setShowSubtasks(!showSubtasks)
         console.log(showSubtasks)
-        console.log(subTasks)
+        console.log(subtasks)
     }
 
     const renderSubtasks = () => {
@@ -27,7 +30,7 @@ const TaskCard: React.FC<Task> = ({description, isComplete, subTasks}) => {
             return (
             <div>
                 <button onClick={() => toggleSubtasks()}>Hide subtasks</button>
-                <SubTaskWindow subTasks={subTaskList} />  
+                <SubTaskWindow taskId={taskId} subTasks={subTaskList} />  
             </div>
             )
         }
@@ -57,7 +60,7 @@ const TaskCard: React.FC<Task> = ({description, isComplete, subTasks}) => {
     }
     return (
         <>
-            <div className="taskCard">
+            <div className={completed ? "taskCardCompleted" : "taskCard"}>
                 <p>{description}</p>
                 {renderSubtasks()}
             </div>

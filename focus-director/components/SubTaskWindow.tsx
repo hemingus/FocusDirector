@@ -4,10 +4,11 @@ import SubTaskCard from './SubTaskCard'
 import '../styles/styles.scss'
 import { useState, useEffect } from 'react'
 import { Subtask } from './TaskTypes'
+import { addSubtask, deleteSubtask } from './API_methods'
 
 
 
-const SubTaskWindow: React.FC<{ subTasks: Subtask[] }> = ({subTasks}) => {
+const SubTaskWindow: React.FC<{ taskId: string, subTasks: Subtask[] }> = ({taskId, subTasks}) => {
     const [listed, setListed] = useState<Subtask[]>(subTasks)
     const [description, setDescription] = useState<string>('')
 
@@ -15,10 +16,26 @@ const SubTaskWindow: React.FC<{ subTasks: Subtask[] }> = ({subTasks}) => {
         setListed(subTasks)
     }, [subTasks])
 
-    const submitNewTask = () => {
+    const getSubtasks = async () => {
+        try {
+            await fetch(`https://hemingmusicapi.azurewebsites.net/taskentity/${taskId}/subtask`, {
+                method: 'GET'
+            })
+            .then(response => response.json())
+            .then(data => setListed(data))
+            .catch(err => {
+                console.error(err)
+            })
+        }
+        catch (err: any) {
+            alert(err.message)
+        }
+    }
+
+    const submitNewTask = async () => {
         if (description.trim() !== '') {
-            let newSubTask: Subtask = {description: description, isComplete: false, steps: []}
-            setListed([...listed, newSubTask])
+            await addSubtask(taskId, description)
+            await getSubtasks()
             setDescription('')
         }
     }
@@ -27,10 +44,11 @@ const SubTaskWindow: React.FC<{ subTasks: Subtask[] }> = ({subTasks}) => {
         setDescription(event.target.value);
     }
 
-    const handleRemoveTask = (index: number) => {
-        const updatedList = [...listed]
-        updatedList.splice(index, 1)
-        setListed(updatedList)
+    const handleRemoveTask = async (subtaskId: string) => {
+        console.log(listed)
+        console.log(`taskId: ${taskId} subtaskId: ${subtaskId}`)
+        await deleteSubtask(taskId, subtaskId)
+        await getSubtasks()
     }
 
     const taskCardContent = (index: number, description: string) => {
@@ -44,8 +62,8 @@ const SubTaskWindow: React.FC<{ subTasks: Subtask[] }> = ({subTasks}) => {
             <ul>
                 {listed.map((subTask, index) => (
                     <li key={index}>
-                        <SubTaskCard description={taskCardContent(index, subTask.description)} isComplete={subTask.isComplete} steps={subTask.steps}/>
-                        <button onClick={() => handleRemoveTask(index)}>❌</button>
+                        <SubTaskCard id={subTask.id} description={taskCardContent(index, subTask.description)} isComplete={subTask.isComplete} steps={subTask.steps}/>
+                        <button onClick={() => handleRemoveTask(subTask.id)}>❌</button>
                     </li>
                 ))}
                 <div>
