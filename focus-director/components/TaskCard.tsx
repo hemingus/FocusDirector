@@ -5,6 +5,9 @@ import TaskWindow from './TaskWindow'
 import SubtaskWindow from './SubtaskWindow';
 import { useState, useEffect } from 'react'
 import { Task, Subtask } from './TaskTypes'
+import { updateTaskStatus } from './API_methods';
+import JSXStyle from 'styled-jsx/style';
+
 
 
 const TaskCard: React.FC<Task> = ({id, description, isComplete, subtasks}) => {
@@ -37,6 +40,11 @@ const TaskCard: React.FC<Task> = ({id, description, isComplete, subtasks}) => {
         return renderButton();
     }
 
+    const handleUpdateTaskStatus = async (taskId: string, status: boolean) => {
+        await updateTaskStatus(`https://hemingmusicapi.azurewebsites.net/TaskEntity/${taskId}`, status)
+        setCompleted(status)
+    } 
+
     const renderButton = () => {
         if (!showSubtasks && subtaskList) {
             return (
@@ -50,6 +58,13 @@ const TaskCard: React.FC<Task> = ({id, description, isComplete, subtasks}) => {
         )
     }
 
+    const statusText= () => {
+        if (!completed) {
+            return "Complete"
+        }
+        return "Revive"
+    }
+
     if (focused) {
         return (
             <div className="taskCardFocused" onClick={() => setFocused(false)}>
@@ -61,10 +76,10 @@ const TaskCard: React.FC<Task> = ({id, description, isComplete, subtasks}) => {
     return (
         <>
             <div className={completed ? "taskCardCompleted" : "taskCard"}>
-                <p>{description}</p>
+                <p style={completed ? {textDecoration: 'line-through'} : {textDecoration: 'none'}}>{description}</p>
+                <button onClick={() => handleUpdateTaskStatus(id, !completed)}>{statusText()}</button>
                 {renderSubtasks()}
             </div>
-            
         </>
     )
 }

@@ -4,7 +4,7 @@ import TaskCard from './TaskCard'
 import '../styles/styles.scss'
 import { useState, useEffect } from 'react'
 import { Task } from './TaskTypes'
-import {deleteTask, updateTaskStatus, addTask} from './API_methods'
+import {deleteTask, addTask} from './API_methods'
 
 
 const TaskWindow: React.FC = () => {
@@ -54,16 +54,6 @@ const TaskWindow: React.FC = () => {
         });
     }
 
-    const handleUpdateTask = (taskId: string, status: boolean) => {
-        updateTaskStatus(`https://hemingmusicapi.azurewebsites.net/TaskEntity/${taskId}`, status)
-        .then((response) => {
-            console.log(response);
-            getTasks();
-        })
-        .catch((error) => {
-            console.error("Error:", error);
-        });
-    } 
     const indexedDescription = (index: number, description: string) => {
         let content = `${index + 1}. ${description}`
         return content
@@ -78,7 +68,6 @@ const TaskWindow: React.FC = () => {
                     <li key={index}>
                         <TaskCard id={task.id} description={indexedDescription(index, task.description)} isComplete={task.isComplete} subtasks={task.subtasks}/>
                         <button onClick={() => handleRemoveTask(task.id)}>❌</button>
-                        <button onClick={() => handleUpdateTask(task.id, true)}>Completed</button>
                     </li>
                 ))}
             </ul>
