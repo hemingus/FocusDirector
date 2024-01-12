@@ -9,6 +9,17 @@ $taskContainer-color: rgb(255, 0, 212);
     background: black;
 }
 
+.taskSection button {
+    background: linear-gradient(grey, black);
+    color: silver;
+}
+
+.taskSection button:hover {
+    cursor: pointer;
+    filter: drop-shadow(1px 1px 1px white);
+    color: white;
+}
+
 .taskContainer {
     display: grid;
     grid-template-columns: 1fr;
@@ -16,10 +27,9 @@ $taskContainer-color: rgb(255, 0, 212);
     ul {
         list-style: none;
         padding: 20px 20px 0 50px;
-        background: linear-gradient($taskContainer-color -200%, black);
+        background-color: rgb(43, 41, 41);
         display: grid;
         gap: 10px;
-        cursor: pointer;
     }
 }
 
@@ -32,26 +42,18 @@ $taskContainer-color: rgb(255, 0, 212);
     font-weight: 800;
     color: white;
     display: block;
-    padding: 10px;
-    background: linear-gradient(black, darkred);
+    padding: 4px;
+    background: linear-gradient(black -10%, darkred, black 110%);
 }
 
 .taskCardCompleted {
-    font-size: 20px;
+    font-size: 14px;
     font-weight: 800;
-    color: white;
+    border-bottom: 1px solid black;
+    color: black;
     display: block;
-    padding: 10px;
-    background: linear-gradient(black, darkgreen);
-}
-
-.taskCard button {
-    background: radial-gradient(black, darkred);
-    color: white;
-}
-
-.taskCard:hover {
-    box-shadow: 5px 5px 5px cyan;
+    padding: 4px;
+    background: linear-gradient(black -10%, rgb(108, 141, 108), black 110%);
 }
 
 // Subtask
@@ -61,16 +63,7 @@ $taskContainer-color: rgb(255, 0, 212);
     color: white;
     display: block;
     padding: 7px;
-    background: linear-gradient(black, darkorange);
-}
-
-.subTaskCard button {
-    background: radial-gradient(black, darkorange);
-    color: white;
-}
-
-.subTaskCard:hover {
-    box-shadow: 5px 5px 5px cyan;
+    background: linear-gradient(black -10%, rgb(180, 99, 0), black 110%);
 }
 
 // Step
@@ -80,16 +73,7 @@ $taskContainer-color: rgb(255, 0, 212);
     color: white;
     display: block;
     padding: 4px;
-    background: linear-gradient(black , yellow 150%);
-}
-
-.stepCard button {
-    background: radial-gradient(black, yellow);
-    color: white;
-}
-
-.stepCard:hover {
-    box-shadow: 5px 5px 5px cyan;
+    background: linear-gradient(black -10%, rgb(95, 95, 0), black 110%);
 }
 
 // Focused card
@@ -122,5 +106,4 @@ $taskContainer-color: rgb(255, 0, 212);
         background: linear-gradient(darkgreen, lightgreen);
         margin-top: 20svh;
     } 
-    
 }

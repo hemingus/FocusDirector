@@ -3,10 +3,23 @@
 import '../styles/styles.scss'
 import { useState } from 'react'
 import { Step } from './TaskTypes'
+import { updateStepStatus } from './API_methods';
 
 const StepCard: React.FC<Step> = ({taskId, subtaskId, id, description, isComplete}) => {
     const [completed, setCompleted] = useState(isComplete)
     const [focused, setFocused] = useState(false)
+
+    const handleUpdateStepStatus = async (id: string, status: boolean) => {
+        await updateStepStatus(taskId, subtaskId, id, status)
+        setCompleted(status)
+    } 
+
+    const statusText= () => {
+        if (!completed) {
+            return "Complete"
+        }
+        return "Revive"
+    }
 
     if (focused) {
         return (
@@ -18,8 +31,9 @@ const StepCard: React.FC<Step> = ({taskId, subtaskId, id, description, isComplet
     }
     return (
         <>
-            <div className="stepCard">
-                <p>{description}</p>
+            <div className={completed ? "taskCardCompleted" : "stepCard"}>
+                <p style={completed ? {textDecoration: 'line-through'} : {textDecoration: 'none'}}>{description}</p>
+                <button onClick={() => handleUpdateStepStatus(id, !completed)}>{statusText()}</button>
                 <button onClick={() => setFocused(true)}>Focus</button>
             </div>
         </>

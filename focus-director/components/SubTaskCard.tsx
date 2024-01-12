@@ -4,6 +4,7 @@ import '../styles/styles.scss'
 import StepWindow from './StepWindow'
 import { useState } from 'react'
 import { Subtask } from './TaskTypes'
+import { updateSubtaskStatus } from './API_methods';
 
 const SubtaskCard: React.FC<Subtask> = ({taskId, id, description, isComplete, steps}) => {
     const [completed, setCompleted] = useState(isComplete)
@@ -39,6 +40,18 @@ const SubtaskCard: React.FC<Subtask> = ({taskId, id, description, isComplete, st
         )
     }
 
+    const handleUpdateSubtaskStatus = async (id: string, status: boolean) => {
+        await updateSubtaskStatus(taskId, id, status)
+        setCompleted(!completed)
+    }
+
+    const statusText= () => {
+        if (!completed) {
+            return "Complete"
+        }
+        return "Revive"
+    }
+
     if (focused) {
         return (
             <div className="taskCardFocused" onClick={() => setFocused(false)}>
@@ -49,11 +62,11 @@ const SubtaskCard: React.FC<Subtask> = ({taskId, id, description, isComplete, st
     }
     return (
         <>
-            <div className="subTaskCard">
-                <p>{description}</p>
+            <div className={completed ? "taskCardCompleted" : "subTaskCard"}>
+                <p style={completed ? {textDecoration: 'line-through'} : {textDecoration: 'none'}}>{description}</p>
+                <button onClick={() => {handleUpdateSubtaskStatus(id, !completed)}}>{statusText()}</button>
                 {renderSubtasks()}
             </div>
-            
         </>
     )
 }
