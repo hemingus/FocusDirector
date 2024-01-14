@@ -13,8 +13,8 @@ const SubtaskWindow: React.FC<{ taskId: string, subtasks: Subtask[] }> = ({taskI
     const [description, setDescription] = useState<string>('')
 
     useEffect(() => {
-        setSubtaskList(subtasks)
-    }, [subtasks])
+        getSubtasks()
+    }, [])
 
     const getSubtasks = async () => {
         try {
@@ -58,10 +58,10 @@ const SubtaskWindow: React.FC<{ taskId: string, subtasks: Subtask[] }> = ({taskI
 
     return (
         <>
-        <div className="taskContainer" style={{border: 'solid', borderColor: 'darkorange'}}>
+        <div className="taskContainer" style={{border: 'solid', borderColor: 'rgb(0, 100, 60)'}}>
             <ul>
                 {subtaskList.map((subtask, index) => (
-                    <li key={index}>
+                    <li className="subtaskWindow" key={index}>
                         <SubtaskCard taskId={taskId} id={subtask.id} description={cardContent(index, subtask.description)} isComplete={subtask.isComplete} steps={subtask.steps}/>
                         <button onClick={() => handleRemoveSubtask(subtask.id)}>❌</button>
                     </li>

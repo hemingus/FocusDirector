@@ -29,7 +29,7 @@ const TaskWindow: React.FC = () => {
 
     const submitNewTask = () => {
         if (taskDescription.trim() !== '') {
-            addTask("https://hemingmusicapi.azurewebsites.net/TaskEntity", taskDescription)
+            addTask(taskDescription)
             .then((response) => {
                 console.log(response);
                 getTasks();
@@ -44,14 +44,9 @@ const TaskWindow: React.FC = () => {
         setTaskDescription(event.target.value);
     }
 
-    const handleRemoveTask = (taskId: string) => {
-        deleteTask(`https://hemingmusicapi.azurewebsites.net/TaskEntity/${taskId}`)
-        .then((response) => {
-            console.log(response);
-        })
-        .catch((error) => {
-            console.error("Error:", error);
-        });
+    const handleRemoveTask = async (taskId: string) => {
+        await deleteTask(taskId)
+        await getTasks();
     }
 
     const indexedDescription = (index: number, description: string) => {
@@ -62,10 +57,10 @@ const TaskWindow: React.FC = () => {
 
     return (
         <>
-        <div className="taskContainer" style={{border: 'solid', borderColor: 'darkred'}}>
+        <div className="taskContainer" style={{border: 'solid', borderColor: 'rgb(0, 80, 80)'}}>
             <ul>
                 {tasks.map((task, index) => (
-                    <li key={index}>
+                    <li className="taskWindow" key={index}>
                         <TaskCard id={task.id} description={indexedDescription(index, task.description)} isComplete={task.isComplete} subtasks={task.subtasks}/>
                         <button onClick={() => handleRemoveTask(task.id)}>❌</button>
                     </li>

@@ -42,7 +42,8 @@ const SubtaskCard: React.FC<Subtask> = ({taskId, id, description, isComplete, st
 
     const handleUpdateSubtaskStatus = async (id: string, status: boolean) => {
         await updateSubtaskStatus(taskId, id, status)
-        setCompleted(!completed)
+        setCompleted(status)
+        setShowSubtasks(!status)
     }
 
     const statusText= () => {
@@ -62,7 +63,7 @@ const SubtaskCard: React.FC<Subtask> = ({taskId, id, description, isComplete, st
     }
     return (
         <>
-            <div className={completed ? "taskCardCompleted" : "subTaskCard"}>
+            <div className={completed ? "taskCardCompleted" : "subtaskCard"}>
                 <p style={completed ? {textDecoration: 'line-through'} : {textDecoration: 'none'}}>{description}</p>
                 <button onClick={() => {handleUpdateSubtaskStatus(id, !completed)}}>{statusText()}</button>
                 {renderSubtasks()}
