@@ -50,10 +50,10 @@ const StepWindow: React.FC<{ taskId: string, subtaskId: string, steps: Step[] }>
 
     return (
         <>
-        <div className="taskContainer" style={{border: 'solid', borderColor: 'yellow', backgroundImage: 'linear-gradient(to right, #ff0000, #0000ff)'}}>
+        <div className="taskContainer" style={{border: 'solid', borderColor: 'rgb(0, 120, 40)'}}>
             <ul>
                 {stepList.map((step, index) => (
-                    <li key={index}>
+                    <li className="stepWindow" key={index}>
                         <StepCard taskId={taskId} subtaskId={subtaskId} id={step.id} description={cardContent(index, step.description)} isComplete={step.isComplete} />
                         <button onClick={() => handleRemoveStep(step.id)}>❌</button>
                     </li>

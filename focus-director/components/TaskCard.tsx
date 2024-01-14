@@ -1,14 +1,10 @@
 "use client";
 
 import '../styles/styles.scss'
-import TaskWindow from './TaskWindow'
 import SubtaskWindow from './SubtaskWindow';
 import { useState, useEffect } from 'react'
 import { Task, Subtask } from './TaskTypes'
 import { updateTaskStatus } from './API_methods';
-import JSXStyle from 'styled-jsx/style';
-
-
 
 const TaskCard: React.FC<Task> = ({id, description, isComplete, subtasks}) => {
     const [completed, setCompleted] = useState(isComplete)
@@ -19,8 +15,6 @@ const TaskCard: React.FC<Task> = ({id, description, isComplete, subtasks}) => {
     useEffect(() => {
         setSubtaskList(subtasks)
     }, [subtasks])
-
-
 
     const toggleSubtasks = () => {
         setShowSubtasks(!showSubtasks)
@@ -41,8 +35,9 @@ const TaskCard: React.FC<Task> = ({id, description, isComplete, subtasks}) => {
     }
 
     const handleUpdateTaskStatus = async (taskId: string, status: boolean) => {
-        await updateTaskStatus(`https://hemingmusicapi.azurewebsites.net/TaskEntity/${taskId}`, status)
+        await updateTaskStatus(taskId, status)
         setCompleted(status)
+        setShowSubtasks(!status)
     } 
 
     const renderButton = () => {

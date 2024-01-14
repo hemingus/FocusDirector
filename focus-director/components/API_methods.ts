@@ -1,12 +1,12 @@
 
 // task methods
 
-export const addTask = async (url: string, text: string) => {
+export const addTask = async (text: string) => {
     const newTask = {
         description: text
     }
     try {
-        await fetch(url, {
+        await fetch("https://hemingmusicapi.azurewebsites.net/TaskEntity", {
             method: 'POST', 
             headers: {
             "Content-Type": "application/json"
@@ -19,9 +19,9 @@ export const addTask = async (url: string, text: string) => {
     }
 }
 
-export const deleteTask = async (url: string) => {
+export const deleteTask = async (taskId: string) => {
     try {
-        await fetch(url, {
+        await fetch(`https://hemingmusicapi.azurewebsites.net/TaskEntity/${taskId}`, {
             method: 'DELETE' 
         })
     }
@@ -30,12 +30,12 @@ export const deleteTask = async (url: string) => {
     }
 }
 
-export const updateTaskStatus = async (url: string, status: boolean) => {
+export const updateTaskStatus = async (taskId: string, status: boolean) => {
     const patchTask = {
         IsComplete: status
     } 
     try {
-        await fetch(url, {
+        await fetch(`https://hemingmusicapi.azurewebsites.net/TaskEntity/${taskId}`, {
             method: 'PATCH',
             headers: {
                 "Content-Type": "application/json"
