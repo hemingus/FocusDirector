@@ -50,7 +50,7 @@ const StepWindow: React.FC<{ taskId: string, subtaskId: string, steps: Step[] }>
 
     return (
         <>
-        <div className="taskContainer" style={{border: 'solid', borderColor: 'rgb(0, 120, 40)'}}>
+        <div className="taskContainer" style={{border: 'solid', borderColor: 'rgb(80, 100, 40)'}}>
             <ul>
                 {stepList.map((step, index) => (
                     <li className="stepWindow" key={index}>

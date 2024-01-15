@@ -58,7 +58,7 @@ const SubtaskWindow: React.FC<{ taskId: string, subtasks: Subtask[] }> = ({taskI
 
     return (
         <>
-        <div className="taskContainer" style={{border: 'solid', borderColor: 'rgb(0, 100, 60)'}}>
+        <div className="taskContainer" style={{border: 'solid', borderColor: 'rgb(80, 150, 100)'}}>
             <ul>
                 {subtaskList.map((subtask, index) => (
                     <li className="subtaskWindow" key={index}>
