@@ -3,9 +3,7 @@
 import TaskCard from './TaskCard'
 import '../styles/styles.scss'
 import { useState, useEffect } from 'react'
-import { Task } from './TaskTypes'
 import {deleteTask, addTask} from './API_methods'
-
 
 const TaskWindow: React.FC = () => {
     const [tasks, setTasks] = useState<Array<any>>([])
@@ -57,7 +55,7 @@ const TaskWindow: React.FC = () => {
 
     return (
         <>
-        <div className="taskContainer" style={{border: 'solid', borderColor: 'rgb(0, 80, 80)'}}>
+        <div className="taskContainer" style={{border: 'solid', borderColor: 'rgb(0, 120, 120)'}}>
             <ul>
                 {tasks.map((task, index) => (
                     <li className="taskWindow" key={index}>
