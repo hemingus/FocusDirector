@@ -48,6 +48,24 @@ export const updateTaskStatus = async (taskId: string, status: boolean) => {
     }
 }
 
+export const updateTaskDescription = async (taskId: string, description: string) => {
+    const patchTask = {
+        description: description
+    } 
+    try {
+        await fetch(`https://hemingmusicapi.azurewebsites.net/TaskEntity/${taskId}/description`, {
+            method: 'PATCH',
+            headers: {
+                "Content-Type": "application/json"
+                }, 
+            body: JSON.stringify(patchTask)
+        })
+    }
+    catch (err: any) {
+        alert(err.message)
+    }
+}
+
 // subtask methods
 
 export const addSubtask = async (taskId: string, text: string) => {
