@@ -2,34 +2,19 @@
 
 import StepCard from './StepCard'
 import '../styles/styles.scss'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { Step } from './TaskTypes'
 import { addStep, deleteStep } from './API_methods'
+import TaskDataContext from './TaskDataContext'
 
 const StepWindow: React.FC<{ taskId: string, subtaskId: string, steps: Step[] }> = ({taskId, subtaskId, steps}) => {
-    const [stepList, setStepList] = useState<Step[]>(steps)
+    const { getTasks } = useContext(TaskDataContext)!
     const [description, setDescription] = useState<string>('')
-
-    const getSteps = async () => {
-        try {
-            await fetch(`https://hemingmusicapi.azurewebsites.net/taskentity/${taskId}/subtask/${subtaskId}/step`, {
-                method: 'GET'
-            })
-            .then(response => response.json())
-            .then(data => setStepList(data))
-            .catch(err => {
-                console.error(err)
-            })
-        }
-        catch (err: any) {
-            alert(err.message)
-        }
-    }
 
     const submitNewStep = async () => {
         if (description.trim() !== '') {
             await addStep(taskId, subtaskId, description)
-            await getSteps()
+            getTasks()
             setDescription('')
         }
     }
@@ -40,7 +25,7 @@ const StepWindow: React.FC<{ taskId: string, subtaskId: string, steps: Step[] }>
 
     const handleRemoveStep = async (stepId: string) => {
         await deleteStep(taskId, subtaskId, stepId)
-        await getSteps()
+        getTasks()
     }
 
     const cardContent = (index: number, description: string) => {
@@ -50,27 +35,26 @@ const StepWindow: React.FC<{ taskId: string, subtaskId: string, steps: Step[] }>
 
     return (
         <>
-        <div className="taskContainer" style={{border: 'solid', borderColor: 'rgb(80, 100, 40)'}}>
+        <div className="stepContainer">
             <ul>
-                {stepList.map((step, index) => (
+                {steps.map((step, index) => (
                     <li className="stepWindow" key={index}>
                         <StepCard taskId={taskId} subtaskId={subtaskId} id={step.id} description={cardContent(index, step.description)} isComplete={step.isComplete} />
                         <button onClick={() => handleRemoveStep(step.id)}>❌</button>
                     </li>
                 ))}
                 <div>
-                    <label>Create new step</label>
+                    <label>new step</label>
                     <input
                     type="text"
                     value={description}
                     onChange={handleChange}
                     placeholder="Describe step"
                     />
-                    <button onClick={submitNewStep}>Add Step</button>
+                    <button onClick={submitNewStep}>add step</button>
                 </div>
             </ul>
         </div>
-
         </>
     )
 }

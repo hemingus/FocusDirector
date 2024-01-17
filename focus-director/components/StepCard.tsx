@@ -1,24 +1,25 @@
 "use client";
 
 import '../styles/styles.scss'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { Step } from './TaskTypes'
-import { updateStepStatus } from './API_methods';
+import { updateStepStatus } from './API_methods'
+import TaskDataContext from './TaskDataContext'
 
 const StepCard: React.FC<Step> = ({taskId, subtaskId, id, description, isComplete}) => {
-    const [completed, setCompleted] = useState(isComplete)
+    const { getTasks } = useContext(TaskDataContext)!
     const [focused, setFocused] = useState(false)
 
-    const handleUpdateStepStatus = async (id: string, status: boolean) => {
+    const handleUpdateStepStatus = async (status: boolean) => {
         await updateStepStatus(taskId, subtaskId, id, status)
-        setCompleted(status)
+        getTasks()
     } 
 
     const statusText= () => {
-        if (!completed) {
-            return "Complete"
+        if (isComplete) {
+            return "Revive"
         }
-        return "Revive"
+        return "Complete"
     }
 
     if (focused) {
@@ -31,9 +32,9 @@ const StepCard: React.FC<Step> = ({taskId, subtaskId, id, description, isComplet
     }
     return (
         <>
-            <div className={completed ? "taskCardCompleted" : "stepCard"}>
-                <p style={completed ? {textDecoration: 'line-through'} : {textDecoration: 'none'}}>{description}</p>
-                <button onClick={() => handleUpdateStepStatus(id, !completed)}>{statusText()}</button>
+            <div className={isComplete ? "taskCardCompleted" : "stepCard"}>
+                <p style={isComplete ? {textDecoration: 'line-through'} : {textDecoration: 'none'}}>{description}</p>
+                <button onClick={() => handleUpdateStepStatus(!isComplete)}>{statusText()}</button>
                 <button onClick={() => setFocused(true)}>Focus</button>
             </div>
         </>

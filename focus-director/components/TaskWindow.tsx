@@ -2,28 +2,13 @@
 
 import TaskCard from './TaskCard'
 import '../styles/styles.scss'
-import { useState, useEffect } from 'react'
+import { useState, useContext } from 'react'
 import {deleteTask, addTask} from './API_methods'
+import TaskDataContext from './TaskDataContext'
 
 const TaskWindow: React.FC = () => {
-    const [tasks, setTasks] = useState<Array<any>>([])
+    const {taskData, setTaskData, getTasks} = useContext(TaskDataContext)!
     const [taskDescription, setTaskDescription] = useState<string>('')
-
-    const getTasks = async (url = "https://hemingmusicapi.azurewebsites.net/TaskEntity") => {
-        await fetch(url, {method: 'GET'})
-        .then(response => response.json())
-        .then(data => {
-            console.log(data)
-            setTasks(data)
-        })
-        .catch(err => {
-            console.error(err)
-        })
-    }
-
-    useEffect(() => {
-        getTasks()
-    }, [])
 
     const submitNewTask = () => {
         if (taskDescription.trim() !== '') {
@@ -31,6 +16,7 @@ const TaskWindow: React.FC = () => {
             .then((response) => {
                 console.log(response);
                 getTasks();
+                setTaskDescription('')
             })
             .catch((error) => {
                 console.error("Error:", error);
@@ -55,23 +41,25 @@ const TaskWindow: React.FC = () => {
 
     return (
         <>
-        <div className="taskContainer" style={{border: 'solid', borderColor: 'rgb(0, 120, 120)'}}>
+        <div className="taskContainer">
             <ul>
-                {tasks.map((task, index) => (
+                {taskData.map((task, index) => (
                     <li className="taskWindow" key={index}>
                         <TaskCard id={task.id} description={indexedDescription(index, task.description)} isComplete={task.isComplete} subtasks={task.subtasks}/>
                         <button onClick={() => handleRemoveTask(task.id)}>❌</button>
                     </li>
                 ))}
             </ul>
-            <label style={{color: "darkred"}}>New task:</label>
-            <input
-            type="text"
-            value={taskDescription}
-            onChange={handleChange}
-            placeholder="Describe task"
-            />
-            <button onClick={submitNewTask}>Add task</button>
+            <div>
+                <label style={{color: "$taskBorderColor"}}>new task:</label>
+                <input
+                type="text"
+                value={taskDescription}
+                onChange={handleChange}
+                placeholder="Describe task"
+                />
+                <button onClick={submitNewTask}>add task</button>
+            </div>
         </div>
 
         </>

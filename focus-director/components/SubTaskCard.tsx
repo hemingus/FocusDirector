@@ -2,24 +2,25 @@
 
 import '../styles/styles.scss'
 import StepWindow from './StepWindow'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { Subtask } from './TaskTypes'
 import { updateSubtaskStatus } from './API_methods';
+import TaskDataProvider from './TaskDataContext'
 
 const SubtaskCard: React.FC<Subtask> = ({taskId, id, description, isComplete, steps}) => {
-    const [completed, setCompleted] = useState(isComplete)
+    const { getTasks } = useContext(TaskDataProvider)!
     const [focused, setFocused] = useState(false)
-    const [showSubtasks, setShowSubtasks] = useState(false)
+    const [showSteps, setShowSteps] = useState(false)
 
-    const toggleSubtasks = () => {
-        setShowSubtasks(!showSubtasks)
+    const toggleSteps = () => {
+        setShowSteps(!showSteps)
     }
 
     const renderSubtasks = () => {
-        if (showSubtasks && steps) {
+        if (showSteps && steps) {
             return (
             <div>
-                <button onClick={() => toggleSubtasks()}>Hide steps</button>
+                <button onClick={() => toggleSteps()}>Hide steps</button>
                 <StepWindow taskId={taskId} subtaskId={id} steps={steps} />  
             </div>
             )
@@ -28,9 +29,9 @@ const SubtaskCard: React.FC<Subtask> = ({taskId, id, description, isComplete, st
     }
 
     const renderButton = () => {
-        if (!showSubtasks && steps) {
+        if (!showSteps && steps) {
             return (
-                <button onClick={() => toggleSubtasks()}>Show steps</button>
+                <button onClick={() => toggleSteps()}>Show steps</button>
             )
         }
         return (
@@ -40,17 +41,17 @@ const SubtaskCard: React.FC<Subtask> = ({taskId, id, description, isComplete, st
         )
     }
 
-    const handleUpdateSubtaskStatus = async (id: string, status: boolean) => {
+    const handleUpdateSubtaskStatus = async (status: boolean) => {
         await updateSubtaskStatus(taskId, id, status)
-        setCompleted(status)
-        setShowSubtasks(!status)
+        getTasks()
+        setShowSteps(!status)
     }
 
     const statusText= () => {
-        if (!completed) {
-            return "Complete"
+        if (isComplete) {
+            return "Revive"
         }
-        return "Revive"
+        return "Complete"
     }
 
     if (focused) {
@@ -63,9 +64,9 @@ const SubtaskCard: React.FC<Subtask> = ({taskId, id, description, isComplete, st
     }
     return (
         <>
-            <div className={completed ? "taskCardCompleted" : "subtaskCard"}>
-                <p style={completed ? {textDecoration: 'line-through'} : {textDecoration: 'none'}}>{description}</p>
-                <button onClick={() => {handleUpdateSubtaskStatus(id, !completed)}}>{statusText()}</button>
+            <div className={isComplete ? "taskCardCompleted" : "subtaskCard"}>
+                <p style={isComplete ? {textDecoration: 'line-through'} : {textDecoration: 'none'}}>{description}</p>
+                <button onClick={() => {handleUpdateSubtaskStatus(!isComplete)}}>{statusText()}</button>
                 {renderSubtasks()}
             </div>
         </>

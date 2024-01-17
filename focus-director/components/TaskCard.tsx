@@ -2,46 +2,42 @@
 
 import '../styles/styles.scss'
 import SubtaskWindow from './SubtaskWindow';
-import { useState, useEffect } from 'react'
-import { Task, Subtask } from './TaskTypes'
-import { updateTaskStatus } from './API_methods';
+import { useState, useContext } from 'react'
+import { Task } from './TaskTypes'
+import { updateTaskStatus, updateTaskDescription } from './API_methods';
+import TaskDataContext from './TaskDataContext';
 
 const TaskCard: React.FC<Task> = ({id, description, isComplete, subtasks}) => {
-    const [completed, setCompleted] = useState(isComplete)
+    const { getTasks } = useContext(TaskDataContext)!
     const [focused, setFocused] = useState(false)
-    const [subtaskList, setSubtaskList] = useState<Subtask[]>(subtasks)
+    const [isEditing, setIsEditing] = useState(false)
+    const [newDescription, setNewDescription] = useState(description)
     const [showSubtasks, setShowSubtasks] = useState(false)
-
-    useEffect(() => {
-        setSubtaskList(subtasks)
-    }, [subtasks])
 
     const toggleSubtasks = () => {
         setShowSubtasks(!showSubtasks)
-        console.log(showSubtasks)
-        console.log(subtasks)
     }
 
     const renderSubtasks = () => {
-        if (showSubtasks && subtaskList) {
+        if (showSubtasks && subtasks) {
             return (
             <div>
                 <button onClick={() => toggleSubtasks()}>Hide subtasks</button>
-                <SubtaskWindow taskId={id} subtasks={subtaskList} />  
+                <SubtaskWindow taskId={id} subtasks={subtasks} />  
             </div>
             )
         }
         return renderButton();
     }
 
-    const handleUpdateTaskStatus = async (taskId: string, status: boolean) => {
-        await updateTaskStatus(taskId, status)
-        setCompleted(status)
+    const handleUpdateTaskStatus = async (status: boolean) => {
+        await updateTaskStatus(id, status)
+        getTasks()
         setShowSubtasks(!status)
     } 
 
     const renderButton = () => {
-        if (!showSubtasks && subtaskList) {
+        if (!showSubtasks && subtasks) {
             return (
                 <button onClick={() => toggleSubtasks()}>Show subtasks</button>
             )
@@ -53,11 +49,26 @@ const TaskCard: React.FC<Task> = ({id, description, isComplete, subtasks}) => {
         )
     }
 
-    const statusText= () => {
-        if (!completed) {
-            return "Complete"
+    const statusText = () => {
+        if (isComplete) {
+            return "Revive"
         }
-        return "Revive"
+        return "Complete"
+    }
+
+    const toggleEdit = () => {
+        setIsEditing(true)
+    }
+
+    const handleChange = (event: any) => {
+        setNewDescription(event.target.value)
+    }
+
+    const handleDescriptionUpdate = async () => {
+        if (newDescription !== description) {
+            await updateTaskDescription(id, newDescription)
+        }
+        setIsEditing(false)
     }
 
     if (focused) {
@@ -70,9 +81,16 @@ const TaskCard: React.FC<Task> = ({id, description, isComplete, subtasks}) => {
     }
     return (
         <>
-            <div className={completed ? "taskCardCompleted" : "taskCard"}>
-                <p style={completed ? {textDecoration: 'line-through'} : {textDecoration: 'none'}}>{description}</p>
-                <button onClick={() => handleUpdateTaskStatus(id, !completed)}>{statusText()}</button>
+            <div onDoubleClick={toggleEdit} className={isComplete ? "taskCardCompleted" : "taskCard"}>
+                {isEditing ? 
+                <input
+                type="text"
+                value={newDescription}
+                onChange={handleChange}
+                onBlur={handleDescriptionUpdate}
+                />
+                : <p style={isComplete ? {textDecoration: 'line-through'} : {textDecoration: 'none'}}>{description}</p>}
+                <button onClick={() => handleUpdateTaskStatus(!isComplete)}>{statusText()}</button>
                 {renderSubtasks()}
             </div>
         </>
