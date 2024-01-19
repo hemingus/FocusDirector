@@ -4,13 +4,14 @@ import '../styles/styles.scss'
 import StepWindow from './StepWindow'
 import { useState, useContext } from 'react'
 import { Subtask } from './TaskTypes'
-import { updateSubtaskStatus } from './API_methods';
+import { updateSubtaskStatus, updateSubtaskDescription } from './API_methods';
 import TaskDataProvider from './TaskDataContext'
 
-const SubtaskCard: React.FC<Subtask> = ({taskId, id, description, isComplete, steps}) => {
+const SubtaskCard: React.FC<Subtask> = ({taskId, id, description, isComplete, steps, order}) => {
     const { getTasks } = useContext(TaskDataProvider)!
     const [focused, setFocused] = useState(false)
     const [showSteps, setShowSteps] = useState(false)
+    const [newDescription, setNewDescription] = useState(description)
 
     const toggleSteps = () => {
         setShowSteps(!showSteps)
@@ -25,13 +26,13 @@ const SubtaskCard: React.FC<Subtask> = ({taskId, id, description, isComplete, st
             </div>
             )
         }
-        return renderButton();
+        return renderButton()
     }
 
     const renderButton = () => {
         if (!showSteps && steps) {
             return (
-                <button onClick={() => toggleSteps()}>Show steps</button>
+                <button onClick={() => toggleSteps()}>Show steps: {steps.length}</button>
             )
         }
         return (
@@ -47,11 +48,11 @@ const SubtaskCard: React.FC<Subtask> = ({taskId, id, description, isComplete, st
         setShowSteps(!status)
     }
 
-    const statusText= () => {
-        if (isComplete) {
-            return "Revive"
+    const handleDescriptionUpdate = async () => {
+        if (newDescription !== description) {
+            await updateSubtaskDescription(taskId, id, newDescription)
+            getTasks()
         }
-        return "Complete"
     }
 
     if (focused) {
@@ -65,8 +66,28 @@ const SubtaskCard: React.FC<Subtask> = ({taskId, id, description, isComplete, st
     return (
         <>
             <div className={isComplete ? "taskCardCompleted" : "subtaskCard"}>
-                <p style={isComplete ? {textDecoration: 'line-through'} : {textDecoration: 'none'}}>{description}</p>
-                <button onClick={() => {handleUpdateSubtaskStatus(!isComplete)}}>{statusText()}</button>
+                <div className="cardDescription">
+                    <div style={{display: "flex"}}>
+                        <p style={{paddingRight: "4px", color: "yellowgreen"}}>{`${order}.`}</p>    
+                        <p
+                        contentEditable="true"
+                        suppressContentEditableWarning
+                        spellCheck="false"
+                        onInput={(event) => {setNewDescription(event.currentTarget.innerText)}}
+                        onKeyDown={(event) => {event.key === 'Enter' ? event.currentTarget.blur() : () => {}}}
+                        onBlur={handleDescriptionUpdate}
+                        style={isComplete ? {textDecoration: 'line-through'} : {textDecoration: 'none'}} 
+                        >
+                            {description}
+                        </p>                    
+                    </div>
+                    <input 
+                    type="checkbox"
+                    checked={isComplete} 
+                    onChange={() => handleUpdateSubtaskStatus(!isComplete)} 
+                    style={{width: "20px", height: "20px"}}
+                    />
+                </div>                   
                 {renderSubtasks()}
             </div>
         </>

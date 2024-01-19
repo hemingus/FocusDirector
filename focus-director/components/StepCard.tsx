@@ -3,23 +3,25 @@
 import '../styles/styles.scss'
 import { useState, useContext } from 'react'
 import { Step } from './TaskTypes'
-import { updateStepStatus } from './API_methods'
+import { updateStepStatus, updateStepDescription } from './API_methods'
 import TaskDataContext from './TaskDataContext'
 
-const StepCard: React.FC<Step> = ({taskId, subtaskId, id, description, isComplete}) => {
+const StepCard: React.FC<Step> = ({taskId, subtaskId, id, description, isComplete, order}) => {
     const { getTasks } = useContext(TaskDataContext)!
     const [focused, setFocused] = useState(false)
+
+    const [newDescription, setNewDescription] = useState(description)
 
     const handleUpdateStepStatus = async (status: boolean) => {
         await updateStepStatus(taskId, subtaskId, id, status)
         getTasks()
     } 
 
-    const statusText= () => {
-        if (isComplete) {
-            return "Revive"
+    const handleDescriptionUpdate = async () => {
+        if (newDescription !== description) {
+            await updateStepDescription(taskId, subtaskId, id, newDescription)
+            getTasks()
         }
-        return "Complete"
     }
 
     if (focused) {
@@ -33,9 +35,29 @@ const StepCard: React.FC<Step> = ({taskId, subtaskId, id, description, isComplet
     return (
         <>
             <div className={isComplete ? "taskCardCompleted" : "stepCard"}>
-                <p style={isComplete ? {textDecoration: 'line-through'} : {textDecoration: 'none'}}>{description}</p>
-                <button onClick={() => handleUpdateStepStatus(!isComplete)}>{statusText()}</button>
-                <button onClick={() => setFocused(true)}>Focus</button>
+                <div className="cardDescription">
+                    <div style={{display: "flex"}}>
+                        <p style={{paddingRight: "4px", color: "yellow"}}>{`${order}.`}</p>     
+                        <p
+                        contentEditable="true"
+                        suppressContentEditableWarning
+                        spellCheck="false"
+                        onInput={(event) => {setNewDescription(event.currentTarget.innerText)}}
+                        onKeyDown={(event) => {event.key === 'Enter' ? event.currentTarget.blur() : () => {}}}
+                        onBlur={handleDescriptionUpdate}
+                        style={isComplete ? {textDecoration: 'line-through'} : {textDecoration: 'none'}} 
+                        >
+                            {description}
+                        </p>
+                    </div>
+                    <input 
+                    type="checkbox"
+                    checked={isComplete}
+                    onChange={() => handleUpdateStepStatus(!isComplete)}
+                    style={{width: "20px", height: "20px"}}
+                    />
+                </div>
+                {/* <button onClick={() => setFocused(true)}>Focus</button> */}
             </div>
         </>
     )
