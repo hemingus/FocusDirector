@@ -28,23 +28,18 @@ const StepWindow: React.FC<{ taskId: string, subtaskId: string, steps: Step[] }>
         getTasks()
     }
 
-    const cardContent = (index: number, description: string) => {
-        let content = `${index + 1}. ${description}`
-        return content
-    } 
-
     return (
         <>
         <div className="stepContainer">
             <ul>
                 {steps.map((step, index) => (
                     <li className="stepWindow" key={index}>
-                        <StepCard taskId={taskId} subtaskId={subtaskId} id={step.id} description={cardContent(index, step.description)} isComplete={step.isComplete} />
+                        <StepCard order={index + 1} taskId={taskId} subtaskId={subtaskId} id={step.id} description={step.description} isComplete={step.isComplete} />
                         <button onClick={() => handleRemoveStep(step.id)}>❌</button>
                     </li>
                 ))}
                 <div>
-                    <label>new step</label>
+                    <label>new step:</label>
                     <input
                     type="text"
                     value={description}

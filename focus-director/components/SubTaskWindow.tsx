@@ -2,7 +2,7 @@
 
 import SubtaskCard from './SubtaskCard'
 import '../styles/styles.scss'
-import { useState, useEffect, useContext } from 'react'
+import { useState, useContext } from 'react'
 import { Subtask } from './TaskTypes'
 import { addSubtask, deleteSubtask } from './API_methods'
 import TaskDataContext from './TaskDataContext'
@@ -42,7 +42,7 @@ const SubtaskWindow: React.FC<{ taskId: string, subtasks: Subtask[] }> = ({taskI
             <ul>
                 {subtasks.map((subtask, index) => (
                     <li className="subtaskWindow" key={index}>
-                        <SubtaskCard taskId={taskId} id={subtask.id} description={cardContent(index, subtask.description)} isComplete={subtask.isComplete} steps={subtask.steps}/>
+                        <SubtaskCard order={index + 1} taskId={taskId} id={subtask.id} description={subtask.description} isComplete={subtask.isComplete} steps={subtask.steps}/>
                         <button onClick={() => handleRemoveSubtask(subtask.id)}>❌</button>
                     </li>
                 ))}

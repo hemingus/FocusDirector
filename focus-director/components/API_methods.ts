@@ -115,6 +115,24 @@ export const updateSubtaskStatus = async (taskId: string, subtaskId: string, sta
     }
 }
 
+export const updateSubtaskDescription = async (taskId: string, subtaskId: string, description: string) => {
+    const patchSubtask = {
+        description: description
+    } 
+    try {
+        await fetch(`https://hemingmusicapi.azurewebsites.net/TaskEntity/${taskId}/subtask/${subtaskId}/description`, {
+            method: 'PATCH',
+            headers: {
+                "Content-Type": "application/json"
+                }, 
+            body: JSON.stringify(patchSubtask)
+        })
+    }
+    catch (err: any) {
+        alert(err.message)
+    }
+}
+
 // step methods
 
 export const addStep = async (taskId: string, subtaskId: string, text: string) => {
@@ -146,12 +164,30 @@ export const deleteStep = async (taskId: string, subtaskId: string, stepId: stri
     }
 }
 
-export const updateStepStatus = async (taskId: string, subtaskId: string, id: string, status: boolean) => {
+export const updateStepStatus = async (taskId: string, subtaskId: string, stepId: string, status: boolean) => {
     const patchStep = {
         IsComplete: status
     } 
     try {
-        await fetch(`https://hemingmusicapi.azurewebsites.net/taskentity/${taskId}/subtask/${subtaskId}/step/${id}`, {
+        await fetch(`https://hemingmusicapi.azurewebsites.net/taskentity/${taskId}/subtask/${subtaskId}/step/${stepId}`, {
+            method: 'PATCH',
+            headers: {
+                "Content-Type": "application/json"
+                }, 
+            body: JSON.stringify(patchStep)
+        })
+    }
+    catch (err: any) {
+        alert(err.message)
+    }
+}
+
+export const updateStepDescription = async (taskId: string, subtaskId: string, stepId: string, description: string) => {
+    const patchStep = {
+        Description: description
+    } 
+    try {
+        await fetch(`https://hemingmusicapi.azurewebsites.net/taskentity/${taskId}/subtask/${subtaskId}/step/${stepId}/description`, {
             method: 'PATCH',
             headers: {
                 "Content-Type": "application/json"
