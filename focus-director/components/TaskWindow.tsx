@@ -3,7 +3,7 @@
 import TaskCard from './TaskCard'
 import '../styles/styles.scss'
 import { useState, useContext } from 'react'
-import {deleteTask, addTask} from './API_methods'
+import { deleteTask, addTask } from './API_methods'
 import TaskDataContext from './TaskDataContext'
 
 const TaskWindow: React.FC = () => {
@@ -40,17 +40,18 @@ const TaskWindow: React.FC = () => {
                 {taskData.map((task, index) => (
                     <li className="taskWindow" key={index}>
                         <TaskCard order={index + 1} id={task.id} description={task.description} isComplete={task.isComplete} subtasks={task.subtasks}/>
-                        <button onClick={() => handleRemoveTask(task.id)}>❌</button>
+                        <button className="deleteButton" onClick={() => handleRemoveTask(task.id)}>❌</button>
                     </li>
                 ))}
             </ul>
             <div>
-                <label>new task:</label>
+                <label style={{color: "lightseagreen"}}>new task:</label>
                 <input
                 type="text"
                 value={taskDescription}
                 onChange={handleChange}
                 placeholder="Describe task"
+                onKeyDown={(event) => {event.key === 'Enter' ? submitNewTask() : () => {}}}
                 />
                 <button onClick={submitNewTask}>add task</button>
             </div>

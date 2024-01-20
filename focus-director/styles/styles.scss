@@ -11,11 +11,43 @@ $stepBorderColor: rgb(120, 160, 40);
 
 // Containers & sections
 
+.mainPage {
+    min-height: 100svh;
+    min-width: 100svw;
+    background: url('../public/assets/Focus_background.png');
+    background-size: cover;
+}
+.mainPage h1 {
+    font-family: "Times";
+    color: rgb(147, 255, 152);
+    padding: 20px;
+    filter: drop-shadow(3px 1px 3px rgb(166, 255, 0));
+}
+
+.mainPage h2 {
+    font-family: "Verdana";
+    padding: 20px;
+    color: lightblue;
+}
+
 .taskSection {
+    border: 5px solid lightskyblue;
+    min-width: 80svw;
+    padding: 50px 0 100px 0;
     color: white;
     display: grid;
-    grid-template-columns: 2fr 1fr;
-    background-image: url('../public/assets/mars-surface.jpg');
+    grid-template-columns: 3fr 1fr;
+    background-image: url('../public/assets/skyblue_clouds.png');
+    background-size: cover;
+    margin: 0;
+}
+
+.taskSection h3 {
+    margin-left: 2svw;
+    padding: 5px;
+    color:white;
+    background: linear-gradient(grey, black);
+    border: solid 2px silver;
 }
 
 .taskSection button {
@@ -42,7 +74,6 @@ $stepBorderColor: rgb(120, 160, 40);
 }
 
 @mixin containerMixin($borderColor) {
-    margin-left: 2svw;
     font-size: 16px;
     font-weight: 800;
     background-color: rgb(43, 41, 41);
@@ -55,17 +86,43 @@ $stepBorderColor: rgb(120, 160, 40);
 
 .taskContainer {
     @include containerMixin($taskBorderColor);
+    margin-left: 2svw;
 }
 
 .subtaskContainer {
     @include containerMixin($subtaskBorderColor);
+    margin-left: 2svw;
 }
 
 .stepContainer {
     @include containerMixin($stepBorderColor);
+    margin-left: 2svw;
 }
 
 // CARDS
+
+.customCheckbox {
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    min-height: 20px;
+    cursor: pointer;
+  }
+.customCheckbox:hover {
+    box-shadow: 0 0 5px 2px rgb(0, 255, 85);
+}
+
+[checkbox-tooltip] {
+    position: relative;
+}
+
+[checkbox-tooltip]:hover::after {
+    content: attr(checkbox-tooltip);
+    position: absolute;
+    right: 25px;
+    background-color: darkgreen;
+    color:white;
+}
 
 @mixin cardMixin($color) {
     color: white;
@@ -81,6 +138,11 @@ $stepBorderColor: rgb(120, 160, 40);
     max-width: 100%;
 }
 
+.deleteButton:hover {
+    background: linear-gradient(darkred, black);
+    box-shadow: 0 0 5px 3px red;
+}
+
 // Task
 .taskWindow {
     display: flex;
@@ -93,6 +155,14 @@ $stepBorderColor: rgb(120, 160, 40);
     @include cardMixin($taskCardColor);
   }
 
+.taskCard p {
+    padding-right: 4px;
+}
+
+.taskCard p:hover {
+    box-shadow: 0 0 2px 2px silver;
+}
+
 // Subtask
 .subtaskWindow {
     display: flex;
@@ -104,6 +174,9 @@ $stepBorderColor: rgb(120, 160, 40);
 .subtaskCard {
     @include cardMixin($subtaskCardColor);
   }
+.subtaskCard p {
+    padding-right: 4px;
+}
 
 // Step
 .stepWindow {
@@ -116,6 +189,10 @@ $stepBorderColor: rgb(120, 160, 40);
 .stepCard {
     @include cardMixin($stepCardColor);
   }
+.stepCard p {
+    padding-right: 2px;
+}
+
 
 // Completed card
 
@@ -127,6 +204,18 @@ $stepBorderColor: rgb(120, 160, 40);
     padding: 8px;
     background: linear-gradient(to top left, black -10%, grey, black 110%);
     width: 100%;
+}
+
+@media (max-width: 600px) {
+    .taskSection {
+        grid-template-columns: 1fr;
+    }
+    .taskContainer {
+        margin-left: 0;
+    }
+    .taskSection h3 {
+        margin-left: 0;
+    }
 }
 
 // Focused card

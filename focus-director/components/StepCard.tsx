@@ -37,7 +37,7 @@ const StepCard: React.FC<Step> = ({taskId, subtaskId, id, description, isComplet
             <div className={isComplete ? "taskCardCompleted" : "stepCard"}>
                 <div className="cardDescription">
                     <div style={{display: "flex"}}>
-                        <p style={{paddingRight: "4px", color: "yellow"}}>{`${order}.`}</p>     
+                        <span style={{paddingRight: "4px", color: "yellow"}}>{`${order}.`}</span>     
                         <p
                         contentEditable="true"
                         suppressContentEditableWarning
@@ -54,7 +54,8 @@ const StepCard: React.FC<Step> = ({taskId, subtaskId, id, description, isComplet
                     type="checkbox"
                     checked={isComplete}
                     onChange={() => handleUpdateStepStatus(!isComplete)}
-                    style={{width: "20px", height: "20px"}}
+                    className="customCheckbox"
+                    checkbox-tooltip={isComplete ? "uncheck" : "Done☑"}
                     />
                 </div>
                 {/* <button onClick={() => setFocused(true)}>Focus</button> */}

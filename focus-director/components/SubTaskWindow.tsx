@@ -11,7 +11,6 @@ import TaskDataContext from './TaskDataContext'
 
 const SubtaskWindow: React.FC<{ taskId: string, subtasks: Subtask[] }> = ({taskId, subtasks}) => {
     const { getTasks } = useContext(TaskDataContext)!
-    // const [subtaskList, setSubtaskList] = useState<Subtask[]>(subtasks)
     const [description, setDescription] = useState<string>('')
 
     const submitNewSubtask = async () => {
@@ -31,11 +30,6 @@ const SubtaskWindow: React.FC<{ taskId: string, subtasks: Subtask[] }> = ({taskI
         getTasks()
     }
 
-    const cardContent = (index: number, description: string) => {
-        let content = `${index + 1}. ${description}`
-        return content
-    } 
-
     return (
         <>
         <div className="subtaskContainer">
@@ -43,16 +37,17 @@ const SubtaskWindow: React.FC<{ taskId: string, subtasks: Subtask[] }> = ({taskI
                 {subtasks.map((subtask, index) => (
                     <li className="subtaskWindow" key={index}>
                         <SubtaskCard order={index + 1} taskId={taskId} id={subtask.id} description={subtask.description} isComplete={subtask.isComplete} steps={subtask.steps}/>
-                        <button onClick={() => handleRemoveSubtask(subtask.id)}>❌</button>
+                        <button className="deleteButton" onClick={() => handleRemoveSubtask(subtask.id)}>❌</button>
                     </li>
                 ))}
                 <div>
-                    <label>new subtask:</label>
+                    <label style={{color: "yellowgreen"}}>new subtask:</label>
                     <input
                     type="text"
                     value={description}
                     onChange={handleChange}
                     placeholder="Describe subtask"
+                    onKeyDown={(event) => {event.key === 'Enter' ? submitNewSubtask() : () => {}}}
                     />
                     <button onClick={submitNewSubtask}>add subtask</button>
                 </div>

@@ -68,7 +68,7 @@ const SubtaskCard: React.FC<Subtask> = ({taskId, id, description, isComplete, st
             <div className={isComplete ? "taskCardCompleted" : "subtaskCard"}>
                 <div className="cardDescription">
                     <div style={{display: "flex"}}>
-                        <p style={{paddingRight: "4px", color: "yellowgreen"}}>{`${order}.`}</p>    
+                        <span style={{paddingRight: "4px", color: "yellowgreen"}}>{`${order}.`}</span> 
                         <p
                         contentEditable="true"
                         suppressContentEditableWarning
@@ -84,8 +84,9 @@ const SubtaskCard: React.FC<Subtask> = ({taskId, id, description, isComplete, st
                     <input 
                     type="checkbox"
                     checked={isComplete} 
-                    onChange={() => handleUpdateSubtaskStatus(!isComplete)} 
-                    style={{width: "20px", height: "20px"}}
+                    onChange={() => handleUpdateSubtaskStatus(!isComplete)}
+                    className="customCheckbox"
+                    checkbox-tooltip={isComplete ? "uncheck" : "Done☑"}
                     />
                 </div>                   
                 {renderSubtasks()}
