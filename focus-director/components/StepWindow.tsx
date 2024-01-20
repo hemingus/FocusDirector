@@ -35,16 +35,17 @@ const StepWindow: React.FC<{ taskId: string, subtaskId: string, steps: Step[] }>
                 {steps.map((step, index) => (
                     <li className="stepWindow" key={index}>
                         <StepCard order={index + 1} taskId={taskId} subtaskId={subtaskId} id={step.id} description={step.description} isComplete={step.isComplete} />
-                        <button onClick={() => handleRemoveStep(step.id)}>❌</button>
+                        <button className="deleteButton" onClick={() => handleRemoveStep(step.id)}>❌</button>
                     </li>
                 ))}
                 <div>
-                    <label>new step:</label>
+                    <label style={{color: "yellow"}}>new step:</label>
                     <input
                     type="text"
                     value={description}
                     onChange={handleChange}
                     placeholder="Describe step"
+                    onKeyDown={(event) => {event.key === 'Enter' ? submitNewStep() : () => {}}}
                     />
                     <button onClick={submitNewStep}>add step</button>
                 </div>
