@@ -4,7 +4,12 @@ import TaskCard from './TaskCard'
 import '../styles/styles.scss'
 import { useState, useContext } from 'react'
 import { deleteTask, addTask } from './API_methods'
+import { DndProvider} from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
+import { TouchBackend } from 'react-dnd-touch-backend'
 import TaskDataContext from './TaskDataContext'
+
+const isTouchDevice = ('ontouchstart' in window || navigator.maxTouchPoints);
 
 const TaskWindow: React.FC = () => {
     const {taskData, getTasks} = useContext(TaskDataContext)!
@@ -12,7 +17,7 @@ const TaskWindow: React.FC = () => {
 
     const submitNewTask = () => {
         if (taskDescription.trim() !== '') {
-            addTask(taskDescription)
+            addTask(taskDescription, taskData.length + 1)
             .then((response) => {
                 console.log(response);
                 getTasks();
@@ -23,6 +28,8 @@ const TaskWindow: React.FC = () => {
             });
         }
     }
+
+    const backend = isTouchDevice ? TouchBackend : HTML5Backend;
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setTaskDescription(event.target.value);
@@ -36,14 +43,16 @@ const TaskWindow: React.FC = () => {
     return (
         <>
         <div className="taskContainer">
+            <DndProvider backend={backend}>
             <ul>
                 {taskData.map((task, index) => (
                     <li className="taskWindow" key={index}>
-                        <TaskCard order={index + 1} id={task.id} description={task.description} isComplete={task.isComplete} subtasks={task.subtasks}/>
+                        <TaskCard order={task.order} id={task.id} description={task.description} isComplete={task.isComplete} subtasks={task.subtasks}/>
                         <button className="deleteButton" onClick={() => handleRemoveTask(task.id)}>❌</button>
                     </li>
                 ))}
             </ul>
+            </DndProvider>
             <div>
                 <label style={{color: "lightseagreen"}}>new task:</label>
                 <input

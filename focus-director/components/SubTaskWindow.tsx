@@ -15,7 +15,7 @@ const SubtaskWindow: React.FC<{ taskId: string, subtasks: Subtask[] }> = ({taskI
 
     const submitNewSubtask = async () => {
         if (description.trim() !== '') {
-            await addSubtask(taskId, description)
+            await addSubtask(taskId, description, subtasks.length+1)
             getTasks()
             setDescription('')
         }
@@ -36,24 +36,23 @@ const SubtaskWindow: React.FC<{ taskId: string, subtasks: Subtask[] }> = ({taskI
             <ul>
                 {subtasks.map((subtask, index) => (
                     <li className="subtaskWindow" key={index}>
-                        <SubtaskCard order={index + 1} taskId={taskId} id={subtask.id} description={subtask.description} isComplete={subtask.isComplete} steps={subtask.steps}/>
+                        <SubtaskCard order={subtask.order} taskId={taskId} id={subtask.id} description={subtask.description} isComplete={subtask.isComplete} steps={subtask.steps}/>
                         <button className="deleteButton" onClick={() => handleRemoveSubtask(subtask.id)}>❌</button>
                     </li>
                 ))}
-                <div>
-                    <label style={{color: "yellowgreen"}}>new subtask:</label>
-                    <input
-                    type="text"
-                    value={description}
-                    onChange={handleChange}
-                    placeholder="Describe subtask"
-                    onKeyDown={(event) => {event.key === 'Enter' ? submitNewSubtask() : () => {}}}
-                    />
-                    <button onClick={submitNewSubtask}>add subtask</button>
-                </div>
             </ul>
+            <div>
+                <label style={{color: "yellowgreen"}}>new subtask:</label>
+                <input
+                type="text"
+                value={description}
+                onChange={handleChange}
+                placeholder="Describe subtask"
+                onKeyDown={(event) => {event.key === 'Enter' ? submitNewSubtask() : () => {}}}
+                />
+                <button onClick={submitNewSubtask}>add subtask</button>
+            </div>
         </div>
-
         </>
     )
 }

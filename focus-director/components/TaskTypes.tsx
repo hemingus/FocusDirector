@@ -5,7 +5,7 @@ export type Task = {
     description: string
     isComplete: boolean
     subtasks: Subtask[]
-    order?: number
+    order: number
 }
 
 export type Subtask = {
@@ -14,7 +14,7 @@ export type Subtask = {
     description: string
     isComplete: boolean
     steps: Step[]
-    order?: number
+    order: number
 }
 
 export type Step = {

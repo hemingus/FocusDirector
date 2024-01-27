@@ -6,7 +6,6 @@ import { TaskDataProvider } from './TaskDataContext'
 
 const DashBoard = () => {
 
-
     return (
         <div>
             <h2>Dashboard</h2>
@@ -14,7 +13,7 @@ const DashBoard = () => {
                 <div>
                     <h3>Tasks:</h3>
                     <TaskDataProvider>
-                        <TaskWindow />
+                        <TaskWindow />   
                     </TaskDataProvider>
                 </div>
             </section>

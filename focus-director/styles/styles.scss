@@ -50,6 +50,10 @@ $stepBorderColor: rgb(120, 160, 40);
     border: solid 2px silver;
 }
 
+.taskSection p:hover {
+    box-shadow: 0 0 1px 1px silver;
+}
+
 .taskSection button {
     background: linear-gradient(grey, black);
     color: silver;
@@ -129,6 +133,7 @@ $stepBorderColor: rgb(120, 160, 40);
     display: block;
     padding: 8px;
     background: linear-gradient(to top right, black -10%, $color, black 110%);
+    border: 2px solid black;
     width: 100%;
   }
 
@@ -155,13 +160,15 @@ $stepBorderColor: rgb(120, 160, 40);
     @include cardMixin($taskCardColor);
   }
 
+.taskCard:hover {
+    border: 2px solid $taskBorderColor;
+    box-shadow: 0 0 6px 2px cyan;
+    z-index: 1;
+}
 .taskCard p {
     padding-right: 4px;
 }
 
-.taskCard p:hover {
-    box-shadow: 0 0 2px 2px silver;
-}
 
 // Subtask
 .subtaskWindow {
@@ -177,6 +184,11 @@ $stepBorderColor: rgb(120, 160, 40);
 .subtaskCard p {
     padding-right: 4px;
 }
+.subtaskCard:hover {
+    border: 2px solid $subtaskBorderColor;
+    box-shadow: 0 0 6px 2px yellowgreen;
+    z-index: 2;
+}
 
 // Step
 .stepWindow {
@@ -189,6 +201,11 @@ $stepBorderColor: rgb(120, 160, 40);
 .stepCard {
     @include cardMixin($stepCardColor);
   }
+.stepCard:hover {
+    border: 2px solid $stepBorderColor;
+    box-shadow: 0 0 6px 2px yellow;
+    z-index: 3;
+}
 .stepCard p {
     padding-right: 2px;
 }
@@ -197,13 +214,14 @@ $stepBorderColor: rgb(120, 160, 40);
 // Completed card
 
 .taskCardCompleted {
+    @include cardMixin(grey);
     opacity: 50%;
-    border-bottom: 1px solid black;
+    border: 2px solid black;
     color: silver;
-    display: block;
-    padding: 8px;
-    background: linear-gradient(to top left, black -10%, grey, black 110%);
-    width: 100%;
+}
+
+.taskCardCompleted:hover {
+    border: 2px solid grey;
 }
 
 @media (max-width: 600px) {
