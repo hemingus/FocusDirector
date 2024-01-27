@@ -2,16 +2,59 @@
 
 import '../styles/styles.scss'
 import StepWindow from './StepWindow'
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { Subtask } from './TaskTypes'
-import { updateSubtaskStatus, updateSubtaskDescription } from './API_methods';
+import { updateSubtaskStatus, updateSubtaskDescription, updateSubtaskOrder } from './API_methods';
+import { useDrag, useDrop, DropTargetMonitor } from 'react-dnd'
 import TaskDataProvider from './TaskDataContext'
+
+const ItemTypes = {
+    SUBTASK_CARD: 'subtaskCard',
+  };
+  
+  interface DragItem {
+    type: string;
+    id: string;
+    order: number;
+  }
 
 const SubtaskCard: React.FC<Subtask> = ({taskId, id, description, isComplete, steps, order}) => {
     const { getTasks } = useContext(TaskDataProvider)!
     const [focused, setFocused] = useState(false)
     const [showSteps, setShowSteps] = useState(false)
     const [newDescription, setNewDescription] = useState(description)
+
+    useEffect(() => {
+        setNewDescription(description);
+      }, [description]);
+
+    const [{ isDragging }, drag] = useDrag({
+        type: ItemTypes.SUBTASK_CARD,
+        item: { type: ItemTypes.SUBTASK_CARD, id, order } as DragItem,
+        collect: (monitor) => ({
+            isDragging: monitor.isDragging(),
+            }) as { isDragging: boolean }
+      });
+
+    const [, drop] = useDrop({
+        accept: ItemTypes.SUBTASK_CARD,
+        hover: (item: DragItem, monitor: DropTargetMonitor) => {
+        },
+        drop: async (item: DragItem, monitor: DropTargetMonitor) => {
+            const targetOrder = order
+            console.log(`dropped: \n id:${item.id} \n index:${item.order} \n new index:${targetOrder}`)
+            await handleUpdateSubtaskOrder(item.id, item.order, targetOrder)
+        }
+    });
+
+    const handleUpdateSubtaskOrder = async (id: string, oldOrder: number, newOrder: number) => {
+        if (oldOrder === newOrder) {
+            return
+        }
+        console.log(newOrder)
+        await updateSubtaskOrder(taskId, id, newOrder)
+        getTasks()
+    }
 
     const toggleSteps = () => {
         setShowSteps(!showSteps)
@@ -65,7 +108,9 @@ const SubtaskCard: React.FC<Subtask> = ({taskId, id, description, isComplete, st
     }
     return (
         <>
-            <div className={isComplete ? "taskCardCompleted" : "subtaskCard"}>
+            <div className={isComplete ? "taskCardCompleted" : "subtaskCard"}
+            ref={(node) => drag(drop(node))} style={{ opacity: isDragging ? 0.5 : 1 }}
+            >
                 <div className="cardDescription">
                     <div style={{display: "flex"}}>
                         <span style={{paddingRight: "4px", color: "yellowgreen"}}>{`${order}.`}</span> 

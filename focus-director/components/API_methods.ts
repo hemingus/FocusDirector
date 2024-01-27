@@ -1,9 +1,10 @@
 
 // task methods
 
-export const addTask = async (text: string) => {
+export const addTask = async (text: string, index: number) => {
     const newTask = {
-        description: text
+        description: text,
+        order: index
     }
     try {
         await fetch("https://hemingmusicapi.azurewebsites.net/TaskEntity", {
@@ -66,11 +67,31 @@ export const updateTaskDescription = async (taskId: string, description: string)
     }
 }
 
+export const updateTaskOrder = async (taskId: string, newOrder: number) => {
+    const patchTask = {
+        order: newOrder
+    } 
+    try {
+        await fetch(`https://hemingmusicapi.azurewebsites.net/TaskEntity/${taskId}/order`, {
+            method: 'PATCH',
+            headers: {
+                "Content-Type": "application/json"
+                }, 
+            body: JSON.stringify(patchTask)
+        })
+    }
+    catch (err: any) {
+        alert(err.message)
+    }
+}
+
+
 // subtask methods
 
-export const addSubtask = async (taskId: string, text: string) => {
+export const addSubtask = async (taskId: string, text: string, order: number) => {
     const subtaskToAdd = {
-        Description: text
+        Description: text,
+        Order: order
     }
     try {
         await fetch(`https://hemingmusicapi.azurewebsites.net/taskentity/${taskId}/subtask`, {
@@ -117,10 +138,28 @@ export const updateSubtaskStatus = async (taskId: string, subtaskId: string, sta
 
 export const updateSubtaskDescription = async (taskId: string, subtaskId: string, description: string) => {
     const patchSubtask = {
-        description: description
+        Description: description
     } 
     try {
         await fetch(`https://hemingmusicapi.azurewebsites.net/TaskEntity/${taskId}/subtask/${subtaskId}/description`, {
+            method: 'PATCH',
+            headers: {
+                "Content-Type": "application/json"
+                }, 
+            body: JSON.stringify(patchSubtask)
+        })
+    }
+    catch (err: any) {
+        alert(err.message)
+    }
+}
+
+export const updateSubtaskOrder = async (taskId: string, subtaskId: string, order: number) => {
+    const patchSubtask = {
+        Order: order
+    } 
+    try {
+        await fetch(`https://hemingmusicapi.azurewebsites.net/TaskEntity/${taskId}/subtask/${subtaskId}/order`, {
             method: 'PATCH',
             headers: {
                 "Content-Type": "application/json"
