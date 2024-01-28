@@ -115,7 +115,7 @@ const TaskCard: React.FC<Task> = ({id, description, isComplete, subtasks, order}
                     <div style={{display: "flex"}}>
                         <span style={{paddingRight: "4px", color: "lightseagreen"}}>{`${order}.`}</span>
                         <p
-                        contentEditable="true"
+                        contentEditable={!isComplete}
                         suppressContentEditableWarning
                         spellCheck="false"
                         onInput={(event) => {setNewDescription(event.currentTarget.innerText)}}
