@@ -174,9 +174,10 @@ export const updateSubtaskOrder = async (taskId: string, subtaskId: string, orde
 
 // step methods
 
-export const addStep = async (taskId: string, subtaskId: string, text: string) => {
+export const addStep = async (taskId: string, subtaskId: string, text: string, order: number) => {
     const stepToAdd = {
-        Description: text
+        Description: text,
+        Order: order
     }
     try {
         await fetch(`https://hemingmusicapi.azurewebsites.net/taskentity/${taskId}/subtask/${subtaskId}/step`, {
@@ -227,6 +228,24 @@ export const updateStepDescription = async (taskId: string, subtaskId: string, s
     } 
     try {
         await fetch(`https://hemingmusicapi.azurewebsites.net/taskentity/${taskId}/subtask/${subtaskId}/step/${stepId}/description`, {
+            method: 'PATCH',
+            headers: {
+                "Content-Type": "application/json"
+                }, 
+            body: JSON.stringify(patchStep)
+        })
+    }
+    catch (err: any) {
+        alert(err.message)
+    }
+}
+
+export const updateStepOrder = async (taskId: string, subtaskId: string, stepId: string, order: number) => {
+    const patchStep = {
+        Order: order
+    }
+    try {
+        await fetch(`https://hemingmusicapi.azurewebsites.net/taskentity/${taskId}/subtask/${subtaskId}/step/${stepId}/order`, {
             method: 'PATCH',
             headers: {
                 "Content-Type": "application/json"

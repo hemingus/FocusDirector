@@ -222,6 +222,11 @@ $stepBorderColor: rgb(120, 160, 40);
 
 .taskCardCompleted:hover {
     border: 2px solid grey;
+    box-shadow: 0 0 6px 2px silver;
+    z-index: 1;
+}
+.taskCardCompleted p:hover {
+    box-shadow: none;
 }
 
 @media (max-width: 600px) {

@@ -13,7 +13,7 @@ const StepWindow: React.FC<{ taskId: string, subtaskId: string, steps: Step[] }>
 
     const submitNewStep = async () => {
         if (description.trim() !== '') {
-            await addStep(taskId, subtaskId, description)
+            await addStep(taskId, subtaskId, description, steps.length +1)
             getTasks()
             setDescription('')
         }
@@ -34,7 +34,7 @@ const StepWindow: React.FC<{ taskId: string, subtaskId: string, steps: Step[] }>
             <ul>
                 {steps.map((step, index) => (
                     <li className="stepWindow" key={index}>
-                        <StepCard order={index + 1} taskId={taskId} subtaskId={subtaskId} id={step.id} description={step.description} isComplete={step.isComplete} />
+                        <StepCard order={step.order} taskId={taskId} subtaskId={subtaskId} id={step.id} description={step.description} isComplete={step.isComplete} />
                         <button className="deleteButton" onClick={() => handleRemoveStep(step.id)}>❌</button>
                     </li>
                 ))}

@@ -1,16 +1,57 @@
 "use client";
 
 import '../styles/styles.scss'
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { Step } from './TaskTypes'
-import { updateStepStatus, updateStepDescription } from './API_methods'
+import { updateStepStatus, updateStepDescription, updateStepOrder } from './API_methods'
+import { useDrag, useDrop, DropTargetMonitor } from 'react-dnd'
 import TaskDataContext from './TaskDataContext'
+
+const ItemTypes = {
+    STEP_CARD: 'stepCard',
+  };
+  
+  interface DragItem {
+    type: string;
+    id: string;
+    order: number;
+  }
 
 const StepCard: React.FC<Step> = ({taskId, subtaskId, id, description, isComplete, order}) => {
     const { getTasks } = useContext(TaskDataContext)!
     const [focused, setFocused] = useState(false)
-
     const [newDescription, setNewDescription] = useState(description)
+
+    useEffect(() => {
+        setNewDescription(description);
+      }, [description]);
+
+    const [{ isDragging }, drag] = useDrag({
+        type: ItemTypes.STEP_CARD,
+        item: { type: ItemTypes.STEP_CARD, id, order } as DragItem,
+        collect: (monitor) => ({
+            isDragging: monitor.isDragging(),
+            }) as { isDragging: boolean }
+      });
+
+    const [, drop] = useDrop({
+        accept: ItemTypes.STEP_CARD,
+        hover: (item: DragItem, monitor: DropTargetMonitor) => {
+        },
+        drop: async (item: DragItem, monitor: DropTargetMonitor) => {
+            const targetOrder = order;
+            console.log(`dropped: \n id:${item.id} \n index:${item.order} \n new index:${targetOrder}`)
+            await handleUpdateStepOrder(item.id, item.order, targetOrder)
+        }
+    });
+
+    const handleUpdateStepOrder = async (stepId: string, oldOrder: number, newOrder: number) => {
+        if (newOrder === oldOrder) {
+            return
+        }
+        await updateStepOrder(taskId, subtaskId, stepId, newOrder)
+        getTasks()
+    }
 
     const handleUpdateStepStatus = async (status: boolean) => {
         await updateStepStatus(taskId, subtaskId, id, status)
@@ -34,12 +75,14 @@ const StepCard: React.FC<Step> = ({taskId, subtaskId, id, description, isComplet
     }
     return (
         <>
-            <div className={isComplete ? "taskCardCompleted" : "stepCard"}>
+            <div className={isComplete ? "taskCardCompleted" : "stepCard"}
+            ref={(node) => drag(drop(node))} style={{ opacity: isDragging ? 0.5 : 1 }}
+            >
                 <div className="cardDescription">
                     <div style={{display: "flex"}}>
                         <span style={{paddingRight: "4px", color: "yellow"}}>{`${order}.`}</span>     
                         <p
-                        contentEditable="true"
+                        contentEditable={!isComplete}
                         suppressContentEditableWarning
                         spellCheck="false"
                         onInput={(event) => {setNewDescription(event.currentTarget.innerText)}}

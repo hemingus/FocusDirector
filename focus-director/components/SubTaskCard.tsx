@@ -65,7 +65,7 @@ const SubtaskCard: React.FC<Subtask> = ({taskId, id, description, isComplete, st
             return (
             <div>
                 <button onClick={() => toggleSteps()}>Hide steps</button>
-                <StepWindow taskId={taskId} subtaskId={id} steps={steps} />  
+                <StepWindow taskId={taskId} subtaskId={id} steps={[...steps].sort((a, b) => a.order - b.order)} />  
             </div>
             )
         }
@@ -115,7 +115,7 @@ const SubtaskCard: React.FC<Subtask> = ({taskId, id, description, isComplete, st
                     <div style={{display: "flex"}}>
                         <span style={{paddingRight: "4px", color: "yellowgreen"}}>{`${order}.`}</span> 
                         <p
-                        contentEditable="true"
+                        contentEditable={!isComplete}
                         suppressContentEditableWarning
                         spellCheck="false"
                         onInput={(event) => {setNewDescription(event.currentTarget.innerText)}}

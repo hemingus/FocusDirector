@@ -23,7 +23,7 @@ export type Step = {
     id: string
     description: string
     isComplete: boolean
-    order?: number
+    order: number
 }
 
 
