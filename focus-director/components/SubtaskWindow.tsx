@@ -7,8 +7,6 @@ import { Subtask } from './TaskTypes'
 import { addSubtask, deleteSubtask } from './API_methods'
 import TaskDataContext from './TaskDataContext'
 
-
-
 const SubtaskWindow: React.FC<{ taskId: string, subtasks: Subtask[] }> = ({taskId, subtasks}) => {
     const { getTasks } = useContext(TaskDataContext)!
     const [description, setDescription] = useState<string>('')
@@ -31,7 +29,6 @@ const SubtaskWindow: React.FC<{ taskId: string, subtasks: Subtask[] }> = ({taskI
     }
 
     return (
-        <>
         <div className="subtaskContainer">
             <ul>
                 {subtasks.map((subtask, index) => (
@@ -53,7 +50,6 @@ const SubtaskWindow: React.FC<{ taskId: string, subtasks: Subtask[] }> = ({taskI
                 <button onClick={submitNewSubtask}>add subtask</button>
             </div>
         </div>
-        </>
     )
 }
 

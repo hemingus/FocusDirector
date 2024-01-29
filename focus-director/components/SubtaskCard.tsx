@@ -10,13 +10,13 @@ import TaskDataProvider from './TaskDataContext'
 
 const ItemTypes = {
     SUBTASK_CARD: 'subtaskCard',
-  };
+}
   
-  interface DragItem {
-    type: string;
-    id: string;
-    order: number;
-  }
+interface DragItem {
+type: string;
+id: string;
+order: number;
+}
 
 const SubtaskCard: React.FC<Subtask> = ({taskId, id, description, isComplete, steps, order}) => {
     const { getTasks } = useContext(TaskDataProvider)!

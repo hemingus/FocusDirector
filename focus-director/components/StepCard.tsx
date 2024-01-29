@@ -9,13 +9,13 @@ import TaskDataContext from './TaskDataContext'
 
 const ItemTypes = {
     STEP_CARD: 'stepCard',
-  };
+}
   
-  interface DragItem {
-    type: string;
-    id: string;
-    order: number;
-  }
+interface DragItem {
+type: string;
+id: string;
+order: number;
+}
 
 const StepCard: React.FC<Step> = ({taskId, subtaskId, id, description, isComplete, order}) => {
     const { getTasks } = useContext(TaskDataContext)!
@@ -24,7 +24,7 @@ const StepCard: React.FC<Step> = ({taskId, subtaskId, id, description, isComplet
 
     useEffect(() => {
         setNewDescription(description);
-      }, [description]);
+        }, [description]);
 
     const [{ isDragging }, drag] = useDrag({
         type: ItemTypes.STEP_CARD,

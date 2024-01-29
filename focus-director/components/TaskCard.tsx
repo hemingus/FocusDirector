@@ -10,13 +10,13 @@ import TaskDataContext from './TaskDataContext'
 
 const ItemTypes = {
     TASK_CARD: 'taskCard',
-  };
-  
-  interface DragItem {
-    type: string;
-    id: string;
-    order: number;
   }
+  
+interface DragItem {
+type: string;
+id: string;
+order: number;
+}
 
 const TaskCard: React.FC<Task> = ({id, description, isComplete, subtasks, order}) => {
     const { getTasks } = useContext(TaskDataContext)!
