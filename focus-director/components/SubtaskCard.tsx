@@ -69,20 +69,7 @@ const SubtaskCard: React.FC<Subtask> = ({taskId, id, description, isComplete, st
             </div>
             )
         }
-        return renderButton()
-    }
-
-    const renderButton = () => {
-        if (!showSteps && steps) {
-            return (
-                <button onClick={() => toggleSteps()}>Show steps: {steps.length}</button>
-            )
-        }
-        return (
-            <div>
-                <button onClick={() => setFocused(true)}>Focus</button>
-            </div>
-        )
+        return <button onClick={() => toggleSteps()}>Show steps: {steps.length}</button>
     }
 
     const handleUpdateSubtaskStatus = async (status: boolean) => {
@@ -97,15 +84,7 @@ const SubtaskCard: React.FC<Subtask> = ({taskId, id, description, isComplete, st
             getTasks()
         }
     }
-
-    if (focused) {
-        return (
-            <div className="taskCardFocused" onClick={() => setFocused(false)}>
-                <p>{description}</p>
-                <button>Done ☑ -~⍟~- Next ➠</button>
-            </div>
-        )
-    }
+    
     return (
         <>
             <div className={isComplete ? "taskCardCompleted" : "subtaskCard"}

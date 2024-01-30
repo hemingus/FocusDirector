@@ -200,7 +200,7 @@ $stepBorderColor: rgb(120, 160, 40);
 
 .stepCard {
     @include cardMixin($stepCardColor);
-  }
+}
 .stepCard:hover {
     border: 2px solid $stepBorderColor;
     box-shadow: 0 0 6px 2px yellow;
@@ -242,7 +242,7 @@ $stepBorderColor: rgb(120, 160, 40);
 }
 
 // Focused card
-.taskCardFocused {
+.focusScreen {
     position: absolute;
     top: 0%;
     left: 50%;
@@ -256,19 +256,57 @@ $stepBorderColor: rgb(120, 160, 40);
     color: white;
     background: radial-gradient(rgb(70, 70, 70), black);
     z-index: 1; 
-    p {
-        background: linear-gradient(grey -50%, black 20%, grey 150%);
-        padding: 20px;
-        border-radius: 20px;
-        font-size: 30px;
-        border: none;
-        box-shadow: 0 0 100px 20px silver;
-    }
-    button {
-        padding: 10px;
-        border-radius: 10px;
-        font-size: 20px;
-        background: linear-gradient(darkgreen, lightgreen);
-        margin-top: 20svh;
-    } 
+}
+
+.focusDescription {
+    background: linear-gradient(grey -50%, black 20%, grey 150%);
+    padding: 20px;
+    border-radius: 20px;
+    font-size: 30px;
+    border: none;
+    box-shadow: 0 0 100px 20px silver;
+}
+
+.goNextButton {
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 20px;
+    margin-top: 20svh;
+    background: linear-gradient(darkgreen, lightgreen) !important;
+    color: black !important;
+}
+
+.exitButton {
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 20px;
+    margin-bottom: 20svh;
+}
+
+
+.subListContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 100px;
+}
+
+.completedSubtasks {
+    @include cardMixin(green);
+    color: black;
+    font-weight: 600;
+    font-size: 14px;
+    opacity: 50%;
+}
+.completedSteps {
+    @include cardMixin(yellow);
+    color: black;
+    font-weight: 600;
+    font-size: 14px;
+    opacity: 50%;
+}
+
+.subListContainer ul {
+    list-style: none;
 }
