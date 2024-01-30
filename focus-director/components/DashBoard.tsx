@@ -1,6 +1,7 @@
 "use client";
 
 import TaskWindow from './TaskWindow'
+import FocusMode from './FocusMode';
 import '../styles/styles.scss'
 import { TaskDataProvider } from './TaskDataContext'
 
@@ -11,8 +12,10 @@ const DashBoard = () => {
             <h2>Dashboard</h2>
             <section className="taskSection">
                 <div>
-                    <h3>Tasks:</h3>
+                    
                     <TaskDataProvider>
+                        <FocusMode />
+                        <h3>Tasks:</h3>
                         <TaskWindow />   
                     </TaskDataProvider>
                 </div>

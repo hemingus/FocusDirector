@@ -19,7 +19,6 @@ order: number;
 
 const StepCard: React.FC<Step> = ({taskId, subtaskId, id, description, isComplete, order}) => {
     const { getTasks } = useContext(TaskDataContext)!
-    const [focused, setFocused] = useState(false)
     const [newDescription, setNewDescription] = useState(description)
 
     useEffect(() => {
@@ -65,14 +64,6 @@ const StepCard: React.FC<Step> = ({taskId, subtaskId, id, description, isComplet
         }
     }
 
-    if (focused) {
-        return (
-            <div className="taskCardFocused" onClick={() => setFocused(false)}>
-                <p>{description}</p>
-                <button>Done ☑ -~⍟~- Next ➠</button>
-            </div>
-        )
-    }
     return (
         <>
             <div className={isComplete ? "taskCardCompleted" : "stepCard"}
@@ -101,7 +92,6 @@ const StepCard: React.FC<Step> = ({taskId, subtaskId, id, description, isComplet
                     checkbox-tooltip={isComplete ? "uncheck" : "Done☑"}
                     />
                 </div>
-                {/* <button onClick={() => setFocused(true)}>Focus</button> */}
             </div>
         </>
     )

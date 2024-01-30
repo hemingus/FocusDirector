@@ -20,7 +20,6 @@ order: number;
 
 const TaskCard: React.FC<Task> = ({id, description, isComplete, subtasks, order}) => {
     const { getTasks } = useContext(TaskDataContext)!
-    const [focused, setFocused] = useState(false)
     const [showSubtasks, setShowSubtasks] = useState(false)
     const [newDescription, setNewDescription] = useState(description)
 
@@ -61,7 +60,7 @@ const TaskCard: React.FC<Task> = ({id, description, isComplete, subtasks, order}
             </div>
             )
         }
-        return renderButton();
+        return <button onClick={() => toggleSubtasks()}>Show subtasks: {subtasks.length}</button>
     }
 
     const handleUpdateTaskOrder = async (taskId: string, currentOrder: number, newOrder: number) => {
@@ -76,36 +75,13 @@ const TaskCard: React.FC<Task> = ({id, description, isComplete, subtasks, order}
         setShowSubtasks(!status)
     } 
 
-    const renderButton = () => {
-        if (!showSubtasks && subtasks) {
-            return (
-                <button onClick={() => toggleSubtasks()}>Show subtasks: {subtasks.length}</button>
-            )
-        }
-        return (
-            <div>
-                <button onClick={() => setFocused(true)}>Focus</button>
-            </div>
-        )
-    }
-
     const handleDescriptionUpdate = async () => {
-        console.log(description)
-        console.log(newDescription)
         if (newDescription !== description) {
             await updateTaskDescription(id, newDescription)
             getTasks()
         }
     }
 
-    if (focused) {
-        return (
-            <div className="taskCardFocused" onClick={() => setFocused(false)}>
-                <p>{description}</p>
-                <button>Done ☑ -~⍟~- Next ➠</button>
-            </div>
-        )
-    }
     return (
             <div 
             className={isComplete ? "taskCardCompleted" : "taskCard"}
@@ -136,7 +112,6 @@ const TaskCard: React.FC<Task> = ({id, description, isComplete, subtasks, order}
                 </div>
                 {renderSubtasks()}
             </div>
-        
     )
 }
 
