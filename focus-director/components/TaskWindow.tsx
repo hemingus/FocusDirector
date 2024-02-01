@@ -41,7 +41,6 @@ const TaskWindow: React.FC = () => {
     }
 
     return (
-        <>
         <div className="taskContainer">
             <DndProvider backend={backend}>
             <ul>
@@ -65,7 +64,6 @@ const TaskWindow: React.FC = () => {
                 <button onClick={submitNewTask}>add task</button>
             </div>
         </div>
-        </>
     )
 }
 

@@ -5,6 +5,7 @@ import { Task, Subtask, Step } from './TaskTypes'
 import TaskDataContext from './TaskDataContext'
 import { useState, useEffect, useContext } from 'react'
 import { updateTaskStatus, updateSubtaskStatus, updateStepStatus } from './API_methods'
+import DownArrow from './DownArrow';
 
 type FocusTarget = Task | Subtask | Step
 
@@ -12,13 +13,14 @@ const noTarget: FocusTarget = {id: "", description: "You have completed all your
 
 const FocusMode = () => {
     const { getTasks, taskData} = useContext(TaskDataContext)!
-    const [focusing, setFocusing] = useState(false)
     const [focused, setFocused] = useState<FocusTarget>(noTarget)
     const [color, setColor] = useState<string>("purple")
+    const [focusParents, setFocusParents] = useState<FocusTarget[]>([])
 
 
     // Focuses the next logical step/subtask/task based on their order.
     const nextFocus = () => {
+        setFocusParents([])
         var target: FocusTarget = noTarget
         const tasksTodo: Array<Task> = taskData.filter(task => !task.isComplete)
         if (tasksTodo.length > 0) {
@@ -26,16 +28,18 @@ const FocusMode = () => {
             target = task
             const subtasksTodo: Array<Subtask> = task.subtasks.filter(subtask => !subtask.isComplete)
             if (subtasksTodo.length > 0) {
+                setFocusParents([task])
                 var subtask = subtasksTodo.sort((a, b) => a.order - b.order)[0]
                 target = subtask
                 const stepsTodo: Array<Step> = subtask.steps.filter(step=> !step.isComplete)
                 if (stepsTodo.length > 0) {
+                    setFocusParents([task, subtask])
                     var step = stepsTodo.sort((a, b) => a.order - b.order)[0]
                     target = step
                 }
             }
         }
-        handleColor(target)
+        setColor(handleColor(target))
         setFocused(target)
     }
 
@@ -48,9 +52,14 @@ const FocusMode = () => {
     }
 
     const handleColor = (target: FocusTarget) => {
-        if (isTask(target)) setColor("blue")
-        else if (isSubtask(target)) setColor("green")
-        else setColor("yellow")
+        if (isTask(target)) return "blue"
+        else if (isSubtask(target)) return "green"
+        else return "yellow"
+    }
+
+    const parentStyle = (target: FocusTarget) => {
+        if (isTask(target)) return "completedTasks"
+        return "completedSubtasks"
     }
     
     const goNext = async () => {
@@ -68,6 +77,7 @@ const FocusMode = () => {
         if (isTask(focused)) {
             return (
                 <div className="subListContainer">
+                    <h5 style={{color: "silver"}}>All subtasks completed!</h5>
                     <ul>
                         {focused.subtasks.map((subtask, index) => (
                             <li className="completedSubtasks" key={index}>
@@ -80,6 +90,7 @@ const FocusMode = () => {
         } else if (isSubtask(focused)) {
             return (
                 <div className="subListContainer">
+                    <h5 style={{color: "silver"}}>All steps completed!</h5>
                     <ul>
                         {focused.steps.map((step, index) => (
                             <li key={index}>
@@ -97,17 +108,21 @@ const FocusMode = () => {
         nextFocus()
     }, [taskData])
 
-    if (focused && focusing) {
-        return (
-            <div className="focusScreen">
-                <button className="exitButton" onClick={() => setFocusing(false)}> Exit </button>
-                <p className="focusDescription" style={{border: "solid", borderColor: color}}>{focused.description}</p>
+    return (
+        <div className="focusScreen">
+            <div className="focusContent">
+                {focusParents.map((parent, index) => (
+                    <div className="focusParentContainer">
+                    <p key={index} className={parentStyle(parent)}>{parent.description}</p>
+                    <DownArrow/>
+                    </div>
+                ))}
+                <p key={focused.description} className="focusDescription" style={{border: "solid", borderColor: color}}>{focused.description}</p>
+                <button className="goNextButton" onClick={() => goNext()}>Done ☑ ⍟ Next ➠</button>
                 {subList()}
-                <button className="goNextButton" onClick={() => goNext()}>Done ☑ -~⍟~- Next ➠</button>
             </div>
-        )
-    }
-    return <button onClick={() => setFocusing(true)}>Focus!</button>
+        </div>
+    )
 }
 
 export default FocusMode
