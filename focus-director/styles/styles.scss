@@ -77,6 +77,20 @@ $stepBorderColor: rgb(120, 160, 40);
     background-color: rgb(68, 68, 68);
 }
 
+.focusButton {
+    background: radial-gradient(black, blue);
+    color: cyan;
+    font-size: 20px;
+    font-family: 'Times New Roman', Times, serif;
+    padding: 10px;
+}
+
+.focusButton:hover {
+    cursor: pointer;
+    box-shadow: 0 0 100px 50px white;
+    color: white;
+}
+
 @mixin containerMixin($borderColor) {
     font-size: 16px;
     font-weight: 800;
@@ -252,10 +266,40 @@ $stepBorderColor: rgb(120, 160, 40);
     flex-direction: column;
     transform: translate(-50%);
     width: 100svw;
-    height: 100svh;
+    min-height: 100svh;
+    height: auto;
     color: white;
-    background: radial-gradient(rgb(70, 70, 70), black);
-    z-index: 1; 
+    background: url("../public/assets/skyblue_clouds.png");
+    background-size: cover;
+    z-index: 1;
+}
+
+.focusContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+    margin: 5svh 10px 10px 10px;
+    background: radial-gradient(rgb(70, 70, 70), silver);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.focusParentsContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.focusParentDescription {
+    background: linear-gradient(grey -50%, black 20%, grey 150%);
+    padding: 10px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-family: 'Times New Roman';
+    border: none;
 }
 
 .focusDescription {
@@ -265,15 +309,27 @@ $stepBorderColor: rgb(120, 160, 40);
     font-size: 30px;
     border: none;
     box-shadow: 0 0 100px 20px silver;
+    animation: showFocus 0.8s ease-in;
+}
+
+@keyframes showFocus {
+    from {transform: scale(0%)};
+    to {transform: scale(100%)};
 }
 
 .goNextButton {
     padding: 10px;
     border-radius: 10px;
     font-size: 20px;
-    margin-top: 20svh;
+    font-family: impact;
     background: linear-gradient(darkgreen, lightgreen) !important;
     color: black !important;
+}
+
+.goNextButton:hover {
+    box-shadow: 0 0 20px 2px cyan;
+    transition: transform 0.2s ease-in;
+    transform: scale(110%);
 }
 
 .exitButton {
@@ -289,24 +345,57 @@ $stepBorderColor: rgb(120, 160, 40);
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 100px;
+    gap: 20px;
 }
 
 .completedSubtasks {
     @include cardMixin(green);
-    color: black;
+    color: white;
     font-weight: 600;
     font-size: 14px;
-    opacity: 50%;
+    opacity: 0.5;
+    width: auto;
 }
 .completedSteps {
     @include cardMixin(yellow);
     color: black;
     font-weight: 600;
     font-size: 14px;
-    opacity: 50%;
+    opacity: 0.5;
+    width: auto;
+}
+
+.completedTasks {
+    @include cardMixin($taskCardColor);
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    opacity: 0.5;
+    width: auto;
 }
 
 .subListContainer ul {
     list-style: none;
+}
+
+
+// DownArrow styles
+
+.arrowContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 30px;
+}
+
+.downArrow {
+    width: 0; 
+    height: 0; 
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;   
+    border-top: 20px solid black;
+    display: block;
+    position: absolute;
+    filter: drop-shadow(0px 0px 3px silver);
 }
