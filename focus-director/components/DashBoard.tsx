@@ -23,7 +23,7 @@ const DashBoard = () => {
         <>
             <h2>Dashboard</h2>
             <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
-                <button className="focusButton" onClick={() => setFocusMode(true)}>FOCUS</button>
+                <button className="focusButton" focus-tooltip="Let's go! 🙏" onClick={() => setFocusMode(true)}>FOCUS</button>
             </div>
             <section className="taskSection">
                 <div>

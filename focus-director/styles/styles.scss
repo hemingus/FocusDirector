@@ -8,7 +8,6 @@ $subtaskBorderColor: rgb(80, 150, 100);
 $stepCardColor: rgb(100, 130, 40);
 $stepBorderColor: rgb(120, 160, 40);
 
-
 // Containers & sections
 
 .mainPage {
@@ -83,6 +82,26 @@ $stepBorderColor: rgb(120, 160, 40);
     font-size: 20px;
     font-family: 'Times New Roman', Times, serif;
     padding: 10px;
+}
+
+[focus-tooltip] {
+    position: relative;
+}
+
+[focus-tooltip]:hover::after {
+    content: attr(focus-tooltip);
+    font-weight: 900;
+    position: absolute;
+    inset: 0 0 0 110%;
+    color:white;
+    width: 100%;
+    filter: drop-shadow(5px 5px 5px black);
+}
+
+
+
+@keyframes focusButtonTooltipAnimation {
+    from {}
 }
 
 .focusButton:hover {
@@ -309,12 +328,13 @@ $stepBorderColor: rgb(120, 160, 40);
     font-size: 30px;
     border: none;
     box-shadow: 0 0 100px 20px silver;
-    animation: showFocus 0.8s ease-in;
+    animation: showFocus 1s ease-in;
+    box-shadow: none;
 }
 
 @keyframes showFocus {
-    from {transform: scale(0%)};
-    to {transform: scale(100%)};
+    from {opacity: 0};
+    to {opacity: 1};
 }
 
 .goNextButton {
