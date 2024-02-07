@@ -9,13 +9,13 @@ import { useDrag, useDrop, DropTargetMonitor } from 'react-dnd'
 import TaskDataProvider from './TaskDataContext'
 
 const ItemTypes = {
-    SUBTASK_CARD: 'subtaskCard',
+    SUBTASK_CARD: 'subtaskCard'
 }
   
 interface DragItem {
-type: string;
-id: string;
-order: number;
+    type: string
+    id: string
+    order: number
 }
 
 const SubtaskCard: React.FC<Subtask> = ({taskId, id, description, isComplete, steps, order}) => {
@@ -26,7 +26,7 @@ const SubtaskCard: React.FC<Subtask> = ({taskId, id, description, isComplete, st
 
     useEffect(() => {
         setNewDescription(description);
-      }, [description]);
+      }, [description])
 
     const [{ isDragging }, drag] = useDrag({
         type: ItemTypes.SUBTASK_CARD,

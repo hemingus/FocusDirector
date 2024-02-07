@@ -74,10 +74,10 @@ const FocusMode = () => {
     }
 
     const subList = () => {
-        if (isTask(focused)) {
+        if (isTask(focused) && focused.subtasks.length > 0) {
             return (
                 <div className="subListContainer">
-                    <h5 style={{color: "silver"}}>All subtasks completed!</h5>
+                    <h5 style={{color: "silver"}}>Subtasks completed!</h5>
                     <ul>
                         {focused.subtasks.map((subtask, index) => (
                             <li className="completedSubtasks" key={index}>
@@ -87,10 +87,10 @@ const FocusMode = () => {
                     </ul>       
                 </div>
             )
-        } else if (isSubtask(focused)) {
+        } else if (isSubtask(focused) && focused.steps.length > 0) {
             return (
                 <div className="subListContainer">
-                    <h5 style={{color: "silver"}}>All steps completed!</h5>
+                    <h5 style={{color: "silver"}}>Steps completed!</h5>
                     <ul>
                         {focused.steps.map((step, index) => (
                             <li key={index}>
@@ -101,7 +101,7 @@ const FocusMode = () => {
                 </div>
             )
         } 
-        return
+        return <h5 style={{color: "silver"}}>⍟ Focused ⍟</h5>
     }
 
     useEffect(() => {

@@ -9,13 +9,13 @@ import { updateTaskStatus, updateTaskDescription, updateTaskOrder } from './API_
 import TaskDataContext from './TaskDataContext'
 
 const ItemTypes = {
-    TASK_CARD: 'taskCard',
+    TASK_CARD: 'taskCard'
   }
   
 interface DragItem {
-type: string;
-id: string;
-order: number;
+    type: string
+    id: string
+    order: number
 }
 
 const TaskCard: React.FC<Task> = ({id, description, isComplete, subtasks, order}) => {
