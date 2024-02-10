@@ -98,12 +98,6 @@ $stepBorderColor: rgb(120, 160, 40);
     filter: drop-shadow(5px 5px 5px black);
 }
 
-
-
-@keyframes focusButtonTooltipAnimation {
-    from {}
-}
-
 .focusButton:hover {
     cursor: pointer;
     box-shadow: 0 0 100px 50px white;
@@ -268,6 +262,7 @@ $stepBorderColor: rgb(120, 160, 40);
     }
     .taskContainer {
         margin-left: 0;
+        max-width: 100%;
     }
     .taskSection h3 {
         margin-left: 0;
@@ -298,6 +293,7 @@ $stepBorderColor: rgb(120, 160, 40);
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    max-width: 90svw;
     gap: 10px;
     margin: 5svh 10px 10px 10px;
     background: radial-gradient(rgb(70, 70, 70), silver);
@@ -322,6 +318,7 @@ $stepBorderColor: rgb(120, 160, 40);
 }
 
 .focusDescription {
+    max-width: 90%;
     background: linear-gradient(grey -50%, black 20%, grey 150%);
     padding: 20px;
     border-radius: 20px;
