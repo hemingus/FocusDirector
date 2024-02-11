@@ -105,6 +105,10 @@ $stepBorderColor: rgb(120, 160, 40);
 }
 
 @mixin containerMixin($borderColor) {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 1;
+    max-width: 100%;
     font-size: 16px;
     font-weight: 800;
     background-color: rgb(43, 41, 41);
@@ -168,6 +172,22 @@ $stepBorderColor: rgb(120, 160, 40);
     display: flex;
     justify-content: space-between;
     max-width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.cardTextArea {
+    display: flex;
+    max-width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.cardTextArea p {
+    display: flex;
+    max-width: 59%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .deleteButton:hover {

@@ -70,7 +70,7 @@ const StepCard: React.FC<Step> = ({taskId, subtaskId, id, description, isComplet
             ref={(node) => drag(drop(node))} style={{ opacity: isDragging ? 0.5 : 1 }}
             >
                 <div className="cardDescription">
-                    <div style={{display: "flex"}}>
+                    <div className="cardTextArea">
                         <span style={{paddingRight: "4px", color: "yellow"}}>{`${order}.`}</span>     
                         <p
                         contentEditable={!isComplete}

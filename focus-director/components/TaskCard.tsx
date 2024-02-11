@@ -88,7 +88,7 @@ const TaskCard: React.FC<Task> = ({id, description, isComplete, subtasks, order}
             ref={(node) => drag(drop(node))} style={{ opacity: isDragging ? 0.5 : 1 }}
             >
                 <div className="cardDescription">
-                    <div style={{display: "flex"}}>
+                    <div className="cardTextArea">
                         <span style={{paddingRight: "4px", color: "lightseagreen"}}>{`${order}.`}</span>
                         <p
                         contentEditable={!isComplete}
