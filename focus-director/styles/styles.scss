@@ -15,6 +15,7 @@ $stepBorderColor: rgb(120, 160, 40);
     min-width: 100svw;
     background: url('../public/assets/Focus_background.png');
     background-size: cover;
+    box-sizing: border-box;
 }
 .mainPage h1 {
     font-family: "Times";
@@ -30,7 +31,7 @@ $stepBorderColor: rgb(120, 160, 40);
 }
 
 .taskSection {
-    border: 5px solid lightskyblue;
+    border: 5px solid black;
     min-width: 80svw;
     padding: 50px 0 100px 0;
     color: white;
@@ -39,6 +40,7 @@ $stepBorderColor: rgb(120, 160, 40);
     background-image: url('../public/assets/skyblue_clouds.png');
     background-size: cover;
     margin: 0;
+    box-sizing: border-box;
 }
 
 .taskSection h3 {
@@ -107,7 +109,6 @@ $stepBorderColor: rgb(120, 160, 40);
 @mixin containerMixin($borderColor) {
     display: flex;
     flex-direction: column;
-    flex-shrink: 1;
     max-width: 100%;
     font-size: 16px;
     font-weight: 800;
@@ -172,22 +173,22 @@ $stepBorderColor: rgb(120, 160, 40);
     display: flex;
     justify-content: space-between;
     max-width: 100%;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
 }
 
 .cardTextArea {
+    hyphens: auto;
     display: flex;
     max-width: 100%;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
 }
 
 .cardTextArea p {
-    display: flex;
-    max-width: 59%;
+    hyphens: auto;
+    display: inline;
+    max-width: 100%;
     word-wrap: break-word;
     overflow-wrap: break-word;
+    box-sizing: border-box;
+    word-break: break-all;
 }
 
 .deleteButton:hover {
@@ -276,13 +277,15 @@ $stepBorderColor: rgb(120, 160, 40);
     box-shadow: none;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 800px) {
     .taskSection {
         grid-template-columns: 1fr;
     }
     .taskContainer {
         margin-left: 0;
         max-width: 100%;
+        box-sizing: border-box;
+        flex-shrink: 1;
     }
     .taskSection h3 {
         margin-left: 0;
@@ -313,7 +316,8 @@ $stepBorderColor: rgb(120, 160, 40);
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    max-width: 90svw;
+    width: 90svw;
+    max-width: 1000px;
     gap: 10px;
     margin: 5svh 10px 10px 10px;
     background: radial-gradient(rgb(70, 70, 70), silver);
@@ -335,18 +339,42 @@ $stepBorderColor: rgb(120, 160, 40);
     font-size: 14px;
     font-family: 'Times New Roman';
     border: none;
+    hyphens: auto;
+    display: inline;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    box-sizing: border-box;
+    word-break: break-all;
 }
 
-.focusDescription {
+@mixin focusDescription($borderColor) {
     max-width: 90%;
     background: linear-gradient(grey -50%, black 20%, grey 150%);
     padding: 20px;
     border-radius: 20px;
     font-size: 30px;
-    border: none;
+    border: solid;
+    border-color: $borderColor;
     box-shadow: 0 0 100px 20px silver;
     animation: showFocus 1s ease-in;
     box-shadow: none;
+    text-align: center;
+    hyphens: auto;
+    display: inline;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    box-sizing: border-box;
+    word-break: break-all;
+}
+
+.focusTaskDescription {
+    @include focusDescription($taskBorderColor);
+}
+.focusSubtaskDescription {
+    @include focusDescription(green);
+}
+.focusStepDescription {
+    @include focusDescription(yellow);
 }
 
 @keyframes showFocus {
@@ -385,30 +413,30 @@ $stepBorderColor: rgb(120, 160, 40);
     gap: 20px;
 }
 
-.completedSubtasks {
-    @include cardMixin(green);
-    color: white;
+@mixin sublistMixin($textColor) {
+    color: $textColor;
     font-weight: 600;
     font-size: 14px;
     opacity: 0.5;
     width: auto;
+    hyphens: auto;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-all;
+}
+
+.completedSubtasks {
+    @include cardMixin(green);
+    @include sublistMixin(white);
 }
 .completedSteps {
     @include cardMixin(yellow);
-    color: black;
-    font-weight: 600;
-    font-size: 14px;
-    opacity: 0.5;
-    width: auto;
+    @include sublistMixin(black);
 }
 
 .completedTasks {
     @include cardMixin($taskCardColor);
-    color: white;
-    font-weight: 600;
-    font-size: 14px;
-    opacity: 0.5;
-    width: auto;
+    @include sublistMixin(white);
 }
 
 .subListContainer ul {

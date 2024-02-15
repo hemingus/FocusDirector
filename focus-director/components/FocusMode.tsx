@@ -14,8 +14,8 @@ const noTarget: FocusTarget = {id: "", description: "You have completed all your
 const FocusMode = () => {
     const { getTasks, taskData} = useContext(TaskDataContext)!
     const [focused, setFocused] = useState<FocusTarget>(noTarget)
-    const [color, setColor] = useState<string>("purple")
     const [focusParents, setFocusParents] = useState<FocusTarget[]>([])
+    const [focusTargetStyle, setFocusTargetStyle] = useState("");
 
 
     // Focuses the next logical step/subtask/task based on their order.
@@ -39,7 +39,7 @@ const FocusMode = () => {
                 }
             }
         }
-        setColor(handleColor(target))
+        setFocusTargetStyle(handleTargetStyle(target))
         setFocused(target)
     }
 
@@ -51,10 +51,10 @@ const FocusMode = () => {
         return 'steps' in obj;
     }
 
-    const handleColor = (target: FocusTarget) => {
-        if (isTask(target)) return "blue"
-        else if (isSubtask(target)) return "green"
-        else return "yellow"
+    const handleTargetStyle = (target: FocusTarget) => {
+        if (isTask(target)) return "focusTaskDescription"
+        else if (isSubtask(target)) return "focusSubtaskDescription"
+        else return "focusStepDescription"
     }
 
     const parentStyle = (target: FocusTarget) => {
@@ -117,7 +117,7 @@ const FocusMode = () => {
                     <DownArrow/>
                     </div>
                 ))}
-                <p key={focused.description} className="focusDescription" style={{border: "solid", borderColor: color}}>{focused.description}</p>
+                <p key={focused.description} className={focusTargetStyle}>{focused.description}</p>
                 <button className="goNextButton" onClick={() => goNext()}>Done ☑ ⍟ Next ➠</button>
                 {subList()}
             </div>
