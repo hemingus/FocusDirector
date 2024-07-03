@@ -32,11 +32,10 @@ $stepBorderColor: rgb(120, 160, 40);
 
 .taskSection {
     border: 5px solid black;
-    min-width: 80svw;
-    padding: 50px 0 100px 0;
+    padding: 10svw;
     color: white;
-    display: grid;
-    grid-template-columns: 3fr 1fr;
+    display: flex;
+    justify-content: center;
     background-image: url('../public/assets/skyblue_clouds.png');
     background-size: cover;
     margin: 0;
@@ -49,10 +48,6 @@ $stepBorderColor: rgb(120, 160, 40);
     color:white;
     background: linear-gradient(grey, black);
     border: solid 2px silver;
-}
-
-.taskSection p:hover {
-    box-shadow: 0 0 1px 1px silver;
 }
 
 .taskSection button {
@@ -122,7 +117,12 @@ $stepBorderColor: rgb(120, 160, 40);
 
 .taskContainer {
     @include containerMixin($taskBorderColor);
+    min-width: 80svw;
     margin-left: 2svw;
+}
+
+.taskContainer p:hover {
+    box-shadow: 0 0 1px 1px silver;
 }
 
 .subtaskContainer {
@@ -182,13 +182,14 @@ $stepBorderColor: rgb(120, 160, 40);
 }
 
 .cardTextArea p {
+    overflow: none;
     hyphens: auto;
     display: inline;
     max-width: 100%;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
     box-sizing: border-box;
-    word-break: break-all;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
 }
 
 .deleteButton:hover {
@@ -277,32 +278,16 @@ $stepBorderColor: rgb(120, 160, 40);
     box-shadow: none;
 }
 
-@media (max-width: 800px) {
-    .taskSection {
-        grid-template-columns: 1fr;
-    }
-    .taskContainer {
-        margin-left: 0;
-        max-width: 100%;
-        box-sizing: border-box;
-        flex-shrink: 1;
-    }
-    .taskSection h3 {
-        margin-left: 0;
-    }
-}
-
 // Focused card
 .focusScreen {
     position: absolute;
-    top: 0%;
-    left: 50%;
+    top: 0;
+    left: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    transform: translate(-50%);
-    width: 100svw;
+    width: 100%;
     min-height: 100svh;
     height: auto;
     color: white;
@@ -312,16 +297,14 @@ $stepBorderColor: rgb(120, 160, 40);
 }
 
 .focusContent {
+    max-width: 80%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    width: 90svw;
-    max-width: 1000px;
     gap: 10px;
-    margin: 5svh 10px 10px 10px;
     background: radial-gradient(rgb(70, 70, 70), silver);
-    padding: 10px;
+    padding: 30px;
     border-radius: 10px;
 }
 
@@ -341,40 +324,37 @@ $stepBorderColor: rgb(120, 160, 40);
     border: none;
     hyphens: auto;
     display: inline;
-    word-wrap: break-word;
     overflow-wrap: break-word;
     box-sizing: border-box;
-    word-break: break-all;
 }
 
-@mixin focusDescription($borderColor) {
-    max-width: 90%;
+@mixin focusDescription($borderColor, $shadowColor) {
+    max-width: 100%;
     background: linear-gradient(grey -50%, black 20%, grey 150%);
     padding: 20px;
+    margin: 20px;
     border-radius: 20px;
-    font-size: 30px;
+    font-size: 2rem;
     border: solid;
     border-color: $borderColor;
-    box-shadow: 0 0 100px 20px silver;
+    box-shadow: 0 0 30px 10px $shadowColor;
     animation: showFocus 1s ease-in;
-    box-shadow: none;
     text-align: center;
     hyphens: auto;
     display: inline;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
     box-sizing: border-box;
-    word-break: break-all;
+    overflow-wrap: break-word;
+    hyphens: auto;
 }
 
 .focusTaskDescription {
-    @include focusDescription($taskBorderColor);
+    @include focusDescription($taskBorderColor, lightblue);
 }
 .focusSubtaskDescription {
-    @include focusDescription(green);
+    @include focusDescription(green, lightgreen);
 }
 .focusStepDescription {
-    @include focusDescription(yellow);
+    @include focusDescription(yellow, gold);
 }
 
 @keyframes showFocus {
@@ -420,9 +400,7 @@ $stepBorderColor: rgb(120, 160, 40);
     opacity: 0.5;
     width: auto;
     hyphens: auto;
-    word-wrap: break-word;
     overflow-wrap: break-word;
-    word-break: break-all;
 }
 
 .completedSubtasks {
@@ -463,4 +441,36 @@ $stepBorderColor: rgb(120, 160, 40);
     display: block;
     position: absolute;
     filter: drop-shadow(0px 0px 3px silver);
+}
+
+@media (max-width: 800px) {
+    .taskSection {
+        padding: 1svw;
+    }
+
+    .taskContainer {
+        margin-left: 0;
+        max-width: 100%;
+        box-sizing: border-box;
+        flex-shrink: 1;
+    }
+    .taskSection h3 {
+        margin-left: 0;
+    }
+
+    .focusContent {
+        max-width: 100%;
+    }
+
+    .focusTaskDescription {
+        font-size: 1.5rem;
+    }
+
+    .focusSubtaskDescription {
+        font-size: 1.5rem;
+    }
+
+    .focusStepDescription {
+        font-size: 1.5rem;
+    }
 }

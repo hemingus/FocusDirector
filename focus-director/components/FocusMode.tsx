@@ -118,7 +118,7 @@ const FocusMode = () => {
                     </div>
                 ))}
                 <p key={focused.description} className={focusTargetStyle}>{focused.description}</p>
-                <button className="goNextButton" onClick={() => goNext()}>Done ☑ ⍟ Next ➠</button>
+                <button className="goNextButton" onClick={() => goNext()}>Done ☑  <span style={{margin: "20px"}}></span>   Next ➠</button>
                 {subList()}
             </div>
         </div>
