@@ -32,14 +32,13 @@ $stepBorderColor: rgb(120, 160, 40);
 
 .taskSection {
     border: 5px solid black;
-    padding: 10svw;
     color: white;
     display: flex;
     justify-content: center;
     background-image: url('../public/assets/skyblue_clouds.png');
     background-size: cover;
-    margin: 0;
     box-sizing: border-box;
+    padding: 10svh;
 }
 
 .taskSection h3 {
