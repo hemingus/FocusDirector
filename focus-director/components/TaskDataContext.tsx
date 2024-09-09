@@ -7,6 +7,7 @@ interface TaskDataContextProps {
     taskData: Task[]
     setTaskData: Dispatch<SetStateAction<Task[]>>
     getTasks: () => Promise<void>
+    loading: boolean
 }
 
 interface TaskDataProviderProps {
@@ -17,6 +18,7 @@ const TaskDataContext = createContext<TaskDataContextProps | undefined>(undefine
 
 export const TaskDataProvider: React.FC<TaskDataProviderProps> = ({ children }) => {
     const [taskData, setTaskData] = useState<Task[]>([])
+    const [loading, setLoading] = useState(true)
 
     const getTasks = async (url = "https://hemingmusicapi.azurewebsites.net/TaskEntity") => {
         await fetch(url, {method: 'GET'})
@@ -24,6 +26,7 @@ export const TaskDataProvider: React.FC<TaskDataProviderProps> = ({ children }) 
         .then(data => {
             console.log(data)
             setTaskData(data)
+            setLoading(false)
         })
         .catch(err => {
             console.error(err)
@@ -37,7 +40,8 @@ export const TaskDataProvider: React.FC<TaskDataProviderProps> = ({ children }) 
     const contextValue: TaskDataContextProps = {
         taskData, 
         setTaskData,
-        getTasks
+        getTasks,
+        loading
     }
 
     return (

@@ -12,7 +12,7 @@ import TaskDataContext from './TaskDataContext'
 const isTouchDevice = ('ontouchstart' in window || navigator.maxTouchPoints);
 
 const TaskWindow: React.FC = () => {
-    const {taskData, getTasks} = useContext(TaskDataContext)!
+    const {taskData, getTasks, loading} = useContext(TaskDataContext)!
     const [taskDescription, setTaskDescription] = useState<string>('')
 
     const submitNewTask = () => {
@@ -40,31 +40,35 @@ const TaskWindow: React.FC = () => {
         await getTasks();
     }
 
-    return (
-        <div className="taskContainer">
-            <DndProvider backend={backend}>
-            <ul>
-                {taskData.map((task, index) => (
-                    <li className="taskWindow" key={index}>
-                        <TaskCard order={task.order} id={task.id} description={task.description} isComplete={task.isComplete} subtasks={task.subtasks}/>
-                        <button className="deleteButton" onClick={() => handleRemoveTask(task.id)}>❌</button>
-                    </li>
-                ))}
-            </ul>
-            </DndProvider>
-            <div>
-                <label style={{color: "lightseagreen"}}>new task:</label>
-                <input
-                type="text"
-                value={taskDescription}
-                onChange={handleChange}
-                placeholder="Describe task"
-                onKeyDown={(event) => {event.key === 'Enter' ? submitNewTask() : () => {}}}
-                />
-                <button onClick={submitNewTask}>add task</button>
+    if (loading) {
+        return <h1>Loading data...</h1>
+    } else {
+        return (
+            <div className="taskContainer">
+                <DndProvider backend={backend}>
+                <ul>
+                    {taskData.map((task, index) => (
+                        <li className="taskWindow" key={index}>
+                            <TaskCard order={task.order} id={task.id} description={task.description} isComplete={task.isComplete} subtasks={task.subtasks}/>
+                            <button className="deleteButton" onClick={() => handleRemoveTask(task.id)}>❌</button>
+                        </li>
+                    ))}
+                </ul>
+                </DndProvider>
+                <div>
+                    <label style={{color: "lightseagreen"}}>new task:</label>
+                    <input
+                    type="text"
+                    value={taskDescription}
+                    onChange={handleChange}
+                    placeholder="Describe task"
+                    onKeyDown={(event) => {event.key === 'Enter' ? submitNewTask() : () => {}}}
+                    />
+                    <button onClick={submitNewTask}>add task</button>
+                </div>
             </div>
-        </div>
-    )
+        )
+    }
 }
 
 export default TaskWindow
