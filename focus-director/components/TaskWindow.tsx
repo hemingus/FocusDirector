@@ -41,7 +41,7 @@ const TaskWindow: React.FC = () => {
     }
 
     if (loading) {
-        return <h1>Loading data...</h1>
+        return <h1 className="loadingAnimation">Loading data...</h1>
     } else {
         return (
             <div className="taskContainer">
