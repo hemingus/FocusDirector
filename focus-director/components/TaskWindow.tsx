@@ -9,7 +9,8 @@ import { HTML5Backend } from 'react-dnd-html5-backend'
 import { TouchBackend } from 'react-dnd-touch-backend'
 import TaskDataContext from './TaskDataContext'
 
-const isTouchDevice = ('ontouchstart' in window || navigator.maxTouchPoints);
+const isTouchDevice = typeof window !== 'undefined' && 
+                      ('ontouchstart' in window || navigator.maxTouchPoints > 0);
 
 const TaskWindow: React.FC = () => {
     const {taskData, getTasks, loading} = useContext(TaskDataContext)!
