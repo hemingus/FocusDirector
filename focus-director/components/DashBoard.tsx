@@ -28,7 +28,6 @@ const DashBoard = () => {
             <section className="taskSection">
                 <div>
                     <TaskDataProvider>
-                        <h3>Tasks:</h3>
                         {taskMode()}  
                     </TaskDataProvider>
                 </div>
