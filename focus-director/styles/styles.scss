@@ -3,10 +3,17 @@
 
 $taskCardColor: rgb(0, 50, 50);
 $taskBorderColor: rgb(0, 120, 120);
+$taskShadowColor: cyan;
+
 $subtaskCardColor: rgb(0, 100, 0);
 $subtaskBorderColor: rgb(80, 150, 100);
+$subtaskShadowColor: yellowgreen;
+
 $stepCardColor: rgb(100, 130, 40);
 $stepBorderColor: rgb(120, 160, 40);
+$stepShadowColor: yellow;
+
+$darkGrey: rgb(40, 40, 40);
 
 // Containers & sections
 
@@ -50,8 +57,10 @@ $stepBorderColor: rgb(120, 160, 40);
 }
 
 .taskSection button {
-    background: linear-gradient(grey, black);
+    background: linear-gradient(grey -100%, black);
     color: silver;
+    padding: 0.2rem;
+    border-radius: 4px;
 }
 
 .taskSection button:hover {
@@ -61,6 +70,7 @@ $stepBorderColor: rgb(120, 160, 40);
 }
 
 .taskSection input {
+    padding: 4px;
     font-size: 16px;
     color: white;
     background-color: rgb(68, 68, 68);
@@ -100,23 +110,27 @@ $stepBorderColor: rgb(120, 160, 40);
     color: white;
 }
 
-@mixin containerMixin($borderColor) {
+@mixin containerMixin($mainColor, $borderColor: white) {
     display: flex;
     flex-direction: column;
     max-width: 100%;
     font-size: 16px;
     font-weight: 800;
-    background-color: rgb(43, 41, 41);
-    border: solid;
-    border-color: $borderColor;
+    background-color: $mainColor;
+    border: solid 2px $borderColor;
+    border-radius: 1rem;
+    padding: 1rem;
     ul {
         list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
     }
 }
 
 .taskContainer {
-    @include containerMixin($taskBorderColor);
-    min-width: 80svw;
+    @include containerMixin($darkGrey, $taskCardColor);
+    min-width: 50svw;
     margin-left: 2svw;
 }
 
@@ -125,12 +139,12 @@ $stepBorderColor: rgb(120, 160, 40);
 }
 
 .subtaskContainer {
-    @include containerMixin($subtaskBorderColor);
+    @include containerMixin($darkGrey, $subtaskCardColor);
     margin-left: 2svw;
 }
 
 .stepContainer {
-    @include containerMixin($stepBorderColor);
+    @include containerMixin($darkGrey, $stepCardColor);
     margin-left: 2svw;
 }
 
@@ -159,13 +173,21 @@ $stepBorderColor: rgb(120, 160, 40);
     color:white;
 }
 
-@mixin cardMixin($color) {
+@mixin cardMixin($mainColor: black, $borderColor: white, $shadowColor: silver) {
     color: white;
     display: block;
     padding: 8px;
-    background: linear-gradient(to top right, black -10%, $color, black 110%);
-    border: 2px solid black;
+    background: linear-gradient(to top ,black -100%, $mainColor, black 200%);
+    border: 1px solid $borderColor;
+    border-radius: 0.5rem;
     width: 100%;
+    p {
+        padding-right: 4px;
+    }
+    &:hover {
+        box-shadow: 0 0 6px 2px $shadowColor;
+        z-index: 1;
+    }
   }
 
 .cardDescription {
@@ -196,26 +218,23 @@ $stepBorderColor: rgb(120, 160, 40);
     box-shadow: 0 0 5px 3px red;
 }
 
+.inputRow {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    padding: 1rem;
+}
+
 // Task
 .taskWindow {
     display: flex;
     justify-content: space-between;
     align-items: left;
-    background-color: lightslategray;
 }
 
 .taskCard {
-    @include cardMixin($taskCardColor);
+    @include cardMixin($taskCardColor, $taskBorderColor, $taskShadowColor);
   }
-
-.taskCard:hover {
-    border: 2px solid $taskBorderColor;
-    box-shadow: 0 0 6px 2px cyan;
-    z-index: 1;
-}
-.taskCard p {
-    padding-right: 4px;
-}
 
 
 // Subtask
@@ -223,41 +242,22 @@ $stepBorderColor: rgb(120, 160, 40);
     display: flex;
     justify-content: space-between;
     align-items: left;
-    background-color: lightslategray;
 }
 
 .subtaskCard {
-    @include cardMixin($subtaskCardColor);
+    @include cardMixin($subtaskCardColor, $subtaskBorderColor, $subtaskShadowColor);
   }
-.subtaskCard p {
-    padding-right: 4px;
-}
-.subtaskCard:hover {
-    border: 2px solid $subtaskBorderColor;
-    box-shadow: 0 0 6px 2px yellowgreen;
-    z-index: 2;
-}
 
 // Step
 .stepWindow {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: left;
-    background-color: lightslategray;
 }
 
 .stepCard {
-    @include cardMixin($stepCardColor);
+    @include cardMixin($stepCardColor, $stepBorderColor, $stepShadowColor);
 }
-.stepCard:hover {
-    border: 2px solid $stepBorderColor;
-    box-shadow: 0 0 6px 2px yellow;
-    z-index: 3;
-}
-.stepCard p {
-    padding-right: 2px;
-}
-
 
 // Completed card
 
