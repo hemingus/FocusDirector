@@ -56,8 +56,8 @@ const TaskWindow: React.FC = () => {
                     ))}
                 </ul>
                 </DndProvider>
-                <div>
-                    <label style={{color: "lightseagreen"}}>new task:</label>
+                <div className="inputRow">
+                    <label>new task:</label>
                     <input
                     type="text"
                     value={taskDescription}
