@@ -22,11 +22,6 @@ const StepWindow: React.FC<{ taskId: string, subtaskId: string, steps: Step[] }>
         setDescription(event.target.value);
     }
 
-    const handleRemoveStep = async (stepId: string) => {
-        await deleteStep(taskId, subtaskId, stepId)
-        getTasks()
-    }
-
     return (
         <>
         <div className="stepContainer">
@@ -34,7 +29,6 @@ const StepWindow: React.FC<{ taskId: string, subtaskId: string, steps: Step[] }>
                 {steps.map((step, index) => (
                     <li className="stepWindow" key={index}>
                         <StepCard order={step.order} taskId={taskId} subtaskId={subtaskId} id={step.id} description={step.description} isComplete={step.isComplete} />
-                        <button className="deleteButton" onClick={() => handleRemoveStep(step.id)}>❌</button>
                     </li>
                 ))}
                 <div>

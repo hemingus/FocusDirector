@@ -3,11 +3,12 @@
 import StepWindow from './StepWindow'
 import { useState, useContext, useEffect } from 'react'
 import { Subtask } from './TaskTypes'
-import { updateSubtaskStatus, updateSubtaskDescription, updateSubtaskOrder } from './API_methods';
+import { updateSubtaskStatus, updateSubtaskDescription, updateSubtaskOrder, deleteSubtask } from './API_methods';
 import { useDrag, useDrop, DropTargetMonitor } from 'react-dnd'
 import TaskDataProvider from './TaskDataContext'
 import ExpandIcon from '../app/assets/icons/expand.svg'
 import CollapseIcon from '../app/assets/icons/collapse.svg'
+import TrashIcon from '../app/assets/icons/trashcan.svg'
 
 const ItemTypes = {
     SUBTASK_CARD: 'subtaskCard'
@@ -96,6 +97,11 @@ const SubtaskCard: React.FC<Subtask> = ({taskId, id, description, isComplete, st
             getTasks()
         }
     }
+
+    const handleRemoveSubtask = async (subtaskId: string) => {
+        await deleteSubtask(taskId, subtaskId)
+        getTasks()
+    }
     
     return (
         <>
@@ -104,7 +110,7 @@ const SubtaskCard: React.FC<Subtask> = ({taskId, id, description, isComplete, st
             >
                 <div className="cardDescription">
                     <div className="cardTextArea">
-                        <span style={{paddingRight: "4px", color: "yellowgreen"}}>{`${order}.`}</span> 
+                        <span className="subtaskNumber">{`${order}.`}</span> 
                         <p
                         contentEditable={!isComplete}
                         suppressContentEditableWarning
@@ -117,13 +123,18 @@ const SubtaskCard: React.FC<Subtask> = ({taskId, id, description, isComplete, st
                             {description}
                         </p>                    
                     </div>
-                    <input 
-                    type="checkbox"
-                    checked={isComplete} 
-                    onChange={() => handleUpdateSubtaskStatus(!isComplete)}
-                    className="customCheckbox"
-                    checkbox-tooltip={isComplete ? "uncheck" : "Done☑"}
-                    />
+                    <div className="cardTailSection">
+                        <input
+                        type="checkbox"
+                        checked={isComplete}
+                        onChange={() => handleUpdateSubtaskStatus(!isComplete)}
+                        className="customCheckbox"
+                        checkbox-tooltip={isComplete ? "uncheck" : "Done☑"}
+                        />
+                        <TrashIcon 
+                            className="trashIconSubtask"
+                            onClick={() => handleRemoveSubtask(id)}/>
+                    </div>
                 </div>                   
                 {renderSubtasks()}
             </div>
