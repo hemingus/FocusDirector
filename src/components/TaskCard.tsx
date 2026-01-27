@@ -4,10 +4,11 @@ import SubtaskWindow from './SubtaskWindow'
 import { useDrag, useDrop, DropTargetMonitor } from 'react-dnd'
 import { useState, useContext, useEffect } from 'react'
 import { Task } from './TaskTypes'
-import { updateTaskStatus, updateTaskDescription, updateTaskOrder } from './API_methods'
+import { updateTaskStatus, updateTaskDescription, updateTaskOrder, deleteTask } from './API_methods'
 import TaskDataContext from './TaskDataContext'
 import ExpandIcon from '../app/assets/icons/expand.svg'
 import CollapseIcon from '../app/assets/icons/collapse.svg'
+import TrashIcon from '../app/assets/icons/trashcan.svg'
 
 const ItemTypes = {
     TASK_CARD: 'taskCard'
@@ -95,6 +96,11 @@ const TaskCard: React.FC<Task> = ({id, description, isComplete, subtasks, order}
         }
     }
 
+    const handleRemoveTask = async (taskId: string) => {
+        await deleteTask(taskId)
+        await getTasks();
+    }
+
     return (
             <div 
             className={styles.card}
@@ -115,13 +121,18 @@ const TaskCard: React.FC<Task> = ({id, description, isComplete, subtasks, order}
                             {description}
                         </p>
                     </div>
-                    <input 
-                    type="checkbox"
-                    checked={isComplete} 
-                    onChange={() => handleUpdateTaskStatus(!isComplete)}
-                    className="customCheckbox"
-                    checkbox-tooltip={isComplete ? "uncheck" : "Done☑"}
-                    />
+                    <div className="cardTailSection">
+                        <input
+                        type="checkbox"
+                        checked={isComplete}
+                        onChange={() => handleUpdateTaskStatus(!isComplete)}
+                        className="customCheckbox"
+                        checkbox-tooltip={isComplete ? "uncheck" : "Done☑"}
+                        />
+                        <TrashIcon 
+                            className="trashIconTask"
+                            onClick={() => handleRemoveTask(id)}/>
+                    </div>
                 </div>
                 {renderSubtasks()}
             </div>
