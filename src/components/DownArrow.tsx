@@ -1,5 +1,3 @@
-import '../styles/styles.scss'
-
 const DownArrow = () => {
     return (
         <div className="arrowContainer">

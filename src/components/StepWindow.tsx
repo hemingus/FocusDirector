@@ -1,7 +1,6 @@
 "use client";
 
 import StepCard from './StepCard'
-import '../styles/styles.scss'
 import { useState, useContext } from 'react'
 import { Step } from './TaskTypes'
 import { addStep, deleteStep } from './API_methods'

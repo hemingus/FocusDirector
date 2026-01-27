@@ -1,6 +1,5 @@
 "use client";
 
-import '../styles/styles.scss'
 import { Task, Subtask, Step } from './TaskTypes'
 import TaskDataContext from './TaskDataContext'
 import { useState, useEffect, useContext } from 'react'

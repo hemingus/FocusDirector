@@ -32,7 +32,7 @@ $darkGrey: rgb(40, 40, 40);
 .mainPage {
     min-height: 100svh;
     min-width: 100svw;
-    background: url('../public/assets/Focus_background.png');
+    background: url('../../public/assets/Focus_background.png');
     background-size: cover;
     box-sizing: border-box;
 }
@@ -54,7 +54,7 @@ $darkGrey: rgb(40, 40, 40);
     color: white;
     display: flex;
     justify-content: center;
-    background-image: url('../public/assets/skyblue_clouds.png');
+    background-image: url('../../public/assets/skyblue_clouds.png');
     background-size: cover;
     box-sizing: border-box;
     padding: 10svh;
@@ -292,7 +292,7 @@ $darkGrey: rgb(40, 40, 40);
     min-height: 100svh;
     height: auto;
     color: white;
-    background: url("../public/assets/skyblue_clouds.png");
+    background: url("../../public/assets/skyblue_clouds.png");
     background-size: cover;
     z-index: 1;
 }

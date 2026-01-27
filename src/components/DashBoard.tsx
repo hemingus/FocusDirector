@@ -2,7 +2,6 @@
 
 import TaskWindow from './TaskWindow'
 import FocusMode from './FocusMode';
-import '../styles/styles.scss'
 import { useState } from 'react'
 import { TaskDataProvider } from './TaskDataContext'
 

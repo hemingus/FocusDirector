@@ -1,7 +1,6 @@
 "use client";
 
 import SubtaskCard from './SubtaskCard'
-import '../styles/styles.scss'
 import { useState, useContext } from 'react'
 import { Subtask } from './TaskTypes'
 import { addSubtask, deleteSubtask } from './API_methods'

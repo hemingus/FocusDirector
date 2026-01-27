@@ -1,5 +1,5 @@
-import DashBoard from '../../components/DashBoard'
-import '../../styles/styles.scss'
+import DashBoard from '../components/DashBoard'
+
 
 export default function Home() {
     return (

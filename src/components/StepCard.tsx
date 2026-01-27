@@ -1,6 +1,5 @@
 "use client";
 
-import '../styles/styles.scss'
 import { useState, useContext, useEffect } from 'react'
 import { Step } from './TaskTypes'
 import { updateStepStatus, updateStepDescription, updateStepOrder } from './API_methods'

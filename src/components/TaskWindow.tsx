@@ -1,7 +1,6 @@
 "use client";
 
 import TaskCard from './TaskCard'
-import '../styles/styles.scss'
 import { useState, useContext } from 'react'
 import { deleteTask, addTask } from './API_methods'
 import { DndProvider} from 'react-dnd'

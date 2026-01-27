@@ -1,14 +1,13 @@
 "use client";
 
-import '../styles/styles.scss'
 import SubtaskWindow from './SubtaskWindow'
 import { useDrag, useDrop, DropTargetMonitor } from 'react-dnd'
 import { useState, useContext, useEffect } from 'react'
 import { Task } from './TaskTypes'
 import { updateTaskStatus, updateTaskDescription, updateTaskOrder } from './API_methods'
 import TaskDataContext from './TaskDataContext'
-import ExpandIcon from '../src/app/assets/icons/gg_arrows-expand-down-right.svg'
-import AddIcon from '../src/app/assets/icons/material-symbols_add-circle.svg'
+import ExpandIcon from '../app/assets/icons/gg_arrows-expand-down-right.svg'
+import AddIcon from '../app/assets/icons/material-symbols_add-circle.svg'
 
 const ItemTypes = {
     TASK_CARD: 'taskCard'

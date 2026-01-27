@@ -1,6 +1,5 @@
 "use client";
 
-import '../styles/styles.scss'
 import StepWindow from './StepWindow'
 import { useState, useContext, useEffect } from 'react'
 import { Subtask } from './TaskTypes'
