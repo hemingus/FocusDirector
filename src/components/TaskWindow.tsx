@@ -35,11 +35,6 @@ const TaskWindow: React.FC = () => {
         setTaskDescription(event.target.value);
     }
 
-    const handleRemoveTask = async (taskId: string) => {
-        await deleteTask(taskId)
-        await getTasks();
-    }
-
     if (loading) {
         return <h1 className="loadingAnimation">Loading data...</h1>
     } else {
@@ -50,7 +45,6 @@ const TaskWindow: React.FC = () => {
                     {taskData.map((task, index) => (
                         <li className="taskWindow" key={index}>
                             <TaskCard order={task.order} id={task.id} description={task.description} isComplete={task.isComplete} subtasks={task.subtasks}/>
-                            <button className="deleteButton" onClick={() => handleRemoveTask(task.id)}>❌</button>
                         </li>
                     ))}
                 </ul>
