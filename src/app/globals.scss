@@ -17,16 +17,32 @@ $darkGrey: rgb(40, 40, 40);
 
 // Containers & sections
 
-.icon-1 {
+@mixin expandCollapseMixin($color1, $color2, $color3) {
     display: flex;
     align-items: end;
     gap: 4px;
-    color: lime;
-    font-size: 1rem;
+    color: $color1;
+    font-size: 1.2rem;
+    cursor: pointer;
+    width: fit-content;
+    border: solid 1px transparent;
+    border-radius: 4px;
+    padding: 2px 4px;
+    span {
+        font-size: 0.8rem;
+        color: $color2;
+    }
+    &:hover {
+        border-color: $color3;
+    }
 }
-.icon-1 p {
-    font-size: 0.6rem;
-    color: limegreen;
+
+.expandCollapseSubtasks {
+    @include expandCollapseMixin(limegreen, lime, limegreen);
+}
+
+.expandCollapseSteps {
+    @include expandCollapseMixin(gold, yellow, gold);
 }
 
 .mainPage {
@@ -54,7 +70,7 @@ $darkGrey: rgb(40, 40, 40);
     color: white;
     display: flex;
     justify-content: center;
-    background-image: url('../../public/assets/skyblue_clouds.png');
+    background-color: rgb(56, 92, 112);
     background-size: cover;
     box-sizing: border-box;
     padding: 10svh;
@@ -144,10 +160,6 @@ $darkGrey: rgb(40, 40, 40);
     @include containerMixin($darkGrey, $taskCardColor);
     min-width: 50svw;
     margin-left: 2svw;
-}
-
-.taskContainer p:hover {
-    box-shadow: 0 0 1px 1px silver;
 }
 
 .subtaskContainer {
@@ -248,6 +260,13 @@ $darkGrey: rgb(40, 40, 40);
     @include cardMixin($taskCardColor, $taskBorderColor, $taskShadowColor);
   }
 
+.taskNumber {
+    color: $taskShadowColor;
+    font-weight: 900;
+    font-size: 1.2rem;
+    padding-right: 6px;
+}
+
 
 // Subtask
 .subtaskWindow {
@@ -259,6 +278,13 @@ $darkGrey: rgb(40, 40, 40);
 .subtaskCard {
     @include cardMixin($subtaskCardColor, $subtaskBorderColor, $subtaskShadowColor);
   }
+
+.subtaskNumber {
+    color: $subtaskShadowColor;
+    font-weight: 900;
+    font-size: 1.2rem;
+    padding-right: 6px;
+}
 
 // Step
 .stepWindow {
