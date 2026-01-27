@@ -6,8 +6,8 @@ import { useState, useContext, useEffect } from 'react'
 import { Task } from './TaskTypes'
 import { updateTaskStatus, updateTaskDescription, updateTaskOrder } from './API_methods'
 import TaskDataContext from './TaskDataContext'
-import ExpandIcon from '../app/assets/icons/gg_arrows-expand-down-right.svg'
-import AddIcon from '../app/assets/icons/material-symbols_add-circle.svg'
+import ExpandIcon from '../app/assets/icons/expand.svg'
+import CollapseIcon from '../app/assets/icons/collapse.svg'
 
 const ItemTypes = {
     TASK_CARD: 'taskCard'
@@ -23,6 +23,10 @@ const TaskCard: React.FC<Task> = ({id, description, isComplete, subtasks, order}
     const { getTasks } = useContext(TaskDataContext)!
     const [showSubtasks, setShowSubtasks] = useState(false)
     const [newDescription, setNewDescription] = useState(description)
+    const styles = isComplete ?
+        {card: "taskCardCompleted", expandCollapse: "expandCollapseCompleted"} 
+        :
+        {card: "taskCard", expandCollapse: "expandCollapseSubtasks"}
 
     const [{ isDragging }, drag] = useDrag({
         type: ItemTypes.TASK_CARD,
@@ -56,19 +60,19 @@ const TaskCard: React.FC<Task> = ({id, description, isComplete, subtasks, order}
         if (showSubtasks && subtasks) {
             return (
             <div>
-                <div className="icon-1">
-                    <AddIcon /> 
-                    {subtasks.length > 0 && <ExpandIcon onClick={() => toggleSubtasks()}/>}
-                    <p>{`SubTasks: ${subtasks.length}`}</p>
+                <div className={styles.expandCollapse}>   
+                    <CollapseIcon onClick={() => toggleSubtasks()}/>
+                    <span>{`Subtasks`}</span>
                 </div>
                 <SubtaskWindow taskId={id} subtasks={[...subtasks].sort((a, b) => a.order - b.order)} />  
             </div>
             )
         }
-        return <div className="icon-1">
-                    <AddIcon /> 
-                    {subtasks.length > 0 && <ExpandIcon onClick={() => toggleSubtasks()}/>}
-                    <p>{`SubTasks: ${subtasks.length}`}</p>
+        return <div 
+                    onClick={() => toggleSubtasks()}
+                    className={styles.expandCollapse}>
+                    <ExpandIcon />
+                    <span>{`${subtasks.length}`}</span>
                 </div>
     }
 
@@ -93,12 +97,12 @@ const TaskCard: React.FC<Task> = ({id, description, isComplete, subtasks, order}
 
     return (
             <div 
-            className={isComplete ? "taskCardCompleted" : "taskCard"}
+            className={styles.card}
             ref={(node) => drag(drop(node))} style={{ opacity: isDragging ? 0.5 : 1 }}
             >
                 <div className="cardDescription">
                     <div className="cardTextArea">
-                        <span style={{paddingRight: "4px", color: "lightseagreen"}}>{`${order}.`}</span>
+                        <span className="taskNumber">{`${order}.`}</span>
                         <p
                         contentEditable={!isComplete}
                         suppressContentEditableWarning

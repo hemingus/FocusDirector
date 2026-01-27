@@ -6,6 +6,8 @@ import { Subtask } from './TaskTypes'
 import { updateSubtaskStatus, updateSubtaskDescription, updateSubtaskOrder } from './API_methods';
 import { useDrag, useDrop, DropTargetMonitor } from 'react-dnd'
 import TaskDataProvider from './TaskDataContext'
+import ExpandIcon from '../app/assets/icons/expand.svg'
+import CollapseIcon from '../app/assets/icons/collapse.svg'
 
 const ItemTypes = {
     SUBTASK_CARD: 'subtaskCard'
@@ -19,9 +21,12 @@ interface DragItem {
 
 const SubtaskCard: React.FC<Subtask> = ({taskId, id, description, isComplete, steps, order}) => {
     const { getTasks } = useContext(TaskDataProvider)!
-    const [focused, setFocused] = useState(false)
     const [showSteps, setShowSteps] = useState(false)
     const [newDescription, setNewDescription] = useState(description)
+        const styles = isComplete ?
+        {card: "taskCardCompleted", expandCollapse: "expandCollapseCompleted"} 
+        :
+        {card: "taskCard", expandCollapse: "expandCollapseSteps"}
 
     useEffect(() => {
         setNewDescription(description);
@@ -63,12 +68,20 @@ const SubtaskCard: React.FC<Subtask> = ({taskId, id, description, isComplete, st
         if (showSteps && steps) {
             return (
             <div>
-                <button onClick={() => toggleSteps()}>Hide steps</button>
+                <div className={styles.expandCollapse}>   
+                    <CollapseIcon onClick={() => toggleSteps()}/>
+                    <span>{`Steps`}</span>
+                </div>
                 <StepWindow taskId={taskId} subtaskId={id} steps={[...steps].sort((a, b) => a.order - b.order)} />  
             </div>
             )
         }
-        return <button onClick={() => toggleSteps()}>Show steps: {steps.length}</button>
+        return <div 
+                    onClick={() => toggleSteps()}
+                    className={styles.expandCollapse}>
+                    <ExpandIcon />
+                    <span>{`${steps.length}`}</span>
+                </div>
     }
 
     const handleUpdateSubtaskStatus = async (status: boolean) => {
