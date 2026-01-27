@@ -3,7 +3,7 @@
 import SubtaskCard from './SubtaskCard'
 import { useState, useContext } from 'react'
 import { Subtask } from './TaskTypes'
-import { addSubtask, deleteSubtask } from './API_methods'
+import { addSubtask } from './API_methods'
 import TaskDataContext from './TaskDataContext'
 
 const SubtaskWindow: React.FC<{ taskId: string, subtasks: Subtask[] }> = ({taskId, subtasks}) => {
@@ -22,18 +22,12 @@ const SubtaskWindow: React.FC<{ taskId: string, subtasks: Subtask[] }> = ({taskI
         setDescription(event.target.value);
     }
 
-    const handleRemoveSubtask = async (subtaskId: string) => {
-        await deleteSubtask(taskId, subtaskId)
-        getTasks()
-    }
-
     return (
         <div className="subtaskContainer">
             <ul>
                 {subtasks.map((subtask, index) => (
                     <li className="subtaskWindow" key={index}>
                         <SubtaskCard order={subtask.order} taskId={taskId} id={subtask.id} description={subtask.description} isComplete={subtask.isComplete} steps={subtask.steps}/>
-                        <button className="deleteButton" onClick={() => handleRemoveSubtask(subtask.id)}>❌</button>
                     </li>
                 ))}
             </ul>

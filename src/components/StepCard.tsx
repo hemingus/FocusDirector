@@ -2,9 +2,10 @@
 
 import { useState, useContext, useEffect } from 'react'
 import { Step } from './TaskTypes'
-import { updateStepStatus, updateStepDescription, updateStepOrder } from './API_methods'
+import { updateStepStatus, updateStepDescription, updateStepOrder, deleteStep } from './API_methods'
 import { useDrag, useDrop, DropTargetMonitor } from 'react-dnd'
 import TaskDataContext from './TaskDataContext'
+import TrashIcon from '../app/assets/icons/trashcan.svg'
 
 const ItemTypes = {
     STEP_CARD: 'stepCard'
@@ -63,6 +64,11 @@ const StepCard: React.FC<Step> = ({taskId, subtaskId, id, description, isComplet
         }
     }
 
+    const handleRemoveStep = async (stepId: string) => {
+        await deleteStep(taskId, subtaskId, stepId)
+        getTasks()
+    }
+
     return (
         <>
             <div className={isComplete ? "taskCardCompleted" : "stepCard"}
@@ -70,7 +76,7 @@ const StepCard: React.FC<Step> = ({taskId, subtaskId, id, description, isComplet
             >
                 <div className="cardDescription">
                     <div className="cardTextArea">
-                        <span style={{paddingRight: "4px", color: "yellow"}}>{`${order}.`}</span>     
+                        <span className="stepNumber">{`${order}.`}</span>     
                         <p
                         contentEditable={!isComplete}
                         suppressContentEditableWarning
@@ -83,13 +89,18 @@ const StepCard: React.FC<Step> = ({taskId, subtaskId, id, description, isComplet
                             {description}
                         </p>
                     </div>
-                    <input 
-                    type="checkbox"
-                    checked={isComplete}
-                    onChange={() => handleUpdateStepStatus(!isComplete)}
-                    className="customCheckbox"
-                    checkbox-tooltip={isComplete ? "uncheck" : "Done☑"}
-                    />
+                    <div className="cardTailSection">
+                        <input
+                        type="checkbox"
+                        checked={isComplete}
+                        onChange={() => handleUpdateStepStatus(!isComplete)}
+                        className="customCheckbox"
+                        checkbox-tooltip={isComplete ? "uncheck" : "Done☑"}
+                        />
+                        <TrashIcon
+                            className="trashIconStep"
+                            onClick={() => handleRemoveStep(id)}/>
+                    </div>
                 </div>
             </div>
         </>
