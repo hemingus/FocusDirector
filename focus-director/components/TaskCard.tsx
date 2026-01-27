@@ -7,6 +7,8 @@ import { useState, useContext, useEffect } from 'react'
 import { Task } from './TaskTypes'
 import { updateTaskStatus, updateTaskDescription, updateTaskOrder } from './API_methods'
 import TaskDataContext from './TaskDataContext'
+import ExpandIcon from '../src/app/assets/icons/gg_arrows-expand-down-right.svg'
+import AddIcon from '../src/app/assets/icons/material-symbols_add-circle.svg'
 
 const ItemTypes = {
     TASK_CARD: 'taskCard'
@@ -55,12 +57,20 @@ const TaskCard: React.FC<Task> = ({id, description, isComplete, subtasks, order}
         if (showSubtasks && subtasks) {
             return (
             <div>
-                <button onClick={() => toggleSubtasks()}>Hide subtasks</button>
+                <div className="icon-1">
+                    <AddIcon /> 
+                    {subtasks.length > 0 && <ExpandIcon onClick={() => toggleSubtasks()}/>}
+                    <p>{`SubTasks: ${subtasks.length}`}</p>
+                </div>
                 <SubtaskWindow taskId={id} subtasks={[...subtasks].sort((a, b) => a.order - b.order)} />  
             </div>
             )
         }
-        return <button onClick={() => toggleSubtasks()}>Show subtasks: {subtasks.length}</button>
+        return <div className="icon-1">
+                    <AddIcon /> 
+                    {subtasks.length > 0 && <ExpandIcon onClick={() => toggleSubtasks()}/>}
+                    <p>{`SubTasks: ${subtasks.length}`}</p>
+                </div>
     }
 
     const handleUpdateTaskOrder = async (taskId: string, currentOrder: number, newOrder: number) => {
