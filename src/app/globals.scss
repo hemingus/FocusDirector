@@ -17,6 +17,7 @@ $stepShadowColor: gold;
 $stepBrightColor: yellow;
 
 $darkGrey: rgb(40, 40, 40);
+$darkerGrey: rgb(30, 30, 30);
 
 // Containers & sections
 
@@ -80,7 +81,6 @@ $darkGrey: rgb(40, 40, 40);
     background-color: rgb(56, 92, 112);
     background-size: cover;
     box-sizing: border-box;
-    padding: 10svh;
 }
 
 .taskSection h3 {
@@ -91,20 +91,21 @@ $darkGrey: rgb(40, 40, 40);
     border: solid 2px silver;
 }
 
-.taskSection button {
-    background: linear-gradient(grey -100%, black);
-    color: silver;
-    padding: 0.2rem;
-    border-radius: 4px;
-}
+// .taskSection button {
+//     background: linear-gradient(grey -100%, black);
+//     color: silver;
+//     padding: 0.2rem;
+//     border-radius: 4px;
+// }
 
-.taskSection button:hover {
-    cursor: pointer;
-    filter: drop-shadow(1px 1px 1px white);
-    color: white;
-}
+// .taskSection button:hover {
+//     cursor: pointer;
+//     filter: drop-shadow(1px 1px 1px white);
+//     color: white;
+// }
 
 .taskSection input {
+    width: 100%;
     padding: 4px;
     font-size: 1rem;
     color: white;
@@ -166,8 +167,12 @@ $darkGrey: rgb(40, 40, 40);
 
 .taskContainer {
     @include containerMixin($darkGrey, $taskCardColor);
-    min-width: 50svw;
+    max-width: 800px;
     margin-left: 1svw;
+    border-radius: 0;
+    ul {
+        gap: 1rem;
+    }
 }
 
 .subtaskContainer {
@@ -212,6 +217,7 @@ $darkGrey: rgb(40, 40, 40);
 }
 
 @mixin cardMixin($mainColor: black, $borderColor: white, $shadowColor: silver) {
+    cursor: grab;
     color: white;
     display: block;
     padding: 8px;
@@ -221,6 +227,7 @@ $darkGrey: rgb(40, 40, 40);
     width: 100%;
     p {
         padding-right: 4px;
+        cursor: text;
     }
     &:hover {
         box-shadow: 0 0 3px 1px $shadowColor;
@@ -228,8 +235,53 @@ $darkGrey: rgb(40, 40, 40);
     }
   }
 
+@mixin inputRowMixin($color1, $color2, $color3) { 
+    width: 100%;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    margin: 1rem 0 0.5rem 0;
+    color: $color1;
+
+    button {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        color: $color3;
+        background-color: $darkGrey;
+        border-radius: 8px;
+        font-weight: 700;
+        padding: 4px 16px 4px 8px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        color: $color2;
+        background-color: $darkerGrey;
+    }
+
+    .addIcon {
+        font-size: 1.2rem;
+        color: $color2;
+    }
+}
+
+.inputRowTask {
+    @include inputRowMixin($taskCardColor, $taskBrightColor, $taskShadowColor);
+}
+
+.inputRowSubtask {
+    @include inputRowMixin($subtaskCardColor, $subtaskBrightColor, $subtaskShadowColor);
+}
+
+.inputRowStep {
+    @include inputRowMixin($stepCardColor, $stepBrightColor, $stepShadowColor);
+}
+
+
 @mixin trashIconMixin($color) {
-    font-size: 1.5rem;
+    width: 100%;
+    font-size: 1.3rem;
     color: $color;
     cursor: pointer;
 }
@@ -277,13 +329,6 @@ $darkGrey: rgb(40, 40, 40);
 .deleteButton:hover {
     background: linear-gradient(darkred, black);
     box-shadow: 0 0 5px 3px red;
-}
-
-.inputRow {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-    padding: 1rem;
 }
 
 // Task
@@ -515,10 +560,6 @@ $darkGrey: rgb(40, 40, 40);
 }
 
 @media (max-width: 800px) {
-    .taskSection {
-        padding: 1svw;
-    }
-
     .taskContainer {
         margin-left: 0;
         max-width: 100%;
