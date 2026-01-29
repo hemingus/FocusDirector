@@ -40,27 +40,31 @@ const TaskWindow: React.FC = () => {
         return <h1 className="loadingAnimation">Loading data...</h1>
     } else {
         return (
-            <div className="taskContainer">
-                <DndProvider backend={backend}>
-                <ul>
-                    {taskData.map((task, index) => (
-                        <li className="taskWindow" key={index}>
-                            <TaskCard order={task.order} id={task.id} description={task.description} isComplete={task.isComplete} subtasks={task.subtasks}/>
-                        </li>
-                    ))}
-                </ul>
-                </DndProvider>
-                <div className="inputRowTask">
-                    <input
-                    type="text"
-                    value={taskDescription}
-                    onChange={handleChange}
-                    placeholder="Describe task"
-                    onKeyDown={(event) => {event.key === 'Enter' ? submitNewTask() : () => {}}}
-                    />
-                    <button onClick={submitNewTask}><AddIcon className="addIcon"/>Add</button>
+            <>
+                
+                <div className="taskContainer">
+                    <h2>Tasks</h2>
+                    <DndProvider backend={backend}>
+                    <ul>
+                        {taskData.map((task, index) => (
+                            <li className="taskWindow" key={index}>
+                                <TaskCard order={task.order} id={task.id} description={task.description} isComplete={task.isComplete} subtasks={task.subtasks}/>
+                            </li>
+                        ))}
+                    </ul>
+                    </DndProvider>
+                    <div className="inputRowTask">
+                        <input
+                        type="text"
+                        value={taskDescription}
+                        onChange={handleChange}
+                        placeholder="Describe task"
+                        onKeyDown={(event) => {event.key === 'Enter' ? submitNewTask() : () => {}}}
+                        />
+                        <button onClick={submitNewTask}><AddIcon className="addIcon"/>Add</button>
+                    </div>
                 </div>
-            </div>
+            </>
         )
     }
 }
