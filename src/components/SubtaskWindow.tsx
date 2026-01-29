@@ -5,6 +5,7 @@ import { useState, useContext } from 'react'
 import { Subtask } from './TaskTypes'
 import { addSubtask } from './API_methods'
 import TaskDataContext from './TaskDataContext'
+import AddIcon from '../app/assets/icons/add.svg'
 
 const SubtaskWindow: React.FC<{ taskId: string, subtasks: Subtask[] }> = ({taskId, subtasks}) => {
     const { getTasks } = useContext(TaskDataContext)!
@@ -31,8 +32,7 @@ const SubtaskWindow: React.FC<{ taskId: string, subtasks: Subtask[] }> = ({taskI
                     </li>
                 ))}
             </ul>
-            <div>
-                <label style={{color: "yellowgreen"}}>new subtask:</label>
+            <div className="inputRowSubtask">
                 <input
                 type="text"
                 value={description}
@@ -40,7 +40,7 @@ const SubtaskWindow: React.FC<{ taskId: string, subtasks: Subtask[] }> = ({taskI
                 placeholder="Describe subtask"
                 onKeyDown={(event) => {event.key === 'Enter' ? submitNewSubtask() : () => {}}}
                 />
-                <button onClick={submitNewSubtask}>add subtask</button>
+                <button onClick={submitNewSubtask}><AddIcon className="addIcon" />Add</button>
             </div>
         </div>
     )
