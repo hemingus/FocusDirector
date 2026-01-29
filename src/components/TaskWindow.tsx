@@ -2,11 +2,12 @@
 
 import TaskCard from './TaskCard'
 import { useState, useContext } from 'react'
-import { deleteTask, addTask } from './API_methods'
+import { addTask } from './API_methods'
 import { DndProvider} from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { TouchBackend } from 'react-dnd-touch-backend'
 import TaskDataContext from './TaskDataContext'
+import AddIcon from '../app/assets/icons/add.svg'
 
 const isTouchDevice = typeof window !== 'undefined' && 
                       ('ontouchstart' in window || navigator.maxTouchPoints > 0);
@@ -49,8 +50,7 @@ const TaskWindow: React.FC = () => {
                     ))}
                 </ul>
                 </DndProvider>
-                <div className="inputRow">
-                    <label>new task:</label>
+                <div className="inputRowTask">
                     <input
                     type="text"
                     value={taskDescription}
@@ -58,7 +58,7 @@ const TaskWindow: React.FC = () => {
                     placeholder="Describe task"
                     onKeyDown={(event) => {event.key === 'Enter' ? submitNewTask() : () => {}}}
                     />
-                    <button onClick={submitNewTask}>add task</button>
+                    <button onClick={submitNewTask}><AddIcon className="addIcon"/>Add</button>
                 </div>
             </div>
         )
