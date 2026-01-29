@@ -25,34 +25,6 @@ $darkerGrey: rgb(30, 30, 30);
 //     filter: invert(1);
 // }
 
-@mixin expandCollapseMixin($color1, $color2, $color3) {
-    display: flex;
-    align-items: flex-end;
-    gap: 4px;
-    color: $color1;
-    font-size: 1.2rem;
-    cursor: pointer;
-    width: fit-content;
-    border: solid 1px transparent;
-    border-radius: 4px;
-    padding: 2px 4px;
-    span {
-        font-size: 0.8rem;
-        color: $color2;
-    }
-    &:hover {
-        border-color: $color3;
-    }
-}
-
-.expandCollapseSubtasks {
-    @include expandCollapseMixin(limegreen, lime, limegreen);
-}
-
-.expandCollapseSteps {
-    @include expandCollapseMixin(gold, yellow, gold);
-}
-
 .mainPage {
     min-height: 100svh;
     min-width: 100svw;
@@ -103,14 +75,6 @@ $darkerGrey: rgb(30, 30, 30);
 //     filter: drop-shadow(1px 1px 1px white);
 //     color: white;
 // }
-
-.taskSection input {
-    width: 100%;
-    padding: 4px;
-    font-size: 1rem;
-    color: white;
-    background-color: rgb(68, 68, 68);
-}
 
 .taskSection textarea {
     font-size: 16px;
@@ -167,7 +131,7 @@ $darkerGrey: rgb(30, 30, 30);
 
 .taskContainer {
     @include containerMixin($darkGrey, $taskCardColor);
-    max-width: 800px;
+    width: 800px;
     margin-left: 1svw;
     border-radius: 0;
     ul {
@@ -235,6 +199,38 @@ $darkerGrey: rgb(30, 30, 30);
     }
   }
 
+@mixin expandCollapseMixin($color1, $color2) {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    color: $color1;
+    font-size: 1.2rem;
+    cursor: pointer;
+    width: fit-content;
+    border: solid 1px transparent;
+    border-radius: 4px;
+    padding: 2px 4px;
+    span {
+        font-size: 0.8rem;
+        color: $color2;
+    }
+    &:hover {
+        border-color: $color1;
+    }
+}
+
+.expandCollapseSubtasks {
+    @include expandCollapseMixin($subtaskShadowColor, $subtaskBrightColor);
+}
+
+.expandCollapseSteps {
+    @include expandCollapseMixin($stepShadowColor, $stepBrightColor);
+}
+
+.expandCollapseCompleted {
+    @include expandCollapseMixin(silver, lightgrey);
+}
+
 @mixin inputRowMixin($color1, $color2, $color3) { 
     width: 100%;
     display: flex;
@@ -242,6 +238,14 @@ $darkerGrey: rgb(30, 30, 30);
     align-items: center;
     margin: 1rem 0 0.5rem 0;
     color: $color1;
+
+    input {
+        width: 100%;
+        padding: 4px;
+        font-size: 1rem;
+        color: white;
+        background-color: rgb(68, 68, 68);
+    }
 
     button {
         display: flex;
@@ -278,9 +282,8 @@ $darkerGrey: rgb(30, 30, 30);
     @include inputRowMixin($stepCardColor, $stepBrightColor, $stepShadowColor);
 }
 
-
 @mixin trashIconMixin($color) {
-    width: 100%;
+    width: 20px;
     font-size: 1.3rem;
     color: $color;
     cursor: pointer;
@@ -295,6 +298,10 @@ $darkerGrey: rgb(30, 30, 30);
 
 .trashIconStep {
     @include trashIconMixin($stepShadowColor);
+}
+
+.trashIconCompleted {
+    @include trashIconMixin(silver);
 }
 
 .cardTailSection {
@@ -324,11 +331,6 @@ $darkerGrey: rgb(30, 30, 30);
     overflow-wrap: break-word;
     word-break: break-word;
     hyphens: auto;
-}
-
-.deleteButton:hover {
-    background: linear-gradient(darkred, black);
-    box-shadow: 0 0 5px 3px red;
 }
 
 // Task
@@ -392,6 +394,13 @@ $darkerGrey: rgb(30, 30, 30);
     @include cardMixin(grey, grey, silver);
     opacity: 50%;
     color: silver;
+}
+
+.completedNumber {
+    color: silver;
+    font-weight: 900;
+    font-size: 1.2rem;
+    padding-right: 6px;
 }
 
 // Focused card
@@ -500,7 +509,6 @@ $darkerGrey: rgb(30, 30, 30);
     margin-bottom: 20svh;
 }
 
-
 .subListContainer {
     display: flex;
     flex-direction: column;
@@ -562,7 +570,7 @@ $darkerGrey: rgb(30, 30, 30);
 @media (max-width: 800px) {
     .taskContainer {
         margin-left: 0;
-        max-width: 100%;
+        width: 100%;
         box-sizing: border-box;
         flex-shrink: 1;
     }
