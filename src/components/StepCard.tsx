@@ -21,6 +21,19 @@ const StepCard: React.FC<Step> = ({taskId, subtaskId, id, description, isComplet
     const { getTasks } = useContext(TaskDataContext)!
     const [newDescription, setNewDescription] = useState(description)
 
+    const styles = isComplete ?
+        {
+        card: "taskCardCompleted",
+        number: "completedNumber",
+        trashIcon: "trashIconCompleted"
+        }
+        :
+        {
+        card: "stepCard",
+        number: "stepNumber",
+        trashIcon: "trashIconStep"
+        }
+
     useEffect(() => {
         setNewDescription(description);
         }, [description])
@@ -76,7 +89,7 @@ const StepCard: React.FC<Step> = ({taskId, subtaskId, id, description, isComplet
             >
                 <div className="cardDescription">
                     <div className="cardTextArea">
-                        <span className="stepNumber">{`${order}.`}</span>     
+                        <span className={styles.number}>{`${order}.`}</span>     
                         <p
                         contentEditable={!isComplete}
                         suppressContentEditableWarning
@@ -98,7 +111,7 @@ const StepCard: React.FC<Step> = ({taskId, subtaskId, id, description, isComplet
                         checkbox-tooltip={isComplete ? "uncheck" : "Done☑"}
                         />
                         <TrashIcon
-                            className="trashIconStep"
+                            className={styles.trashIcon}
                             onClick={() => handleRemoveStep(id)}/>
                     </div>
                 </div>

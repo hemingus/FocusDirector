@@ -25,9 +25,15 @@ const SubtaskCard: React.FC<Subtask> = ({taskId, id, description, isComplete, st
     const [showSteps, setShowSteps] = useState(false)
     const [newDescription, setNewDescription] = useState(description)
         const styles = isComplete ?
-        {card: "taskCardCompleted", expandCollapse: "expandCollapseCompleted"} 
+        {card: "taskCardCompleted", 
+            expandCollapse: "expandCollapseCompleted",
+            trashIcon: "trashIconCompleted",
+            number: "completedNumber"} 
         :
-        {card: "taskCard", expandCollapse: "expandCollapseSteps"}
+        {card: "taskCard", 
+            expandCollapse: "expandCollapseSteps",
+            trashIcon: "trashIconSubtask",
+            number: "subtaskNumber"}
 
     useEffect(() => {
         setNewDescription(description);
@@ -110,7 +116,7 @@ const SubtaskCard: React.FC<Subtask> = ({taskId, id, description, isComplete, st
             >
                 <div className="cardDescription">
                     <div className="cardTextArea">
-                        <span className="subtaskNumber">{`${order}.`}</span> 
+                        <span className={styles.number}>{`${order}.`}</span> 
                         <p
                         contentEditable={!isComplete}
                         suppressContentEditableWarning
@@ -132,7 +138,7 @@ const SubtaskCard: React.FC<Subtask> = ({taskId, id, description, isComplete, st
                         checkbox-tooltip={isComplete ? "uncheck" : "Done☑"}
                         />
                         <TrashIcon 
-                            className="trashIconSubtask"
+                            className={styles.trashIcon}
                             onClick={() => handleRemoveSubtask(id)}/>
                     </div>
                 </div>                   

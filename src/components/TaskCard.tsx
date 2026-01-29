@@ -25,9 +25,17 @@ const TaskCard: React.FC<Task> = ({id, description, isComplete, subtasks, order}
     const [showSubtasks, setShowSubtasks] = useState(false)
     const [newDescription, setNewDescription] = useState(description)
     const styles = isComplete ?
-        {card: "taskCardCompleted", expandCollapse: "expandCollapseCompleted"} 
+        {card: "taskCardCompleted", 
+            expandCollapse: "expandCollapseCompleted",
+            trashIcon: "trashIconCompleted",
+            number: "completedNumber"
+        } 
         :
-        {card: "taskCard", expandCollapse: "expandCollapseSubtasks"}
+        {card: "taskCard", 
+            expandCollapse: "expandCollapseSubtasks",
+            trashIcon: "trashIconTask",
+            number: "taskNumber"
+        }
 
     const [{ isDragging }, drag] = useDrag({
         type: ItemTypes.TASK_CARD,
@@ -108,7 +116,7 @@ const TaskCard: React.FC<Task> = ({id, description, isComplete, subtasks, order}
             >
                 <div className="cardDescription">
                     <div className="cardTextArea">
-                        <span className="taskNumber">{`${order}.`}</span>
+                        <span className={styles.number}>{`${order}.`}</span>
                         <p
                         contentEditable={!isComplete}
                         suppressContentEditableWarning
@@ -130,7 +138,7 @@ const TaskCard: React.FC<Task> = ({id, description, isComplete, subtasks, order}
                         checkbox-tooltip={isComplete ? "uncheck" : "Done☑"}
                         />
                         <TrashIcon 
-                            className="trashIconTask"
+                            className={styles.trashIcon}
                             onClick={() => handleRemoveTask(id)}/>
                     </div>
                 </div>
