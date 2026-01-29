@@ -3,8 +3,9 @@
 import StepCard from './StepCard'
 import { useState, useContext } from 'react'
 import { Step } from './TaskTypes'
-import { addStep, deleteStep } from './API_methods'
+import { addStep } from './API_methods'
 import TaskDataContext from './TaskDataContext'
+import AddIcon from '../app/assets/icons/add.svg'
 
 const StepWindow: React.FC<{ taskId: string, subtaskId: string, steps: Step[] }> = ({taskId, subtaskId, steps}) => {
     const { getTasks } = useContext(TaskDataContext)!
@@ -31,18 +32,17 @@ const StepWindow: React.FC<{ taskId: string, subtaskId: string, steps: Step[] }>
                         <StepCard order={step.order} taskId={taskId} subtaskId={subtaskId} id={step.id} description={step.description} isComplete={step.isComplete} />
                     </li>
                 ))}
-                <div>
-                    <label style={{color: "yellow"}}>new step:</label>
-                    <input
-                    type="text"
-                    value={description}
-                    onChange={handleChange}
-                    placeholder="Describe step"
-                    onKeyDown={(event) => {event.key === 'Enter' ? submitNewStep() : () => {}}}
-                    />
-                    <button onClick={submitNewStep}>add step</button>
-                </div>
             </ul>
+            <div className="inputRowStep">
+                <input
+                type="text"
+                value={description}
+                onChange={handleChange}
+                placeholder="Describe step"
+                onKeyDown={(event) => {event.key === 'Enter' ? submitNewStep() : () => {}}}
+                />
+                <button onClick={submitNewStep}><AddIcon className="addIcon"/>Add</button>
+            </div>
         </div>
         </>
     )
