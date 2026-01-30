@@ -1,17 +1,17 @@
 
 // Color variables
 
-$taskCardColor: rgb(0, 50, 50);
+$taskCardColor: rgba(0, 50, 50, 1);
 $taskBorderColor: rgb(0, 120, 120);
 $taskShadowColor: lightseagreen;
 $taskBrightColor: cyan;
 
-$subtaskCardColor: rgb(0, 100, 0);
+$subtaskCardColor: rgba(0, 100, 0, 0.6);
 $subtaskBorderColor: rgb(80, 150, 100);
 $subtaskShadowColor: limegreen;
 $subtaskBrightColor: lime;
 
-$stepCardColor: rgb(80, 90, 0);
+$stepCardColor: rgba(80, 70, 0);
 $stepBorderColor: rgb(120, 160, 40);
 $stepShadowColor: gold;
 $stepBrightColor: yellow;
@@ -30,7 +30,7 @@ $darkerGrey: rgb(30, 30, 30);
 .mainPage {
     min-height: 100svh;
     min-width: 100svw;
-    background: url('../../public/assets/Focus_background.png');
+    background: url('../../public/assets/Focus_bg.jpg');
     background-size: cover;
     box-sizing: border-box;
 }
@@ -57,10 +57,12 @@ $darkerGrey: rgb(30, 30, 30);
 
 .taskSection h2 {
     color: $taskBrightColor;
-    padding: 0;
-    margin: 0;
+    background-color: $darkGrey;
+    margin-bottom: 0.5rem;
     font-size: 1.2rem;
     padding: 0.5rem;
+    border-radius: 8px;
+    text-align: center;
 }
 
 .taskSection h3 {
@@ -128,7 +130,7 @@ $darkerGrey: rgb(30, 30, 30);
     background-color: $mainColor;
     border: solid 2px $borderColor;
     border-radius: 1rem;
-    padding: 1rem;
+    padding: 2rem;
     ul {
         list-style: none;
         display: flex;
@@ -138,7 +140,7 @@ $darkerGrey: rgb(30, 30, 30);
 }
 
 .taskContainer {
-    @include containerMixin($darkGrey, $taskCardColor);
+    @include containerMixin(rgba(0,0,0,0.9), $taskCardColor);
     width: 800px;
     margin-left: 1svw;
     border-radius: 0;
@@ -193,7 +195,7 @@ $darkerGrey: rgb(30, 30, 30);
     color: white;
     display: block;
     padding: 8px;
-    background: linear-gradient(to top ,black -100%, $mainColor, black 200%);
+    background: linear-gradient(to top,black -100%, $mainColor, black 200%);
     border: 1px solid $borderColor;
     border-radius: 0.5rem;
     width: 100%;
@@ -295,6 +297,9 @@ $darkerGrey: rgb(30, 30, 30);
     font-size: 1.3rem;
     color: $color;
     cursor: pointer;
+    &:hover {
+        filter: drop-shadow(1px 1px 1px black);
+    }
 }
 .trashIconTask {
     @include trashIconMixin($taskShadowColor);
@@ -355,7 +360,7 @@ $darkerGrey: rgb(30, 30, 30);
 .taskNumber {
     color: $taskBrightColor;
     font-weight: 900;
-    font-size: 1.2rem;
+    font-size: 1rem;
     padding-right: 6px;
 }
 
@@ -374,7 +379,7 @@ $darkerGrey: rgb(30, 30, 30);
 .subtaskNumber {
     color: $subtaskBrightColor;
     font-weight: 900;
-    font-size: 1.2rem;
+    font-size: 1rem;
     padding-right: 6px;
 }
 
@@ -392,7 +397,7 @@ $darkerGrey: rgb(30, 30, 30);
 .stepNumber {
     color: $stepBrightColor;
     font-weight: 900;
-    font-size: 1.2rem;
+    font-size: 1rem;
     padding-right: 6px;
 }
 
@@ -578,9 +583,10 @@ $darkerGrey: rgb(30, 30, 30);
 @media (max-width: 800px) {
     .taskContainer {
         margin-left: 0;
-        width: 100%;
+        width: 100svw;
         box-sizing: border-box;
         flex-shrink: 1;
+        padding: 0.5rem;
     }
     .taskSection h3 {
         margin-left: 0;
