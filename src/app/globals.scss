@@ -16,8 +16,10 @@ $stepBorderColor: rgb(120, 160, 40);
 $stepShadowColor: gold;
 $stepBrightColor: yellow;
 
+$lightGrey: rgb(68, 68, 68);
 $darkGrey: rgb(40, 40, 40);
 $darkerGrey: rgb(30, 30, 30);
+
 
 // Containers & sections
 
@@ -46,13 +48,19 @@ $darkerGrey: rgb(30, 30, 30);
 }
 
 .taskSection {
-    border: 5px solid black;
     color: white;
     display: flex;
     justify-content: center;
-    background-color: rgb(56, 92, 112);
     background-size: cover;
     box-sizing: border-box;
+}
+
+.taskSection h2 {
+    color: $taskBrightColor;
+    padding: 0;
+    margin: 0;
+    font-size: 1.2rem;
+    padding: 0.5rem;
 }
 
 .taskSection h3 {
