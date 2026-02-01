@@ -69,8 +69,10 @@ const TaskCard: React.FC<Task> = ({id, description, isComplete, subtasks, order}
         if (showSubtasks && subtasks) {
             return (
             <div>
-                <div className={styles.expandCollapse}>   
-                    <CollapseIcon onClick={() => toggleSubtasks()}/>
+                <div 
+                    onClick={() => toggleSubtasks()}
+                    className={styles.expandCollapse}>
+                    <CollapseIcon />
                     <span>{`Subtasks`}</span>
                 </div>
                 <SubtaskWindow taskId={id} subtasks={[...subtasks].sort((a, b) => a.order - b.order)} />  
