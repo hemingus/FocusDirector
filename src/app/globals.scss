@@ -11,7 +11,7 @@ $subtaskBorderColor: rgb(80, 150, 100);
 $subtaskShadowColor: limegreen;
 $subtaskBrightColor: lime;
 
-$stepCardColor: rgba(80, 70, 0);
+$stepCardColor: rgba(100, 90, 0, 0.6);
 $stepBorderColor: rgb(120, 160, 40);
 $stepShadowColor: gold;
 $stepBrightColor: yellow;
@@ -27,10 +27,15 @@ $darkerGrey: rgb(30, 30, 30);
 //     filter: invert(1);
 // }
 
+@keyframes appearGrow {
+  from {max-height: 0;}
+  to {max-height: 500px;}
+}
+
 .mainPage {
     min-height: 100svh;
     min-width: 100svw;
-    background: url('../../public/assets/Focus_bg.jpg');
+    background: url('../../public/assets/focus_bg.jpg');
     background-size: cover;
     box-sizing: border-box;
 }
@@ -53,16 +58,19 @@ $darkerGrey: rgb(30, 30, 30);
     justify-content: center;
     background-size: cover;
     box-sizing: border-box;
+    background-attachment: url('/assets/focus_zen_dark.png');
+    // filter: invert(1);
 }
 
 .taskSection h2 {
     color: $taskBrightColor;
     background-color: $darkGrey;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
     font-size: 1.2rem;
     padding: 0.5rem;
     border-radius: 8px;
     text-align: center;
+    text-shadow: 3px 3px 1px black;
 }
 
 .taskSection h3 {
@@ -121,14 +129,13 @@ $darkerGrey: rgb(30, 30, 30);
     color: white;
 }
 
-@mixin containerMixin($mainColor, $borderColor: white) {
+@mixin containerMixin($mainColor) {
     display: flex;
     flex-direction: column;
     max-width: 100%;
     font-size: 16px;
-    font-weight: 800;
+    font-weight: 500;
     background-color: $mainColor;
-    border: solid 2px $borderColor;
     border-radius: 1rem;
     padding: 2rem;
     ul {
@@ -140,29 +147,31 @@ $darkerGrey: rgb(30, 30, 30);
 }
 
 .taskContainer {
-    @include containerMixin(rgba(0,0,0,0.9), $taskCardColor);
+    @include containerMixin($taskCardColor);
+    background-color: rgba(0, 0, 0, 0.8);
     width: 800px;
     margin-left: 1svw;
-    border-radius: 0;
     ul {
         gap: 1rem;
     }
 }
 
 .subtaskContainer {
-    @include containerMixin($darkGrey, $subtaskCardColor);
+    @include containerMixin($subtaskCardColor);
     margin-left: 1svw;
     padding: 0;
     border: none;
-    background-color: transparent;
+    background: none;
+    animation: appearGrow 0.3s ease;
 }
 
 .stepContainer {
-    @include containerMixin($darkGrey, $stepCardColor);
+    @include containerMixin($stepCardColor);
     margin-left: 1svw;
     padding: 0;
     border: none;
-    background-color: transparent;
+    background: none;
+    animation: appearGrow 0.3s ease;
 }
 
 // CARDS
@@ -185,9 +194,13 @@ $darkerGrey: rgb(30, 30, 30);
 [checkbox-tooltip]:hover::after {
     content: attr(checkbox-tooltip);
     position: absolute;
-    right: 25px;
+    bottom: calc(100% + 4px);
+    left: 50%;
+    transform: translateX(-50%);
     background-color: rgb(0, 110, 173);
     color:white;
+    padding: 4px;
+    border-radius: 4px;
 }
 
 @mixin cardMixin($mainColor: black, $borderColor: white, $shadowColor: silver) {
@@ -195,7 +208,7 @@ $darkerGrey: rgb(30, 30, 30);
     color: white;
     display: block;
     padding: 8px;
-    background: linear-gradient(to top,black -100%, $mainColor, black 200%);
+    background: linear-gradient(to top,black -50%, $mainColor, black 150%);
     border: 1px solid $borderColor;
     border-radius: 0.5rem;
     width: 100%;
@@ -204,7 +217,8 @@ $darkerGrey: rgb(30, 30, 30);
         cursor: text;
     }
     &:hover {
-        box-shadow: 0 0 3px 1px $shadowColor;
+        box-shadow: 0 0 1px 1px $shadowColor;
+        background: linear-gradient(to top, black -150%, $mainColor, black 250%);
         z-index: 1;
     }
   }
@@ -590,6 +604,10 @@ $darkerGrey: rgb(30, 30, 30);
     }
     .taskSection h3 {
         margin-left: 0;
+    }
+
+    .taskContainer {
+        border-radius: 0;
     }
 
     .focusContent {
