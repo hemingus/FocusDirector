@@ -9,6 +9,7 @@ import TaskDataContext from './TaskDataContext'
 import ExpandIcon from '../app/assets/icons/expand.svg'
 import CollapseIcon from '../app/assets/icons/collapse.svg'
 import TrashIcon from '../app/assets/icons/trashcan.svg'
+import { Tooltip } from './Tooltip/Tooltip';
 
 const ItemTypes = {
     TASK_CARD: 'taskCard'
@@ -139,9 +140,11 @@ const TaskCard: React.FC<Task> = ({id, description, isComplete, subtasks, order}
                         className="customCheckbox"
                         checkbox-tooltip={isComplete ? "uncheck" : "Done☑"}
                         />
-                        <TrashIcon 
-                            className={styles.trashIcon}
-                            onClick={() => handleRemoveTask(id)}/>
+                        <Tooltip content="DELETE Task" color="darkred">
+                            <TrashIcon 
+                                className={styles.trashIcon}
+                                onClick={() => handleRemoveTask(id)}/>
+                        </Tooltip>
                     </div>
                 </div>
                 {renderSubtasks()}
