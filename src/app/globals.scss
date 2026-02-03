@@ -27,10 +27,7 @@ $darkerGrey: rgb(30, 30, 30);
 //     filter: invert(1);
 // }
 
-@keyframes appearGrow {
-  from {max-height: 0;}
-  to {max-height: 500px;}
-}
+
 
 .mainPage {
     min-height: 100svh;
@@ -176,6 +173,7 @@ $darkerGrey: rgb(30, 30, 30);
 
 // CARDS
 
+// Checkbox
 .customCheckbox {
     width: 20px;
     height: 20px;
@@ -222,7 +220,7 @@ $darkerGrey: rgb(30, 30, 30);
         background: linear-gradient(to top, black -150%, $mainColor, black 250%);
         z-index: 1;
     }
-  }
+}
 
 @mixin expandCollapseMixin($color1, $color2) {
     display: flex;
@@ -242,18 +240,6 @@ $darkerGrey: rgb(30, 30, 30);
     &:hover {
         border-color: $color1;
     }
-}
-
-.expandCollapseSubtasks {
-    @include expandCollapseMixin($subtaskShadowColor, $subtaskBrightColor);
-}
-
-.expandCollapseSteps {
-    @include expandCollapseMixin($stepShadowColor, $stepBrightColor);
-}
-
-.expandCollapseCompleted {
-    @include expandCollapseMixin(silver, lightgrey);
 }
 
 @mixin inputRowMixin($color1, $color2, $color3) { 
@@ -295,18 +281,6 @@ $darkerGrey: rgb(30, 30, 30);
     }
 }
 
-.inputRowTask {
-    @include inputRowMixin($taskCardColor, $taskBrightColor, $taskShadowColor);
-}
-
-.inputRowSubtask {
-    @include inputRowMixin($subtaskCardColor, $subtaskBrightColor, $subtaskShadowColor);
-}
-
-.inputRowStep {
-    @include inputRowMixin($stepCardColor, $stepBrightColor, $stepShadowColor);
-}
-
 @mixin trashIconMixin($color) {
     width: 20px;
     font-size: 1.3rem;
@@ -315,21 +289,6 @@ $darkerGrey: rgb(30, 30, 30);
     &:hover {
         filter: drop-shadow(1px 1px 1px black);
     }
-}
-.trashIconTask {
-    @include trashIconMixin($taskShadowColor);
-}
-
-.trashIconSubtask {
-    @include trashIconMixin($subtaskShadowColor);
-}
-
-.trashIconStep {
-    @include trashIconMixin($stepShadowColor);
-}
-
-.trashIconCompleted {
-    @include trashIconMixin(silver);
 }
 
 .cardTailSection {
@@ -379,12 +338,23 @@ $darkerGrey: rgb(30, 30, 30);
     padding-right: 6px;
 }
 
+.trashIconTask {
+    @include trashIconMixin($taskShadowColor);
+}
+
+.inputRowTask {
+    @include inputRowMixin($taskCardColor, $taskBrightColor, $taskShadowColor);
+}
 
 // Subtask
 .subtaskWindow {
     display: flex;
     justify-content: space-between;
     align-items: left;
+}
+
+.expandCollapseSubtasks {
+    @include expandCollapseMixin($subtaskShadowColor, $subtaskBrightColor);
 }
 
 .subtaskCard {
@@ -398,11 +368,23 @@ $darkerGrey: rgb(30, 30, 30);
     padding-right: 6px;
 }
 
+.trashIconSubtask {
+    @include trashIconMixin($subtaskShadowColor);
+}
+
+.inputRowSubtask {
+    @include inputRowMixin($subtaskCardColor, $subtaskBrightColor, $subtaskShadowColor);
+}
+
 // Step
 .stepWindow {
     display: flex;
     justify-content: center;
     align-items: left;
+}
+
+.expandCollapseSteps {
+    @include expandCollapseMixin($stepShadowColor, $stepBrightColor);
 }
 
 .stepCard {
@@ -416,12 +398,23 @@ $darkerGrey: rgb(30, 30, 30);
     padding-right: 6px;
 }
 
-// Completed card
+.trashIconStep {
+    @include trashIconMixin($stepShadowColor);
+}
 
+.inputRowStep {
+    @include inputRowMixin($stepCardColor, $stepBrightColor, $stepShadowColor);
+}
+
+// Completed card
 .taskCardCompleted {
     @include cardMixin(grey, grey, silver);
     opacity: 50%;
     color: silver;
+}
+
+.expandCollapseCompleted {
+    @include expandCollapseMixin(silver, lightgrey);
 }
 
 .completedNumber {
@@ -431,7 +424,15 @@ $darkerGrey: rgb(30, 30, 30);
     padding-right: 6px;
 }
 
-// Focused card
+.trashIconCompleted {
+    @include trashIconMixin(silver);
+}
+
+
+// ----------------------
+// Focused mode
+// ----------------------
+
 .focusScreen {
     position: absolute;
     top: 0;
@@ -510,11 +511,6 @@ $darkerGrey: rgb(30, 30, 30);
     @include focusDescription(yellow, gold);
 }
 
-@keyframes showFocus {
-    from {opacity: 0};
-    to {opacity: 1};
-}
-
 .goNextButton {
     padding: 10px;
     border-radius: 10px;
@@ -573,7 +569,6 @@ $darkerGrey: rgb(30, 30, 30);
     list-style: none;
 }
 
-
 // DownArrow styles
 
 .arrowContainer {
@@ -594,6 +589,37 @@ $darkerGrey: rgb(30, 30, 30);
     position: absolute;
     filter: drop-shadow(0px 0px 3px silver);
 }
+
+// -------------------
+// Animations
+// -------------------
+
+@keyframes showFocus {
+    from {opacity: 0};
+    to {opacity: 1};
+}
+
+@keyframes appearGrow {
+    from {max-height: 0;}
+    to {max-height: 500px;}
+}
+
+@keyframes fadeInOut {
+    0%, 100% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+}
+
+.loadingAnimation {
+    animation: fadeInOut 3s ease-in-out infinite;
+}
+
+// -----------------
+// Responsiveness
+// -----------------
 
 @media (max-width: 800px) {
     .taskContainer {
@@ -628,15 +654,5 @@ $darkerGrey: rgb(30, 30, 30);
     }
 }
 
-.loadingAnimation {
-    animation: fadeInOut 3s ease-in-out infinite;
-}
 
-@keyframes fadeInOut {
-    0%, 100% {
-      opacity: 0;
-    }
-    50% {
-      opacity: 1;
-    }
-  }
+
