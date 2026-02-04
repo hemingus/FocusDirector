@@ -1,10 +1,12 @@
-type ConfirmDialogProps = {
+import './ConfirmDialog.scss';
+
+export type ConfirmDialogProps = {
     open: boolean;
     title?: string;
     message: React.ReactNode;
     confirmLabel?: string;
     cancelLabel?: string;
-    onConfirm: () => void;
+    onConfirm: () => void | Promise<void>;
     onCancel: () => void;
 };
 
