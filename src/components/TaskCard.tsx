@@ -10,6 +10,7 @@ import ExpandIcon from '../app/assets/icons/expand.svg'
 import CollapseIcon from '../app/assets/icons/collapse.svg'
 import TrashIcon from '../app/assets/icons/trashcan.svg'
 import { Tooltip } from './Tooltip/Tooltip';
+import { useConfirm } from './ConfirmDialog/useConfirm';
 
 const ItemTypes = {
     TASK_CARD: 'taskCard'
@@ -25,6 +26,7 @@ const TaskCard: React.FC<Task> = ({id, description, isComplete, subtasks, order}
     const { getTasks } = useContext(TaskDataContext)!
     const [showSubtasks, setShowSubtasks] = useState(false)
     const [newDescription, setNewDescription] = useState(description)
+    const { confirm, dialog } = useConfirm();
     const styles = isComplete ?
         {card: "taskCardCompleted", 
             expandCollapse: "expandCollapseCompleted",
@@ -143,7 +145,19 @@ const TaskCard: React.FC<Task> = ({id, description, isComplete, subtasks, order}
                         <Tooltip content="DELETE Task" color="darkred">
                             <TrashIcon 
                                 className={styles.trashIcon}
-                                onClick={() => handleRemoveTask(id)}/>
+                                onClick={() =>
+                                    confirm(
+                                        {
+                                        title: 'Delete Task',
+                                        message: 'Are you sure you want to delete this task?',
+                                        confirmLabel: 'Delete',
+                                        cancelLabel: 'Cancel',
+                                        },
+                                        () => handleRemoveTask(id)
+                                    )
+                                }
+                            />
+                            {dialog}
                         </Tooltip>
                     </div>
                 </div>
