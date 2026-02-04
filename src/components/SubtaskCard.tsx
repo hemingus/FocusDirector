@@ -9,6 +9,8 @@ import TaskDataProvider from './TaskDataContext'
 import ExpandIcon from '../app/assets/icons/expand.svg'
 import CollapseIcon from '../app/assets/icons/collapse.svg'
 import TrashIcon from '../app/assets/icons/trashcan.svg'
+import { useConfirm } from './ConfirmDialog/useConfirm';
+import { Tooltip } from './Tooltip/Tooltip';
 
 const ItemTypes = {
     SUBTASK_CARD: 'subtaskCard'
@@ -24,7 +26,8 @@ const SubtaskCard: React.FC<Subtask> = ({taskId, id, description, isComplete, st
     const { getTasks } = useContext(TaskDataProvider)!
     const [showSteps, setShowSteps] = useState(false)
     const [newDescription, setNewDescription] = useState(description)
-        const styles = isComplete ?
+    const { confirm, dialog } = useConfirm();
+    const styles = isComplete ?
         {card: "taskCardCompleted", 
             expandCollapse: "expandCollapseCompleted",
             trashIcon: "trashIconCompleted",
@@ -137,9 +140,23 @@ const SubtaskCard: React.FC<Subtask> = ({taskId, id, description, isComplete, st
                         className="customCheckbox"
                         checkbox-tooltip={isComplete ? "uncheck" : "Done☑"}
                         />
-                        <TrashIcon 
-                            className={styles.trashIcon}
-                            onClick={() => handleRemoveSubtask(id)}/>
+                        <Tooltip content="DELETE Subtask" color="darkred">
+                            <TrashIcon 
+                                className={styles.trashIcon}
+                                onClick={() =>
+                                    confirm(
+                                        {
+                                        title: 'Delete Subtask',
+                                        message: 'Are you sure you want to delete this subtask?',
+                                        confirmLabel: 'Delete',
+                                        cancelLabel: 'Cancel',
+                                        },
+                                        () => handleRemoveSubtask(id)
+                                    )
+                                }
+                            />
+                            {dialog}
+                        </Tooltip>
                     </div>
                 </div>                   
                 {renderSubtasks()}

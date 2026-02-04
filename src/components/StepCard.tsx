@@ -6,6 +6,8 @@ import { updateStepStatus, updateStepDescription, updateStepOrder, deleteStep } 
 import { useDrag, useDrop, DropTargetMonitor } from 'react-dnd'
 import TaskDataContext from './TaskDataContext'
 import TrashIcon from '../app/assets/icons/trashcan.svg'
+import { useConfirm } from './ConfirmDialog/useConfirm';
+import { Tooltip } from './Tooltip/Tooltip';
 
 const ItemTypes = {
     STEP_CARD: 'stepCard'
@@ -20,7 +22,7 @@ interface DragItem {
 const StepCard: React.FC<Step> = ({taskId, subtaskId, id, description, isComplete, order}) => {
     const { getTasks } = useContext(TaskDataContext)!
     const [newDescription, setNewDescription] = useState(description)
-
+    const { confirm, dialog } = useConfirm()
     const styles = isComplete ?
         {
         card: "taskCardCompleted",
@@ -110,9 +112,23 @@ const StepCard: React.FC<Step> = ({taskId, subtaskId, id, description, isComplet
                         className="customCheckbox"
                         checkbox-tooltip={isComplete ? "uncheck" : "Done☑"}
                         />
-                        <TrashIcon
-                            className={styles.trashIcon}
-                            onClick={() => handleRemoveStep(id)}/>
+                        <Tooltip content="DELETE Step" color="darkred">
+                            <TrashIcon 
+                                className={styles.trashIcon}
+                                onClick={() =>
+                                    confirm(
+                                        {
+                                        title: 'Delete Step',
+                                        message: 'Are you sure you want to delete this step?',
+                                        confirmLabel: 'Delete',
+                                        cancelLabel: 'Cancel',
+                                        },
+                                        () => handleRemoveStep(id)
+                                    )
+                                }
+                            />
+                            {dialog}
+                        </Tooltip>
                     </div>
                 </div>
             </div>
