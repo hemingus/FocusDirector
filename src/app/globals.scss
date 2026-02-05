@@ -441,7 +441,8 @@ $darkerGrey: rgb(30, 30, 30);
     align-items: center;
     flex-direction: column;
     gap: 10px;
-    background: radial-gradient(rgb(70, 70, 70), silver);
+    background-color: rgba(0, 0, 0, 0.7);
+    // background: radial-gradient(rgb(70, 70, 70), silver);
     padding: 30px;
     border-radius: 10px;
 }
