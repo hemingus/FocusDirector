@@ -28,11 +28,13 @@
 .confirm-message {
     margin-bottom: 1rem;
     font-size: 0.9rem;
+    white-space: pre-line;
+    word-break: break-all;
 }
 
 .confirm-actions {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-around;
     gap: 0.5rem;
 
     button {
