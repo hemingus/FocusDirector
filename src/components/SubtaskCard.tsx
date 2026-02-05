@@ -9,8 +9,8 @@ import TaskDataProvider from './TaskDataContext'
 import ExpandIcon from '../app/assets/icons/expand.svg'
 import CollapseIcon from '../app/assets/icons/collapse.svg'
 import TrashIcon from '../app/assets/icons/trashcan.svg'
-import { useConfirm } from './ConfirmDialog/useConfirm';
 import { Tooltip } from './Tooltip/Tooltip';
+import { useGlobalConfirm } from './ConfirmDialog/ConfirmContext';
 
 const ItemTypes = {
     SUBTASK_CARD: 'subtaskCard'
@@ -26,7 +26,7 @@ const SubtaskCard: React.FC<Subtask> = ({taskId, id, description, isComplete, st
     const { getTasks } = useContext(TaskDataProvider)!
     const [showSteps, setShowSteps] = useState(false)
     const [newDescription, setNewDescription] = useState(description)
-    const { confirm, dialog } = useConfirm();
+    const confirm = useGlobalConfirm();
     const styles = isComplete ?
         {card: "taskCardCompleted", 
             expandCollapse: "expandCollapseCompleted",
@@ -155,7 +155,6 @@ const SubtaskCard: React.FC<Subtask> = ({taskId, id, description, isComplete, st
                                     )
                                 }
                             />
-                            {dialog}
                         </Tooltip>
                     </div>
                 </div>                   

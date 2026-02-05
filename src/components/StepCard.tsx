@@ -6,8 +6,8 @@ import { updateStepStatus, updateStepDescription, updateStepOrder, deleteStep } 
 import { useDrag, useDrop, DropTargetMonitor } from 'react-dnd'
 import TaskDataContext from './TaskDataContext'
 import TrashIcon from '../app/assets/icons/trashcan.svg'
-import { useConfirm } from './ConfirmDialog/useConfirm';
 import { Tooltip } from './Tooltip/Tooltip';
+import { useGlobalConfirm } from './ConfirmDialog/ConfirmContext';
 
 const ItemTypes = {
     STEP_CARD: 'stepCard'
@@ -22,7 +22,7 @@ interface DragItem {
 const StepCard: React.FC<Step> = ({taskId, subtaskId, id, description, isComplete, order}) => {
     const { getTasks } = useContext(TaskDataContext)!
     const [newDescription, setNewDescription] = useState(description)
-    const { confirm, dialog } = useConfirm()
+    const confirm = useGlobalConfirm();
     const styles = isComplete ?
         {
         card: "taskCardCompleted",
@@ -127,7 +127,6 @@ const StepCard: React.FC<Step> = ({taskId, subtaskId, id, description, isComplet
                                     )
                                 }
                             />
-                            {dialog}
                         </Tooltip>
                     </div>
                 </div>
