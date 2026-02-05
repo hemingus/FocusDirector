@@ -119,7 +119,7 @@ const StepCard: React.FC<Step> = ({taskId, subtaskId, id, description, isComplet
                                     confirm(
                                         {
                                         title: 'Delete Step',
-                                        message: 'Are you sure you want to delete this step?',
+                                        message: `"${description}"\n\n Are you sure you want to delete this step?`,
                                         confirmLabel: 'Delete',
                                         cancelLabel: 'Cancel',
                                         },

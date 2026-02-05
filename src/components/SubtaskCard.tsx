@@ -74,24 +74,40 @@ const SubtaskCard: React.FC<Subtask> = ({taskId, id, description, isComplete, st
         setShowSteps(!showSteps)
     }
 
+    // Function to build the delete confirmation message
+    function buildDeleteSubtaskMessage() {
+        const lines = [`"${description}"\n`, 'Are you sure you want to DELETE this Subtask?'];
+
+        if (steps.length > 0) {
+            lines.push(`\nIncluding:\n- ${steps.length} steps`);
+        }
+        return lines.join('\n');
+    }
+
     const renderSubtasks = () => {
         if (showSteps && steps) {
             return (
             <div>
-                <div className={styles.expandCollapse}>   
-                    <CollapseIcon onClick={() => toggleSteps()}/>
-                    <span>{`Steps`}</span>
-                </div>
+                <Tooltip content={`Hide steps`} color="#665500">
+                    <div className={styles.expandCollapse}>
+                        <CollapseIcon onClick={() => toggleSteps()}/>
+                        <span>{`Steps`}</span>
+                    </div>
+                </Tooltip>
                 <StepWindow taskId={taskId} subtaskId={id} steps={[...steps].sort((a, b) => a.order - b.order)} />  
             </div>
             )
         }
-        return <div 
-                    onClick={() => toggleSteps()}
-                    className={styles.expandCollapse}>
-                    <ExpandIcon />
-                    <span>{`${steps.length}`}</span>
-                </div>
+        return (
+        <Tooltip content={`Expand steps`} color="#665500">
+            <div
+                onClick={() => toggleSteps()}
+                className={styles.expandCollapse}>
+                <ExpandIcon />
+                <span>{`${steps.length}`}</span>
+            </div>
+        </Tooltip>
+        )
     }
 
     const handleUpdateSubtaskStatus = async (status: boolean) => {
@@ -147,7 +163,7 @@ const SubtaskCard: React.FC<Subtask> = ({taskId, id, description, isComplete, st
                                     confirm(
                                         {
                                         title: 'Delete Subtask',
-                                        message: 'Are you sure you want to delete this subtask?',
+                                        message: buildDeleteSubtaskMessage(),
                                         confirmLabel: 'Delete',
                                         cancelLabel: 'Cancel',
                                         },

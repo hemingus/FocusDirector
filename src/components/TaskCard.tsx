@@ -25,6 +25,7 @@ interface DragItem {
 const TaskCard: React.FC<Task> = ({id, description, isComplete, subtasks, order}) => {
     const { getTasks } = useContext(TaskDataContext)!
     const [showSubtasks, setShowSubtasks] = useState(false)
+    const totalSteps = calculateTotalSteps();
     const [newDescription, setNewDescription] = useState(description)
     const confirm = useGlobalConfirm();
     const styles = isComplete ?
@@ -64,6 +65,28 @@ const TaskCard: React.FC<Task> = ({id, description, isComplete, subtasks, order}
         setShowSubtasks(!showSubtasks)
     }
 
+    function calculateTotalSteps() {
+        const totalSteps = subtasks.reduce((sum, subtask) => {
+            return sum + subtask.steps.length;
+        }, 0)
+        return totalSteps;
+    }
+
+    // Function to build the delete confirmation message
+    function buildDeleteTaskMessage() {
+        const lines = [`"${description}"\n`, 'Are you sure you want to DELETE this Task?'];
+
+        if (subtasks.length > 0) {
+            lines.push(`\nIncluding:\n- ${subtasks.length} subtasks`);
+        }
+
+        if (totalSteps > 0) {
+            lines.push(`- ${totalSteps} steps`);
+        }
+
+        return lines.join('\n');
+    }
+
     useEffect(() => {
         setNewDescription(description);
       }, [description]);
@@ -72,22 +95,28 @@ const TaskCard: React.FC<Task> = ({id, description, isComplete, subtasks, order}
         if (showSubtasks && subtasks) {
             return (
             <div>
-                <div 
-                    onClick={() => toggleSubtasks()}
-                    className={styles.expandCollapse}>
-                    <CollapseIcon />
-                    <span>{`Subtasks`}</span>
-                </div>
+                <Tooltip content={`Hide subtasks`} color="#006600">
+                    <div
+                        onClick={() => toggleSubtasks()}
+                        className={styles.expandCollapse}>
+                        <CollapseIcon />
+                        <span>{`Subtasks`}</span>
+                    </div>
+                </Tooltip>
                 <SubtaskWindow taskId={id} subtasks={[...subtasks].sort((a, b) => a.order - b.order)} />  
             </div>
             )
         }
-        return <div 
+        return (
+            <Tooltip content={`Expand subtasks`} color="#006600">
+                <div
                     onClick={() => toggleSubtasks()}
                     className={styles.expandCollapse}>
-                    <ExpandIcon />
-                    <span>{`${subtasks.length}`}</span>
+                        <ExpandIcon />
+                        <span>{`${subtasks.length}`}</span>
                 </div>
+            </Tooltip>
+        )
     }
 
     const handleUpdateTaskOrder = async (taskId: string, currentOrder: number, newOrder: number) => {
@@ -149,7 +178,7 @@ const TaskCard: React.FC<Task> = ({id, description, isComplete, subtasks, order}
                                     confirm(
                                         {
                                         title: 'Delete Task',
-                                        message: 'Are you sure you want to delete this task?',
+                                        message: buildDeleteTaskMessage(),
                                         confirmLabel: 'Delete',
                                         cancelLabel: 'Cancel',
                                         },
