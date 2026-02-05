@@ -70,27 +70,6 @@ $darkerGrey: rgb(30, 30, 30);
     text-shadow: 3px 3px 1px black;
 }
 
-.taskSection h3 {
-    margin-left: 2svw;
-    padding: 5px;
-    color:white;
-    background: linear-gradient(grey, black);
-    border: solid 2px silver;
-}
-
-// .taskSection button {
-//     background: linear-gradient(grey -100%, black);
-//     color: silver;
-//     padding: 0.2rem;
-//     border-radius: 4px;
-// }
-
-// .taskSection button:hover {
-//     cursor: pointer;
-//     filter: drop-shadow(1px 1px 1px white);
-//     color: white;
-// }
-
 .taskSection textarea {
     font-size: 16px;
     color: white;
@@ -99,11 +78,15 @@ $darkerGrey: rgb(30, 30, 30);
 }
 
 .focusButton {
-    background: radial-gradient(black, blue);
-    color: cyan;
-    font-size: 20px;
+    background: radial-gradient($lightGrey, $darkerGrey);
+    color: lightgreen;
+    font-size: 1.5rem;
     font-family: 'Times New Roman', Times, serif;
-    padding: 10px;
+    font-weight: 900;
+    padding: 1rem;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+    text-shadow: 3px 3px 1px black;
 }
 
 [focus-tooltip] {
@@ -445,7 +428,8 @@ $darkerGrey: rgb(30, 30, 30);
     min-height: 100svh;
     height: auto;
     color: white;
-    background: url("../../public/assets/skyblue_clouds.png");
+    background-image: url("../../public/assets/zen_pond.png");
+    // background: url("../../public/assets/skyblue_clouds.png");
     background-size: cover;
     z-index: 1;
 }
