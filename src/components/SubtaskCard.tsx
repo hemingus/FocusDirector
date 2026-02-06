@@ -76,11 +76,15 @@ const SubtaskCard: React.FC<Subtask> = ({taskId, id, description, isComplete, st
 
     // Function to build the delete confirmation message
     function buildDeleteSubtaskMessage() {
-        const lines = [`"${description}"\n`, 'Are you sure you want to DELETE this Subtask?'];
+        const lines = [`"${description}"\n`];
+        const stepWord = steps.length === 1 ? "step" : "steps";
 
         if (steps.length > 0) {
-            lines.push(`\nIncluding:\n- ${steps.length} steps`);
+            lines.push(`Including:\n- ${steps.length} ${stepWord}`);
         }
+
+        lines.push('\nAre you sure you want to DELETE this Subtask?')
+
         return lines.join('\n');
     }
 
