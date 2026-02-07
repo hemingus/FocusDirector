@@ -10,8 +10,9 @@ const DashBoard = () => {
 
     const taskMode = () => {
         if (focusMode) return (
-            <div>
-                <button className="exitButton" style={{position: 'fixed', zIndex: 3, top: "0", left: "0"}} onClick={() => setFocusMode(false)}>EXIT</button>
+            <div onClick={() => {
+                setFocusMode(false);
+                }}>
                 <FocusMode/>
             </div>
         )
