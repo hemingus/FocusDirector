@@ -2,37 +2,31 @@
 
 import React, { useState } from "react";
 import { Menu, X } from "lucide-react";
-import "./Navbar.scss";
+import styles from "./Navbar.module.scss";
 
 
 export default function Navbar() {
 const [isOpen, setIsOpen] = useState(false);
 
-
-    return (
-        <nav className="navbar">
-            <div className="navbar__container">
-                <div className="navbar__logo">Focus Director</div>
-
-                <ul className={`navbar__links ${isOpen ? "active" : ""}`}>
-                    <li><a href="#">Home</a></li>
+    return (     
+        <nav className={styles.navbar}>
+            <div className={styles.navbar__container}>
+                <div className={styles.navbar__logo}>Focus Director</div>
+                <ul className={`${styles.navbar__links} ${isOpen ? "active" : ""}`}>
+                    <li><a href="/Testroute">Home</a></li>
                     <li><a href="#">Features</a></li>
                     <li><a href="#">Pricing</a></li>
                     <li><a href="#">Contact</a></li>
-                    <div className="navbar__actions mobile">
-                        <button className="btn btn--outline">Login</button>
-                        <button className="btn btn--primary">Sign Up</button>
+                    <div className={`${styles.navbar__actions} ${styles.mobile}`}>
+                        <button className={`${styles.btn} ${styles.btnOutline}`}>Login</button>
+                        <button className={`${styles.btn} ${styles.btnPrimary}`}>Sign Up</button>
                     </div>
                 </ul>
-
-
-                <div className="navbar__actions desktop">
-                    <button className="btn btn--outline">Login</button>
-                    <button className="btn btn--primary">Sign Up</button>
+                <div className={`${styles.navbar__actions} ${styles.desktop}`}>
+                    <button className={`${styles.btn} ${styles.btnOutline}`}>Login</button>
+                    <button className={`${styles.btn} ${styles.btnPrimary}`}>Sign Up</button>
                 </div>
-
-
-                <div className="navbar__toggle" onClick={() => setIsOpen(!isOpen)}>
+                <div className={styles.navbar__toggle} onClick={() => setIsOpen(!isOpen)}>
                 {isOpen ? <X size={24} /> : <Menu size={24} />}
                 </div>
             </div>
