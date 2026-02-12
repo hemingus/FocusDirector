@@ -3,7 +3,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import './globals.scss'
 import { ConfirmProvider } from '@/components/ConfirmDialog/ConfirmContext'
-import Navbar from '@/components/NavBar/NavBar'
+import Navbar from '@/components/Navbar/Navbar'
 
 const inter = Inter({ subsets: ['latin'] })
 
