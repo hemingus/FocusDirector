@@ -2,9 +2,9 @@
   width: 100%;
   position: sticky;
   top: 0;
-  background-image: linear-gradient(to bottom, #005358,#002020);
+  background-image: linear-gradient(to bottom, #303030,#000000);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  z-index: 1000;
+  z-index: 100;
   color: white;
 
   &__container {
@@ -104,13 +104,13 @@
       padding: 1.5rem 0;
       display: none;
 
-      &.active {
-        display: flex;
-      }
-
       .mobile {
         display: flex;
       }
+    }
+
+    &__linksOpen {
+      display: flex;
     }
 
     &__actions.desktop {
