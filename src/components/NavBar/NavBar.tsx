@@ -11,12 +11,12 @@ const [isOpen, setIsOpen] = useState(false);
     return (     
         <nav className={styles.navbar}>
             <div className={styles.navbar__container}>
-                <div className={styles.navbar__logo}>Focus Director</div>
-                <ul className={`${styles.navbar__links} ${isOpen ? "active" : ""}`}>
+                <a href="/LandingPage" className={styles.navbar__logo}>Focus Director</a>
+                <ul className={`${styles.navbar__links} ${isOpen ? styles.navbar__linksOpen : ""}`}>
                     <li><a href="/Testroute">Home</a></li>
-                    <li><a href="#">Features</a></li>
-                    <li><a href="#">Pricing</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li><a href="/LandingPage">Projects</a></li>
+                    <li><a href="/">Tutorial</a></li>
+                    <li><a href="/">About</a></li>
                     <div className={`${styles.navbar__actions} ${styles.mobile}`}>
                         <button className={`${styles.btn} ${styles.btnOutline}`}>Login</button>
                         <button className={`${styles.btn} ${styles.btnPrimary}`}>Sign Up</button>
