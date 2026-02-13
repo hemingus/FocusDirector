@@ -417,7 +417,7 @@ $darkerGrey: rgb(30, 30, 30);
 // ----------------------
 
 .focusScreen {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     display: flex;
@@ -431,7 +431,7 @@ $darkerGrey: rgb(30, 30, 30);
     background-image: url("../../public/assets/zen_pond.png");
     // background: url("../../public/assets/skyblue_clouds.png");
     background-size: cover;
-    z-index: 1;
+    z-index: 1000;
 }
 
 .focusContent {
