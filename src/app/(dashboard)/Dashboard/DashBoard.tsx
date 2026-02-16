@@ -1,9 +1,9 @@
 "use client";
 
-import TaskWindow from './TaskWindow'
-import FocusMode from './FocusMode';
+import TaskWindow from '../../../components/TaskWindow'
+import FocusMode from '../../../components/FocusMode';
 import { useState } from 'react'
-import { TaskDataProvider } from './TaskDataContext'
+import { TaskDataProvider } from '../../../components/TaskDataContext'
 
 const DashBoard = () => {
     const [focusMode, setFocusMode] = useState(false)
