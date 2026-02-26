@@ -35,6 +35,10 @@ $darkerGrey: rgb(30, 30, 30);
     background: url('../../public/assets/focus_bg.jpg');
     background-size: cover;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
 }
 .mainPage h1 {
     font-family: "Times";
