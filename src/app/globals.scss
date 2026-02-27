@@ -27,12 +27,22 @@ $darkerGrey: rgb(30, 30, 30);
 //     filter: invert(1);
 // }
 
+main { 
+    flex: 1
+}
 
+footer {
+    width: 100%;
+    text-align: center;
+    padding: 0.5rem;
+    color: white;
+    background-image: linear-gradient(to bottom, #08514f,#000000);
+}
 
 .mainPage {
     min-height: 100svh;
     min-width: 100svw;
-    background: url('../../public/assets/focus_bg.jpg');
+    background: url('../../public/assets/focus_zen_dark.png');
     background-size: cover;
     box-sizing: border-box;
     display: flex;
@@ -82,15 +92,20 @@ $darkerGrey: rgb(30, 30, 30);
 }
 
 .focusButton {
-    background: radial-gradient($lightGrey, $darkerGrey);
+    width: 200px;
+    background: radial-gradient(greenyellow, #000);
     color: lightgreen;
     font-size: 1.5rem;
+    padding: 0.5rem 2.5rem;
     font-family: 'Times New Roman', Times, serif;
     font-weight: 900;
-    padding: 1rem;
-    border-radius: 50%;
+    border-radius: 2rem;
     margin-bottom: 1rem;
     text-shadow: 3px 3px 1px black;
+}
+
+.focusButton img {
+    width: 100px;
 }
 
 [focus-tooltip] {
@@ -101,15 +116,15 @@ $darkerGrey: rgb(30, 30, 30);
     content: attr(focus-tooltip);
     font-weight: 900;
     position: absolute;
-    inset: 0 0 0 110%;
-    color:white;
+    inset: 10% 0 0 100%;
+    color:lightgreen;
     width: 100%;
     filter: drop-shadow(5px 5px 5px black);
 }
 
 .focusButton:hover {
     cursor: pointer;
-    box-shadow: 0 0 100px 50px white;
+    box-shadow: 0 0 100px 1px lightgreen;
     color: white;
 }
 
