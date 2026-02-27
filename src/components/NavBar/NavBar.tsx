@@ -13,7 +13,7 @@ export default function Navbar() {
     <nav className={styles.navbar}>
       <div className={styles.navbar__container}>
         <a href="/LandingPage" className={styles.navbar__logo}>
-          Focus Director
+          <img src="./assets/favicon.png" />
         </a>
 
         <ul
@@ -21,7 +21,7 @@ export default function Navbar() {
             isOpen ? styles.navbar__linksOpen : ""
           }`}
         >
-          <li><a href="/Testroute">Home</a></li>
+          <li><a href="/">Home</a></li>
           <li><a href="/Dashboard">Dashboard</a></li>
           <li><a href="/">About</a></li>
 
