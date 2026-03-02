@@ -43,7 +43,9 @@ footer {
     min-height: 100svh;
     min-width: 100svw;
     background: url('../../public/assets/focus_zen_dark.png');
-    background-size: cover;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-position: top center;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
