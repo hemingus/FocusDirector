@@ -12,7 +12,7 @@ export default function Navbar() {
   return (
     <nav className={styles.navbar}>
       <div className={styles.navbar__container}>
-        <a href="/LandingPage" className={styles.navbar__logo}>
+        <a href="/" className={styles.navbar__logo}>
           <img src="./assets/favicon.png" />
         </a>
 
