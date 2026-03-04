@@ -9,20 +9,52 @@
     padding: 1rem;
     border-radius: 1rem;
     margin-top: 2rem;
+    text-align: center;
 
     &__cta {
         display: flex;
+        align-items: center;
+        justify-content: center;
         gap: 2rem;
     }
 
+    &__text {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    &__message {
+        display: flex;
+        gap: 2rem;
+        flex-wrap: wrap;
+        p {
+            min-width: 300px;
+            flex: 1;
+        }
+    }
+
+    h1, h2 {
+        margin: 0;
+        padding: 0;
+    }
+
     img {
-        // background: rgba(50,80,80,0.8);
+        width: 100%;
+        max-width: 600px;
         padding: 2vw;
-        border-radius: 2rem;
     }
 
     p {
-        color: white;
+        display: flex;
+        align-items: center;
+        font-size: 1.3rem;
+        color: rgb(212, 255, 186);
+        padding: 1rem;
+        margin: 0;
+        padding: 1rem;
+        background-color: rgba(0, 50, 50, 0.5);
+        border-radius: 0.5rem; 
     }
 
     a {
