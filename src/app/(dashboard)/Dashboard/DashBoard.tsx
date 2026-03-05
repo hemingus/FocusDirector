@@ -21,7 +21,9 @@ const DashBoard = () => {
 
     return (
         <>
-            <h2>Dashboard</h2>
+            <header>
+                <h1>Dashboard</h1>
+            </header>
             <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
                 <button className="focusButton" focus-tooltip="Focus Mode" onClick={() => setFocusMode(true)}><img src="./assets/focus_button.png" /></button>
             </div>
