@@ -30,13 +30,13 @@ export default function LoginPage() {
     console.log("Login attempt:", formData);
 
     // Example login request
-    // await fetch("/api/login", {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify(formData),
-    // });
+    await fetch("https://localhost:7172/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    });
 
-    router.push("/dashboard"); // redirect after login
+    router.push("/Dashboard"); // redirect after login
   };
 
   return (
