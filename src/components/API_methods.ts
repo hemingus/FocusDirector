@@ -1,5 +1,20 @@
 
 // task methods
+const DEV_BASE_URL = "https://localhost:7172"
+const PROD_BASE_URL = "https://hemingmusicapi.azurewebsites.net"
+const BASE_URL = DEV_BASE_URL
+
+export const apiFetch = async (url: string, options: RequestInit = {}) => {
+  return fetch(`${BASE_URL}${url}`, {
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      ...(options.headers || {})
+    },
+    ...options
+  })
+}
+
 
 export const addTask = async (text: string, index: number) => {
     const newTask = {
@@ -7,11 +22,8 @@ export const addTask = async (text: string, index: number) => {
         order: index
     }
     try {
-        await fetch("https://hemingmusicapi.azurewebsites.net/TaskEntity", {
+        await apiFetch(`${BASE_URL}/TaskEntity`, {
             method: 'POST', 
-            headers: {
-            "Content-Type": "application/json"
-            }, 
             body: JSON.stringify(newTask)
         })
     }
@@ -22,7 +34,7 @@ export const addTask = async (text: string, index: number) => {
 
 export const deleteTask = async (taskId: string) => {
     try {
-        await fetch(`https://hemingmusicapi.azurewebsites.net/TaskEntity/${taskId}`, {
+        await apiFetch(`/TaskEntity/${taskId}`, {
             method: 'DELETE' 
         })
     }
@@ -36,11 +48,8 @@ export const updateTaskStatus = async (taskId: string, status: boolean) => {
         IsComplete: status
     } 
     try {
-        await fetch(`https://hemingmusicapi.azurewebsites.net/TaskEntity/${taskId}`, {
+        await apiFetch(`/TaskEntity/${taskId}`, {
             method: 'PATCH',
-            headers: {
-                "Content-Type": "application/json"
-                }, 
             body: JSON.stringify(patchTask)
         })
     }
@@ -54,11 +63,8 @@ export const updateTaskDescription = async (taskId: string, description: string)
         description: description
     } 
     try {
-        await fetch(`https://hemingmusicapi.azurewebsites.net/TaskEntity/${taskId}/description`, {
-            method: 'PATCH',
-            headers: {
-                "Content-Type": "application/json"
-                }, 
+        await apiFetch(`/TaskEntity/${taskId}/description`, {
+            method: 'PATCH', 
             body: JSON.stringify(patchTask)
         })
     }
@@ -72,11 +78,8 @@ export const updateTaskOrder = async (taskId: string, newOrder: number) => {
         order: newOrder
     } 
     try {
-        await fetch(`https://hemingmusicapi.azurewebsites.net/TaskEntity/${taskId}/order`, {
+        await fetch(`/TaskEntity/${taskId}/order`, {
             method: 'PATCH',
-            headers: {
-                "Content-Type": "application/json"
-                }, 
             body: JSON.stringify(patchTask)
         })
     }
@@ -94,11 +97,8 @@ export const addSubtask = async (taskId: string, text: string, order: number) =>
         Order: order
     }
     try {
-        await fetch(`https://hemingmusicapi.azurewebsites.net/taskentity/${taskId}/subtask`, {
-            method: 'PATCH',
-            headers: {
-                "Content-Type": "application/json"
-                }, 
+        await apiFetch(`/taskentity/${taskId}/subtask`, {
+            method: 'PATCH', 
             body: JSON.stringify(subtaskToAdd)
         })
     }
@@ -109,7 +109,7 @@ export const addSubtask = async (taskId: string, text: string, order: number) =>
 
 export const deleteSubtask = async (taskId: string, subtaskId: string) => {
     try {
-        await fetch(`https://hemingmusicapi.azurewebsites.net/taskentity/${taskId}/subtask/${subtaskId}`, {
+        await apiFetch(`/taskentity/${taskId}/subtask/${subtaskId}`, {
             method: 'DELETE'
         })
     }
@@ -123,11 +123,8 @@ export const updateSubtaskStatus = async (taskId: string, subtaskId: string, sta
         IsComplete: status
     } 
     try {
-        await fetch(`https://hemingmusicapi.azurewebsites.net/taskentity/${taskId}/subtask/${subtaskId}`, {
+        await apiFetch(`/taskentity/${taskId}/subtask/${subtaskId}`, {
             method: 'PATCH',
-            headers: {
-                "Content-Type": "application/json"
-                }, 
             body: JSON.stringify(patchSubtask)
         })
     }
@@ -141,11 +138,8 @@ export const updateSubtaskDescription = async (taskId: string, subtaskId: string
         Description: description
     } 
     try {
-        await fetch(`https://hemingmusicapi.azurewebsites.net/TaskEntity/${taskId}/subtask/${subtaskId}/description`, {
+        await apiFetch(`/TaskEntity/${taskId}/subtask/${subtaskId}/description`, {
             method: 'PATCH',
-            headers: {
-                "Content-Type": "application/json"
-                }, 
             body: JSON.stringify(patchSubtask)
         })
     }
@@ -159,11 +153,8 @@ export const updateSubtaskOrder = async (taskId: string, subtaskId: string, orde
         Order: order
     } 
     try {
-        await fetch(`https://hemingmusicapi.azurewebsites.net/TaskEntity/${taskId}/subtask/${subtaskId}/order`, {
+        await apiFetch(`/TaskEntity/${taskId}/subtask/${subtaskId}/order`, {
             method: 'PATCH',
-            headers: {
-                "Content-Type": "application/json"
-                }, 
             body: JSON.stringify(patchSubtask)
         })
     }
@@ -180,11 +171,8 @@ export const addStep = async (taskId: string, subtaskId: string, text: string, o
         Order: order
     }
     try {
-        await fetch(`https://hemingmusicapi.azurewebsites.net/taskentity/${taskId}/subtask/${subtaskId}/step`, {
+        await apiFetch(`/taskentity/${taskId}/subtask/${subtaskId}/step`, {
             method: 'PATCH',
-            headers: {
-                "Content-Type": "application/json"
-                }, 
             body: JSON.stringify(stepToAdd)
         })
     }
@@ -195,7 +183,7 @@ export const addStep = async (taskId: string, subtaskId: string, text: string, o
 
 export const deleteStep = async (taskId: string, subtaskId: string, stepId: string) => {
     try {
-        await fetch(`https://hemingmusicapi.azurewebsites.net/taskentity/${taskId}/subtask/${subtaskId}/step/${stepId}`, {
+        await apiFetch(`/taskentity/${taskId}/subtask/${subtaskId}/step/${stepId}`, {
             method: 'DELETE'
         })
     }
@@ -209,11 +197,8 @@ export const updateStepStatus = async (taskId: string, subtaskId: string, stepId
         IsComplete: status
     } 
     try {
-        await fetch(`https://hemingmusicapi.azurewebsites.net/taskentity/${taskId}/subtask/${subtaskId}/step/${stepId}`, {
+        await apiFetch(`/taskentity/${taskId}/subtask/${subtaskId}/step/${stepId}`, {
             method: 'PATCH',
-            headers: {
-                "Content-Type": "application/json"
-                }, 
             body: JSON.stringify(patchStep)
         })
     }
@@ -227,11 +212,8 @@ export const updateStepDescription = async (taskId: string, subtaskId: string, s
         Description: description
     } 
     try {
-        await fetch(`https://hemingmusicapi.azurewebsites.net/taskentity/${taskId}/subtask/${subtaskId}/step/${stepId}/description`, {
+        await apiFetch(`/taskentity/${taskId}/subtask/${subtaskId}/step/${stepId}/description`, {
             method: 'PATCH',
-            headers: {
-                "Content-Type": "application/json"
-                }, 
             body: JSON.stringify(patchStep)
         })
     }
@@ -245,11 +227,8 @@ export const updateStepOrder = async (taskId: string, subtaskId: string, stepId:
         Order: order
     }
     try {
-        await fetch(`https://hemingmusicapi.azurewebsites.net/taskentity/${taskId}/subtask/${subtaskId}/step/${stepId}/order`, {
+        await apiFetch(`/taskentity/${taskId}/subtask/${subtaskId}/step/${stepId}/order`, {
             method: 'PATCH',
-            headers: {
-                "Content-Type": "application/json"
-                }, 
             body: JSON.stringify(patchStep)
         })
     }
