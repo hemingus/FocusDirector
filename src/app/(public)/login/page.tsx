@@ -33,6 +33,7 @@ export default function LoginPage() {
     await fetch("https://localhost:7172/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
       body: JSON.stringify(formData),
     });
 
