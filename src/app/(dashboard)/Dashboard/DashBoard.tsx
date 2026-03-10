@@ -12,24 +12,8 @@ type Project = {
     createdAt: string
 }
 
-const projectFallback = 
-[
-    {
-        "id": "717c6e75-922b-4541-a2ca-40ae2112331e",
-        "name": "My first test project",
-        "description": "Some text describing the test project.",
-        "createdAt": "2026-03-05T22:56:24.5673622+01:00"
-    },
-    {
-        "id": "941d002a-6e55-421d-ae66-0ebfa7ca5ba1",
-        "name": "Project belongs to WHO ??",
-        "description": "Second, maybe first ?.",
-        "createdAt": "2026-03-05T23:24:05.8600497+01:00"
-    }
-]
-
 const DashBoard = () => {
-    const [projects, setProjects] = useState<Project[]>(projectFallback)
+    const [projects, setProjects] = useState<Project[]>([])
     const [activeProject, setActiveProject] = useState("")
     const [focusMode, setFocusMode] = useState(false)
 
@@ -62,7 +46,7 @@ const DashBoard = () => {
       }
     } catch (err) {
       console.error(err);
-      setProjects(projectFallback);
+      setProjects([]);
     }
   };
 
