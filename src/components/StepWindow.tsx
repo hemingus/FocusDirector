@@ -8,13 +8,13 @@ import TaskDataContext from './TaskDataContext'
 import AddIcon from '../app/assets/icons/add.svg'
 
 const StepWindow: React.FC<{ taskId: string, subtaskId: string, steps: Step[] }> = ({taskId, subtaskId, steps}) => {
-    const { getTasks } = useContext(TaskDataContext)!
+    const { getTasks, projectId } = useContext(TaskDataContext)!
     const [description, setDescription] = useState<string>('')
 
     const submitNewStep = async () => {
         if (description.trim() !== '') {
             await addStep(taskId, subtaskId, description, steps.length +1)
-            getTasks()
+            getTasks(projectId)
             setDescription('')
         }
     }

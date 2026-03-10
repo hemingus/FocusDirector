@@ -23,7 +23,7 @@ interface DragItem {
 }
 
 const TaskCard: React.FC<Task> = ({id, description, isComplete, subtasks, order}) => {
-    const { getTasks } = useContext(TaskDataContext)!
+    const { getTasks, projectId } = useContext(TaskDataContext)!
     const [showSubtasks, setShowSubtasks] = useState(false)
     const totalSteps = calculateTotalSteps();
     const [newDescription, setNewDescription] = useState(description)
@@ -57,7 +57,7 @@ const TaskCard: React.FC<Task> = ({id, description, isComplete, subtasks, order}
             const dropZoneTaskCardOrder = order;
             console.log(`dropped: \n id:${item.id} \n index:${item.order} \n new index:${dropZoneTaskCardOrder}`)
             await handleUpdateTaskOrder(item.id, item.order, dropZoneTaskCardOrder)
-            getTasks()
+            getTasks(projectId)
         }
     });
 
@@ -131,20 +131,20 @@ const TaskCard: React.FC<Task> = ({id, description, isComplete, subtasks, order}
 
     const handleUpdateTaskStatus = async (status: boolean) => {
         await updateTaskStatus(id, status)
-        getTasks()
+        getTasks(projectId)
         setShowSubtasks(!status)
     } 
 
     const handleDescriptionUpdate = async () => {
         if (newDescription !== description) {
             await updateTaskDescription(id, newDescription)
-            getTasks()
+            getTasks(projectId)
         }
     }
 
     const handleRemoveTask = async (taskId: string) => {
         await deleteTask(taskId)
-        await getTasks();
+        await getTasks(projectId);
     }
 
     return (

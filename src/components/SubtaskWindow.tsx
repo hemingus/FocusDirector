@@ -8,13 +8,13 @@ import TaskDataContext from './TaskDataContext'
 import AddIcon from '../app/assets/icons/add.svg'
 
 const SubtaskWindow: React.FC<{ taskId: string, subtasks: Subtask[] }> = ({taskId, subtasks}) => {
-    const { getTasks } = useContext(TaskDataContext)!
+    const { getTasks, projectId } = useContext(TaskDataContext)!
     const [description, setDescription] = useState<string>('')
 
     const submitNewSubtask = async () => {
         if (description.trim() !== '') {
             await addSubtask(taskId, description, subtasks.length+1)
-            getTasks()
+            getTasks(projectId)
             setDescription('')
         }
     }

@@ -20,7 +20,7 @@ interface DragItem {
 }
 
 const StepCard: React.FC<Step> = ({taskId, subtaskId, id, description, isComplete, order}) => {
-    const { getTasks } = useContext(TaskDataContext)!
+    const { getTasks, projectId } = useContext(TaskDataContext)!
     const [newDescription, setNewDescription] = useState(description)
     const confirm = useGlobalConfirm();
     const styles = isComplete ?
@@ -64,24 +64,24 @@ const StepCard: React.FC<Step> = ({taskId, subtaskId, id, description, isComplet
             return
         }
         await updateStepOrder(taskId, subtaskId, stepId, newOrder)
-        getTasks()
+        getTasks(projectId)
     }
 
     const handleUpdateStepStatus = async (status: boolean) => {
         await updateStepStatus(taskId, subtaskId, id, status)
-        getTasks()
+        getTasks(projectId)
     } 
 
     const handleDescriptionUpdate = async () => {
         if (newDescription !== description) {
             await updateStepDescription(taskId, subtaskId, id, newDescription)
-            getTasks()
+            getTasks(projectId)
         }
     }
 
     const handleRemoveStep = async (stepId: string) => {
         await deleteStep(taskId, subtaskId, stepId)
-        getTasks()
+        getTasks(projectId)
     }
 
     return (

@@ -23,7 +23,7 @@ interface DragItem {
 }
 
 const SubtaskCard: React.FC<Subtask> = ({taskId, id, description, isComplete, steps, order}) => {
-    const { getTasks } = useContext(TaskDataProvider)!
+    const { getTasks, projectId } = useContext(TaskDataProvider)!
     const [showSteps, setShowSteps] = useState(false)
     const [newDescription, setNewDescription] = useState(description)
     const confirm = useGlobalConfirm();
@@ -67,7 +67,7 @@ const SubtaskCard: React.FC<Subtask> = ({taskId, id, description, isComplete, st
         }
         console.log(newOrder)
         await updateSubtaskOrder(taskId, id, newOrder)
-        getTasks()
+        getTasks(projectId)
     }
 
     const toggleSteps = () => {
@@ -116,20 +116,20 @@ const SubtaskCard: React.FC<Subtask> = ({taskId, id, description, isComplete, st
 
     const handleUpdateSubtaskStatus = async (status: boolean) => {
         await updateSubtaskStatus(taskId, id, status)
-        getTasks()
+        getTasks(projectId)
         setShowSteps(!status)
     }
 
     const handleDescriptionUpdate = async () => {
         if (newDescription !== description) {
             await updateSubtaskDescription(taskId, id, newDescription)
-            getTasks()
+            getTasks(projectId)
         }
     }
 
     const handleRemoveSubtask = async (subtaskId: string) => {
         await deleteSubtask(taskId, subtaskId)
-        getTasks()
+        getTasks(projectId)
     }
     
     return (
