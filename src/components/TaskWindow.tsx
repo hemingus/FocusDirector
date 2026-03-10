@@ -52,7 +52,7 @@ const TaskWindow = ( { projectId }: TaskWindowProps) => {
                     <ul>
                         {taskData.map((task, index) => (
                             <li className="taskWindow" key={index}>
-                                <TaskCard order={task.order} id={task.id} description={task.description} isComplete={task.isComplete} subtasks={task.subtasks}/>
+                                <TaskCard {...task}/>
                             </li>
                         ))}
                     </ul>
