@@ -9,20 +9,16 @@ import { TouchBackend } from 'react-dnd-touch-backend'
 import TaskDataContext from './TaskDataContext'
 import AddIcon from '../app/assets/icons/add.svg'
 
-interface TaskWindowProps {
-    projectId: string
-}
-
 const isTouchDevice = typeof window !== 'undefined' && 
                       ('ontouchstart' in window || navigator.maxTouchPoints > 0);
 
-const TaskWindow = ( { projectId }: TaskWindowProps) => {
-    const {taskData, getTasks, loading} = useContext(TaskDataContext)!
+const TaskWindow = () => {
+    const {taskData, getTasks, loading, projectId} = useContext(TaskDataContext)!
     const [taskDescription, setTaskDescription] = useState<string>('')
 
     const submitNewTask = () => {
         if (taskDescription.trim() !== '') {
-            addTask(taskDescription, taskData.length + 1)
+            addTask(taskDescription, taskData.length + 1, projectId)
             .then((response) => {
                 console.log(response);
                 getTasks(projectId);
