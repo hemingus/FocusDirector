@@ -6,34 +6,65 @@ import { useState, useEffect } from 'react'
 import { TaskDataProvider } from '../../../components/TaskDataContext'
 
 type Project = {
+    id: string,
     name: string,
-    description: string
+    description: string,
+    createdAt: string
 }
 
+const projectFallback = 
+[
+    {
+        "id": "717c6e75-922b-4541-a2ca-40ae2112331e",
+        "name": "My first test project",
+        "description": "Some text describing the test project.",
+        "createdAt": "2026-03-05T22:56:24.5673622+01:00"
+    },
+    {
+        "id": "941d002a-6e55-421d-ae66-0ebfa7ca5ba1",
+        "name": "Project belongs to WHO ??",
+        "description": "Second, maybe first ?.",
+        "createdAt": "2026-03-05T23:24:05.8600497+01:00"
+    }
+]
+
 const DashBoard = () => {
-    const [projects, setProjects] = useState([])
+    const [projects, setProjects] = useState<Project[]>(projectFallback)
     const [activeProject, setActiveProject] = useState("")
     const [focusMode, setFocusMode] = useState(false)
 
-    const getProjects = async () => {
-        const url = `https://localhost:7172/Project`
-        await fetch(url, 
-        {
-            credentials: "include",
-            method: 'GET',
-            headers:{
-                "Content-Type": "application/json"
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data)
-            setProjects(data)
-        })
-        .catch(err => {
-            console.error(err)
-        })
+  const getProjects = async () => {
+    try {
+      const response = await fetch("https://localhost:7172/Project", {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        const text = await response.text();
+        throw new Error(`Failed to fetch projects: ${response.status} ${text}`);
+      }
+
+      const data = await response.json();
+      console.log("projects response:", data);
+
+      if (!Array.isArray(data)) {
+        throw new Error("Projects response is not an array");
+      }
+
+      setProjects(data);
+
+      if (data.length > 0) {
+        setActiveProject(data[0].id);
+      }
+    } catch (err) {
+      console.error(err);
+      setProjects(projectFallback);
     }
+  };
 
     useEffect(() => {
         getProjects()
@@ -57,20 +88,34 @@ const DashBoard = () => {
             </header>
 
             <h2>Pick a project</h2>
-            {projects && projects.map((p: Project) => {
-                <p>{p.name}</p>
-            })}
-
-            <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
-                <button className="focusButton" focus-tooltip="Focus Mode" onClick={() => setFocusMode(true)}><img src="./assets/focus_button.png" /></button>
+            <div>
+                {projects.map((p:Project) => (
+                <button
+                    key={p.id}
+                    onClick={() => setActiveProject(p.id)}
+                    style={{
+                    display: "block",
+                    marginBottom: "0.5rem",
+                    fontWeight: activeProject === p.id ? "bold" : "normal",
+                    }}
+                >
+                    {p.name}
+                </button>
+                ))}
             </div>
-            <section className="taskSection">
-                <div>
-                    <TaskDataProvider projectId={activeProject}>
-                        {taskMode()}  
-                    </TaskDataProvider>
+
+            {activeProject && <div>
+                <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
+                    <button className="focusButton" focus-tooltip="Focus Mode" onClick={() => setFocusMode(true)}><img src="./assets/focus_button.png" /></button>
                 </div>
-            </section>
+                <section className="taskSection">
+                    <div>
+                        <TaskDataProvider projectId={activeProject}>
+                            {taskMode()}
+                        </TaskDataProvider>
+                    </div>
+                </section>
+            </div>}
         </>
     )
 }
