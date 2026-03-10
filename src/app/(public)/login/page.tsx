@@ -24,21 +24,33 @@ export default function LoginPage() {
     });
   };
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
 
-    console.log("Login attempt:", formData);
+  console.log("Login attempt:", formData);
 
-    // Example login request
-    await fetch("https://localhost:7172/auth/login", {
+  try {
+    const response = await fetch("https://localhost:7172/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
       body: JSON.stringify(formData),
     });
 
-    router.push("/Dashboard"); // redirect after login
-  };
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error("Login failed:", response.status, errorText);
+      return;
+    }
+
+    const data = await response.json();
+    console.log("Login success:", data);
+
+    router.push("/Dashboard");
+  } catch (error) {
+    console.error("Failed to fetch login:", error);
+  }
+};
 
   return (
     <div className={styles.container}>
