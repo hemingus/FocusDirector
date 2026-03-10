@@ -21,19 +21,31 @@ export default function RegisterPage() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log("Form submitted:", formData);
+const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  console.log("Form submitted:", formData);
 
-    // Example: send data to your API
-    await fetch("https://localhost:7172/auth/register", {
+  try {
+    const response = await fetch("https://localhost:7172/auth/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
     });
 
-    router.push("/login"); // redirect after registration
-  };
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error("Registration failed:", response.status, errorText);
+      return;
+    }
+
+    const data = await response.json();
+    console.log("Registration success:", data);
+
+    router.push("/login");
+  } catch (error) {
+    console.error("Failed to fetch register:", error);
+  }
+};
 
   return (
     <div className={styles.container}>
