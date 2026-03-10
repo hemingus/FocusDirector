@@ -2,6 +2,7 @@
 
 export type Task = {
     id: string
+    projectId: string
     description: string
     isComplete: boolean
     subtasks: Subtask[]
