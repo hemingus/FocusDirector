@@ -62,7 +62,7 @@ const DashBoard = () => {
                 <FocusMode/>
             </div>
         )
-        return <TaskWindow projectId={activeProject}/>
+        return <TaskWindow />
     }
 
     return (
