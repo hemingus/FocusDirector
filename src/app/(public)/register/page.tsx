@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import styles from "./Register.module.scss";
 
 interface FormData {
-  username: string;
+  name: string;
   email: string;
   password: string;
 }
@@ -12,7 +12,7 @@ interface FormData {
 export default function RegisterPage() {
   const router = useRouter();
   const [formData, setFormData] = useState<FormData>({
-    username: "",
+    name: "",
     email: "",
     password: "",
   });
@@ -52,12 +52,12 @@ const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
       <h1 className={styles.container__title}>Register</h1>
       <form onSubmit={handleSubmit}>
         <div className={styles.container__formGroup}>
-          <label htmlFor="username">Username:</label>
+          <label htmlFor="name">Username:</label>
           <input
             type="text"
-            id="username"
-            name="username"
-            value={formData.username}
+            id="name"
+            name="name"
+            value={formData.name}
             onChange={handleChange}
             required
           />
