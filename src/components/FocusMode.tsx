@@ -8,10 +8,10 @@ import DownArrow from './DownArrow';
 
 type FocusTarget = Task | Subtask | Step
 
-const noTarget: FocusTarget = {id: "", description: "You have completed all your tasks!", isComplete: true, subtasks: [], order: 0}
+const noTarget: FocusTarget = {id: "", projectId:"", description: "You have completed all your tasks!", isComplete: true, subtasks: [], order: 0}
 
 const FocusMode = () => {
-    const { getTasks, taskData} = useContext(TaskDataContext)!
+    const { getTasks, taskData, projectId} = useContext(TaskDataContext)!
     const [focused, setFocused] = useState<FocusTarget>(noTarget)
     const [focusParents, setFocusParents] = useState<FocusTarget[]>([])
     const [focusTargetStyle, setFocusTargetStyle] = useState("");
@@ -69,7 +69,7 @@ const FocusMode = () => {
         } else {
             await updateStepStatus(focused.taskId, focused.subtaskId, focused.id, true)
         }
-        getTasks()
+        getTasks(projectId)
     }
 
     const subList = () => {
