@@ -8,6 +8,7 @@ interface TaskDataContextProps {
     setTaskData: Dispatch<SetStateAction<Task[]>>
     getTasks: (projectId: string) => Promise<void>
     loading: boolean
+    projectId: string
 }
 
 interface TaskDataProviderProps {
@@ -54,7 +55,8 @@ export const TaskDataProvider: React.FC<TaskDataProviderProps> = ({ children, pr
         taskData, 
         setTaskData,
         getTasks,
-        loading
+        loading,
+        projectId
     }
 
     return (
