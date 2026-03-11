@@ -22,7 +22,7 @@ export default function Navbar() {
           }`}
         >
           <li><a href="/">Home</a></li>
-          <li><a href="/Dashboard">Dashboard</a></li>
+          <li><a href="/dashboard">Dashboard</a></li>
           <li><a href="/">About</a></li>
 
           <div className={`${styles.navbar__actions} ${styles.mobile}`}>
