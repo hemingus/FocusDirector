@@ -1,4 +1,4 @@
-import DashBoard from './DashBoard'
+import Dashboard from './Dashboard'
 import DashboardNav from './DashboardNav'
 
 
@@ -6,7 +6,7 @@ export default function Home() {
     return (
         <div className="mainPage">
             <DashboardNav />
-            <DashBoard />
+            <Dashboard />
         </div>
     )
 }

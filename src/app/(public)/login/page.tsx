@@ -46,7 +46,7 @@ const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     const data = await response.json();
     console.log("Login success:", data);
 
-    router.push("/Dashboard");
+    router.push("/dashboard");
   } catch (error) {
     console.error("Failed to fetch login:", error);
   }
