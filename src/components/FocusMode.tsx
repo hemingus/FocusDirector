@@ -1,7 +1,7 @@
 "use client";
 
 import { Task, Subtask, Step } from './TaskTypes'
-import TaskDataContext from './TaskDataContext'
+import TaskDataContext from '../context/TaskDataContext'
 import { useState, useEffect, useContext } from 'react'
 import { updateTaskStatus, updateSubtaskStatus, updateStepStatus } from './API_methods'
 import DownArrow from './DownArrow';

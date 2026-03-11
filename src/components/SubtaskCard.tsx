@@ -5,7 +5,7 @@ import { useState, useContext, useEffect } from 'react'
 import { Subtask } from './TaskTypes'
 import { updateSubtaskStatus, updateSubtaskDescription, updateSubtaskOrder, deleteSubtask } from './API_methods';
 import { useDrag, useDrop, DropTargetMonitor } from 'react-dnd'
-import TaskDataProvider from './TaskDataContext'
+import TaskDataProvider from '../context/TaskDataContext'
 import ExpandIcon from '../app/assets/icons/expand.svg'
 import CollapseIcon from '../app/assets/icons/collapse.svg'
 import TrashIcon from '../app/assets/icons/trashcan.svg'

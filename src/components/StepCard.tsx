@@ -4,7 +4,7 @@ import { useState, useContext, useEffect } from 'react'
 import { Step } from './TaskTypes'
 import { updateStepStatus, updateStepDescription, updateStepOrder, deleteStep } from './API_methods'
 import { useDrag, useDrop, DropTargetMonitor } from 'react-dnd'
-import TaskDataContext from './TaskDataContext'
+import TaskDataContext from '../context/TaskDataContext'
 import TrashIcon from '../app/assets/icons/trashcan.svg'
 import { Tooltip } from './Tooltip/Tooltip';
 import { useGlobalConfirm } from './ConfirmDialog/ConfirmContext';

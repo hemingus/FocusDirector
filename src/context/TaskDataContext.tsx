@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, createContext, ReactNode, SetStateAction, Dispatch } from 'react'
-import { Task } from './TaskTypes' 
+import { Task } from '../components/TaskTypes' 
 
 interface TaskDataContextProps {
     taskData: Task[]

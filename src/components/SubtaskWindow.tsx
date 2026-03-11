@@ -4,7 +4,7 @@ import SubtaskCard from './SubtaskCard'
 import { useState, useContext } from 'react'
 import { Subtask } from './TaskTypes'
 import { addSubtask } from './API_methods'
-import TaskDataContext from './TaskDataContext'
+import TaskDataContext from '../context/TaskDataContext'
 import AddIcon from '../app/assets/icons/add.svg'
 
 const SubtaskWindow: React.FC<{ taskId: string, subtasks: Subtask[] }> = ({taskId, subtasks}) => {

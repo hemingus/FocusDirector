@@ -4,7 +4,7 @@ import StepCard from './StepCard'
 import { useState, useContext } from 'react'
 import { Step } from './TaskTypes'
 import { addStep } from './API_methods'
-import TaskDataContext from './TaskDataContext'
+import TaskDataContext from '../context/TaskDataContext'
 import AddIcon from '../app/assets/icons/add.svg'
 
 const StepWindow: React.FC<{ taskId: string, subtaskId: string, steps: Step[] }> = ({taskId, subtaskId, steps}) => {

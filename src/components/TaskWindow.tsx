@@ -6,7 +6,7 @@ import { addTask } from './API_methods'
 import { DndProvider} from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { TouchBackend } from 'react-dnd-touch-backend'
-import TaskDataContext from './TaskDataContext'
+import TaskDataContext from '../context/TaskDataContext'
 import AddIcon from '../app/assets/icons/add.svg'
 
 const isTouchDevice = typeof window !== 'undefined' && 
