@@ -3,7 +3,7 @@
 import TaskWindow from '../../../components/TaskWindow'
 import FocusMode from '../../../components/FocusMode';
 import { useState, useEffect } from 'react'
-import { TaskDataProvider } from '../../../components/TaskDataContext'
+import { TaskDataProvider } from '../../../context/TaskDataContext'
 
 type Project = {
     id: string,
