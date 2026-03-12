@@ -12,7 +12,7 @@ type Project = {
     createdAt: string
 }
 
-const DashBoard = () => {
+const Dashboard = () => {
     const [projects, setProjects] = useState<Project[]>([])
     const [activeProject, setActiveProject] = useState("")
     const [focusMode, setFocusMode] = useState(false)
@@ -104,4 +104,4 @@ const DashBoard = () => {
     )
 }
 
-export default DashBoard
+export default Dashboard
