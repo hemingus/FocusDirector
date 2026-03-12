@@ -2,6 +2,7 @@
 
 import { useState, ChangeEvent, FormEvent } from "react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import styles from "../register/Register.module.scss";
 
 interface LoginFormData {
@@ -17,6 +18,8 @@ export default function LoginPage() {
     password: "",
   });
 
+  const [loading, setLoading] = useState(false);
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
@@ -24,33 +27,35 @@ export default function LoginPage() {
     });
   };
 
-const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
 
-  console.log("Login attempt:", formData);
+    try {
+      const response = await fetch("https://localhost:7172/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify(formData),
+      });
 
-  try {
-    const response = await fetch("https://localhost:7172/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify(formData),
-    });
+      if (!response.ok) {
+        const errorText = await response.text();
+        toast.error(errorText || "Login failed");
+        setLoading(false);
+        return;
+      }
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error("Login failed:", response.status, errorText);
-      return;
+      const data = await response.json();
+
+      toast.success(data.message || "Login successful");
+      router.push("/dashboard");
+    } catch (error) {
+      toast.error("Network error. Please try again.");
+    } finally {
+      setLoading(false);
     }
-
-    const data = await response.json();
-    console.log("Login success:", data);
-
-    router.push("/dashboard");
-  } catch (error) {
-    console.error("Failed to fetch login:", error);
-  }
-};
+  };
 
   return (
     <div className={styles.container}>
@@ -84,8 +89,9 @@ const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         <button
           type="submit"
           className={styles.container__submit}
+          disabled={loading}
         >
-          Login
+          {loading ? "Logging in..." : "Login"}
         </button>
       </form>
     </div>
