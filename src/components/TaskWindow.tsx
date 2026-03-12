@@ -41,7 +41,6 @@ const TaskWindow = () => {
     } else {
         return (
             <>
-                {(taskData && taskData.length > 0) ? 
                 <div className="taskContainer">
                     <h2>Tasks</h2>
                     <DndProvider backend={backend}>
@@ -64,9 +63,6 @@ const TaskWindow = () => {
                         <button onClick={submitNewTask}><AddIcon className="addIcon"/>Add</button>
                     </div>
                 </div>
-                :
-                <h2>No Tasks</h2>
-                }
             </>
         )
     }
