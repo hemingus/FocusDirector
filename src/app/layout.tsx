@@ -4,6 +4,7 @@ import './globals.css'
 import './globals.scss'
 import { ConfirmProvider } from '@/components/ConfirmDialog/ConfirmContext'
 import { AuthProvider } from '@/context/AuthContext'
+import { Toaster } from 'sonner'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -22,7 +23,24 @@ export default function RootLayout({
       <body className={inter.className}>
         <AuthProvider>
           <ConfirmProvider>
+
             {children}
+
+          <Toaster
+            position="top-center"
+            offset={20}
+            richColors
+            closeButton
+            toastOptions={{
+              duration: 3000,
+              style: {
+                background: "#000",
+                border: "1px solid #444",
+                borderRadius: "10px",
+              },
+            }}
+          />
+
           </ConfirmProvider>
         </AuthProvider>
       </body>
