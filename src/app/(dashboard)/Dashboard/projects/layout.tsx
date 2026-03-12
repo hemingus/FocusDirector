@@ -1,4 +1,3 @@
-// projects/layout.tsx
 import { ProjectProvider } from "@/context/ProjectContext";
 
 export default function ProjectsLayout({
@@ -6,5 +5,9 @@ export default function ProjectsLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <ProjectProvider>{children}</ProjectProvider>;
+  return (
+    <ProjectProvider>
+      {children}
+    </ProjectProvider>
+  )
 }
