@@ -12,7 +12,6 @@
   }
 
   &__container {
-    max-width: 1200px;
     margin: 0 auto;
     padding: 1rem 1.5rem;
     display: flex;
@@ -21,17 +20,24 @@
   }
 
   &__logo {
+    display: flex;
     font-size: 1.5rem;
     font-weight: 700;
     cursor: pointer;
+    text-decoration: none;
+
+    img {
+      width: 40px;
+    }
   }
+
 
   &__links {
     list-style: none;
     display: flex;
     gap: 2rem;
 
-    li a {
+    a {
       text-decoration: none;
       color: silver;
       font-weight: 500;
