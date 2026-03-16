@@ -13,17 +13,10 @@ export default function Navbar() {
     <nav className={styles.navbar}>
       <div className={styles.navbar__container}>
         <a href="/" className={styles.navbar__logo}>
-          <img src="./assets/favicon.png" />
+          <img src="./assets/fd_logo_nobg.png" />
         </a>
 
-        <ul
-          className={`${styles.navbar__links} ${
-            isOpen ? styles.navbar__linksOpen : ""
-          }`}
-        >
-          <li><a href="/">Home</a></li>
-          <li><a href="/dashboard">Dashboard</a></li>
-          <li><a href="/">About</a></li>
+
 
           <div className={`${styles.navbar__actions} ${styles.mobile}`}>
             <button
@@ -40,7 +33,7 @@ export default function Navbar() {
               Sign Up
             </button>
           </div>
-        </ul>
+       
 
         <div className={`${styles.navbar__actions} ${styles.desktop}`}>
           <button
