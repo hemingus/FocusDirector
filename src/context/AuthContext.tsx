@@ -1,5 +1,8 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+
 import {
   createContext,
   useContext,
@@ -34,6 +37,7 @@ const BASE_URL =
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   const refreshUser = async () => {
     try {
@@ -76,7 +80,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       console.error(error);
     } finally {
       setUser(null);
-      window.location.href = "/login";
+      toast.success("Logged out.");
+      router.push("/");
     }
   };
 
