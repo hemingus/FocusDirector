@@ -1,4 +1,4 @@
-// task methods
+
 const DEV_BASE_URL = "https://localhost:7172";
 const PROD_BASE_URL = "https://hemingmusicapi.azurewebsites.net";
 
@@ -42,6 +42,8 @@ const handleResponse = async (response: Response, errorMessage: string) => {
 
   return response;
 };
+
+// task methods
 
 export const addTask = async (
   text: string,
