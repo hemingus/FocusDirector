@@ -80,7 +80,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       console.error(error);
     } finally {
       setUser(null);
-      toast.success("Logged out.");
+      toast.info("Logged out.");
       router.push("/");
     }
   };
