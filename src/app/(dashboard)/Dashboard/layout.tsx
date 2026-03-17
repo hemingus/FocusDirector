@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import '../../globals.css'
 import '../../globals.scss'
 import { ConfirmProvider } from '@/components/ConfirmDialog/ConfirmContext'
+import DashboardNav from './DashboardNav'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,7 +19,11 @@ export default function DashboardLayout({
 }) {
   return (
         <ConfirmProvider>
-          {children}
+
+          <div className="mainPage">
+            <DashboardNav />
+            <main>{children}</main>
+          </div>
         </ConfirmProvider>
   )
 }

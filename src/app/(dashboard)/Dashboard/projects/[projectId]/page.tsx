@@ -45,7 +45,7 @@ export default function ProjectPage({
   }
 
   return (
-    <>
+    <div className="mainPage">
       <header>
         <h1>{project.name}</h1>
         <p>{project.description}</p>
@@ -58,6 +58,6 @@ export default function ProjectPage({
       <section className="taskSection">
         {focusMode ? <FocusMode /> : <TaskWindow />}
       </section>
-    </>
+    </div>
   );
 }
