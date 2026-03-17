@@ -12,8 +12,7 @@ html {
   scrollbar-gutter: stable both-edges;
 }
 
-html, body {
+body {
   background: #000;
   width: 100vw;
-  overflow-x: hidden;
 }
