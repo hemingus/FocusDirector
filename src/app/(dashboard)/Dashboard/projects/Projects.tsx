@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { useProjects } from "@/context/ProjectContext";
+import styles from './Projects.module.scss'
+import ProjectCard from "./ProjectCard";
 
 export default function Projects() {
   const { projects, loading, error } = useProjects();
@@ -19,16 +21,17 @@ export default function Projects() {
   }
 
   return (
-    <div>
-      <h1>Projects</h1>
+    <div className={styles.page}>
+      <h1 className={styles.header}>Projects</h1>
+      <div className={styles.project__container}>
+        
 
-      {projects.map((project) => (
-        <div key={project.id}>
+        {projects.map((project) => (
           <Link href={`/dashboard/projects/${project.id}`}>
-            {project.name}
+            <ProjectCard {...project}/>
           </Link>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 }
