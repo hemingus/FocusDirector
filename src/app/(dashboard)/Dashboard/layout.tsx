@@ -4,6 +4,9 @@ import '../../globals.css'
 import '../../globals.scss'
 import { ConfirmProvider } from '@/components/ConfirmDialog/ConfirmContext'
 import DashboardNav from './DashboardNav'
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import { toast } from 'sonner'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -17,9 +20,15 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode
 }) {
+
+  const auth = cookies().get("auth_token");
+
+  if (!auth) {
+    redirect("/login");
+    toast.warning("Login required.")
+  }
   return (
         <ConfirmProvider>
-
           <div className="mainPage">
             <DashboardNav />
             <main>{children}</main>

@@ -24,7 +24,9 @@ export default function RootLayout({
         <AuthProvider>
           <ConfirmProvider>
 
-            {children}
+            <div className="mainPage">
+              {children}
+            </div>
 
           <Toaster
             position="top-center"
