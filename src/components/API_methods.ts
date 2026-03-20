@@ -1,4 +1,6 @@
 
+import { toast } from "sonner";
+
 const DEV_BASE_URL = "https://localhost:7172";
 const PROD_BASE_URL = "https://hemingmusicapi.azurewebsites.net";
 
@@ -17,6 +19,7 @@ export const apiFetch = async (url: string, options: RequestInit = {}) => {
 
   if (response.status === 401) {
     console.warn("Unauthorized — redirecting to login");
+    toast.warning("Unauthorized — redirecting to login");
 
     if (!window.location.pathname.includes("/login")) {
       window.location.href = "/login";
@@ -42,6 +45,24 @@ const handleResponse = async (response: Response, errorMessage: string) => {
 
   return response;
 };
+
+// project methods
+
+export const addProject = async (
+  name: string,
+  description?: string
+) => {
+  const newProject = {
+    name,
+    description
+  }
+  const response = await apiFetch(`/Project`, {
+    method: "POST",
+    body: JSON.stringify(newProject)
+  });
+
+  return handleResponse(response, "Failed to add project.");
+}
 
 // task methods
 
