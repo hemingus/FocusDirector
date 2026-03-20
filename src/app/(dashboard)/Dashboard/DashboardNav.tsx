@@ -2,6 +2,7 @@
 
 import { useAuth } from "@/context/AuthContext";
 import styles from "../../../components/Navbar/Navbar.module.scss";
+import Link from "next/link";
 
 const DashboardNav = () => {
   const { user, loading, logout } = useAuth();
@@ -20,8 +21,14 @@ const DashboardNav = () => {
     <nav className={styles.navbar}>
       <div className={styles.navbar__container}>
         <div className={styles.navbar__logo}>
-          <h2>Dashboard</h2>
+          <img src="../../assets/fd_logo_nobg.png" alt="focus director logo" />
         </div>
+
+          <div>
+            <Link href="/dashboard/projects">
+              Projects
+            </Link>
+          </div>
 
         <div className={styles.navbar__actions}>
           {user ? (
