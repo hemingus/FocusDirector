@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { addProject } from "@/components/API_methods";
+import styles from "./Projects.module.scss"
 
 export default function AddNewProject() {
   const router = useRouter();
@@ -47,12 +48,11 @@ export default function AddNewProject() {
   return (
     <form
       onSubmit={handleAddProject}
-      className="space-y-4 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm"
+      className={styles.form}
     >
-      <div>
+      <div className={styles.flexcol}>
         <label
           htmlFor="project-name"
-          className="mb-1 block text-sm font-medium text-gray-900"
         >
           Name
         </label>
@@ -63,14 +63,12 @@ export default function AddNewProject() {
           onChange={(e) => setName(e.target.value)}
           placeholder="Enter project name"
           disabled={isSubmitting}
-          className="w-full rounded-xl border border-gray-300 px-3 py-2 text-sm outline-none transition focus:border-gray-500"
         />
       </div>
 
-      <div>
+      <div className={styles.flexcol}>
         <label
           htmlFor="project-description"
-          className="mb-1 block text-sm font-medium text-gray-900"
         >
           Description <span className="text-gray-500">(optional)</span>
         </label>
@@ -81,12 +79,11 @@ export default function AddNewProject() {
           placeholder="Enter project description"
           disabled={isSubmitting}
           rows={4}
-          className="w-full rounded-xl border border-gray-300 px-3 py-2 text-sm outline-none transition focus:border-gray-500"
         />
       </div>
 
       {error && (
-        <p role="alert" className="text-sm text-red-600">
+        <p role="alert">
           {error}
         </p>
       )}
@@ -94,7 +91,6 @@ export default function AddNewProject() {
       <button
         type="submit"
         disabled={isSubmitting || !name.trim()}
-        className="inline-flex items-center rounded-xl bg-black px-4 py-2 text-sm font-medium text-white transition disabled:cursor-not-allowed disabled:opacity-50"
       >
         {isSubmitting ? "Creating..." : "Add Project"}
       </button>
