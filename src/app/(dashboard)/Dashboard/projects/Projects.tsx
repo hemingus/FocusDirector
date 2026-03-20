@@ -16,22 +16,19 @@ export default function Projects() {
     return <p>{error}</p>;
   }
 
-  if (projects.length === 0) {
-    return <p>No projects found.</p>;
-  }
-
   return (
     <div className={styles.page}>
-      <h1 className={styles.header}>Projects</h1>
+      
+      {projects.length === 0 ? <p>No projects found.</p> 
+      :
       <div className={styles.project__container}>
-        
-
         {projects.map((project) => (
           <Link href={`/dashboard/projects/${project.id}`}>
             <ProjectCard {...project}/>
           </Link>
         ))}
-      </div>
+      </div>}
+
     </div>
   );
 }
