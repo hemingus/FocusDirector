@@ -5,7 +5,11 @@ import { useRouter } from "next/navigation";
 import { addProject } from "@/components/API_methods";
 import styles from "./Projects.module.scss"
 
-export default function AddNewProject() {
+interface AddNewProjectProps {
+  onClose: () => void
+}
+
+export default function AddNewProject({ onClose }: AddNewProjectProps) {
   const router = useRouter();
 
   const [name, setName] = useState("");
@@ -42,58 +46,63 @@ export default function AddNewProject() {
       setError("Unable to create project. Please try again.");
     } finally {
       setIsSubmitting(false);
+      onClose();
     }
   };
 
   return (
-    <form
-      onSubmit={handleAddProject}
-      className={styles.form}
-    >
-      <div className={styles.flexcol}>
-        <label
-          htmlFor="project-name"
-        >
-          Name
-        </label>
-        <input
-          id="project-name"
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Enter project name"
-          disabled={isSubmitting}
-        />
-      </div>
-
-      <div className={styles.flexcol}>
-        <label
-          htmlFor="project-description"
-        >
-          Description <span className="text-gray-500">(optional)</span>
-        </label>
-        <textarea
-          id="project-description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          placeholder="Enter project description"
-          disabled={isSubmitting}
-          rows={4}
-        />
-      </div>
-
-      {error && (
-        <p role="alert">
-          {error}
-        </p>
-      )}
-
-      <button
-        type="submit"
-        disabled={isSubmitting || !name.trim()}
+    <div className={styles.newProjectWrapper}>
+      
+      <form
+        onSubmit={handleAddProject}
+        className={styles.form}
       >
-        {isSubmitting ? "Creating..." : "Add Project"}
-      </button>
-    </form>
+        <h2>New Project</h2>
+        <div className={styles.flexcol}>
+          <label
+            htmlFor="project-name"
+          >
+            Name
+          </label>
+          <input
+            id="project-name"
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Enter project name"
+            disabled={isSubmitting}
+          />
+        </div>
+        <div className={styles.flexcol}>
+          <label
+            htmlFor="project-description"
+          >
+            Description <span className="text-gray-500">(optional)</span>
+          </label>
+          <textarea
+            id="project-description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Enter project description"
+            disabled={isSubmitting}
+            rows={4}
+          />
+        </div>
+        {error && (
+          <p role="alert">
+            {error}
+          </p>
+        )}
+          <div className={styles.flexrow}>
+            <button onClick={onClose}>Cancel</button>
+            <button
+              type="submit"
+              disabled={isSubmitting || !name.trim()}
+            >
+              {isSubmitting ? "Creating..." : "Add Project"}
+            </button>
+          </div>
+      </form>
+    </div>
   );
 }
