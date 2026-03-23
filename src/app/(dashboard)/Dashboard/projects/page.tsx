@@ -6,7 +6,6 @@ export default function ProjectsPage() {
     return (
         <div className={styles.page}>
             <h1 className={styles.header}>Projects</h1>
-                <AddNewProject/>
                 <Projects />
         </div>
     )
