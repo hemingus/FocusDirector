@@ -10,12 +10,19 @@ import {
   type ReactNode,
 } from "react";
 
+import { addProject, deleteProject } from "@/components/API_methods";
+
 export type Project = {
   id: string;
   name: string;
   description: string;
   createdAt: string;
 };
+
+export type ProjectForCreation = {
+  name: string;
+  description?: string;
+}
 
 type ProjectContextType = {
   projects: Project[];
@@ -24,6 +31,8 @@ type ProjectContextType = {
   activeProjectId: string | null;
   activeProject: Project | null;
   setActiveProjectId: (projectId: string | null) => void;
+  // addNewProject: (project: ProjectForCreation) => Promise<void>;
+  // removeProject: (projectId: string) => Promise<void>;
   refreshProjects: () => Promise<void>;
 };
 
@@ -38,6 +47,10 @@ export function ProjectProvider({ children }: ProjectProviderProps) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [activeProjectId, setActiveProjectId] = useState<string | null>(null);
+
+  // const addNewProject = async (project: ProjectForCreation) => {
+  //   addProject()
+  // }
 
   const refreshProjects = useCallback(async () => {
     try {
@@ -100,6 +113,8 @@ export function ProjectProvider({ children }: ProjectProviderProps) {
       activeProjectId,
       activeProject,
       setActiveProjectId,
+      // addNewProject,
+      // removeProject,
       refreshProjects,
     }),
     [projects, loading, error, activeProjectId, activeProject, refreshProjects]
