@@ -3,7 +3,8 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { addProject } from "@/components/API_methods";
-import styles from "./Projects.module.scss"
+import styles from "./Projects.module.scss";
+import { useProjects } from "@/context/ProjectContext";
 
 interface AddNewProjectProps {
   onClose: () => void
@@ -11,6 +12,7 @@ interface AddNewProjectProps {
 
 export default function AddNewProject({ onClose }: AddNewProjectProps) {
   const router = useRouter();
+  const { refreshProjects } = useProjects();
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
