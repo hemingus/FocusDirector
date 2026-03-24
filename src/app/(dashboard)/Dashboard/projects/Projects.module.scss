@@ -22,6 +22,7 @@
         color: rgb(154, 206, 130);
         cursor: pointer;
         background-color: #444;
+        border: solid 1px rgba(255,255,255,0.3);
     }
 
     button:hover {
@@ -121,13 +122,14 @@
             color: white;
             display: -webkit-box;
             line-clamp: 3;
-            -webkit-line-clamp: 3; /* number of lines */
+            -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
 
         h3 {
             color: lightgreen;
+            text-align: center;
         }
 
         h6 {
