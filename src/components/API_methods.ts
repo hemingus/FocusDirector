@@ -48,6 +48,22 @@ const handleResponse = async (response: Response, errorMessage: string) => {
 
 // project methods
 
+export const getProjects = async () => {
+  const response = await apiFetch(`/Project`, {
+    method: "GET"
+  })
+
+  return handleResponse(response, "Failed to fetch projects.")
+}
+
+export const getProject = async (id: string) => {
+  const response = await apiFetch(`/Project/${id}`, {
+    method: "GET"
+  })
+
+  handleResponse(response, `Failed to fetch project with id: ${id}`)
+}
+
 export const addProject = async (
   name: string,
   description?: string
@@ -63,6 +79,16 @@ export const addProject = async (
 
   return handleResponse(response, "Failed to add project.");
 }
+
+export const deleteProject = async (id: string) => {
+  const response = await apiFetch(`/Project/${id}`, {
+    method: "DELETE"
+  });
+
+  return handleResponse(response, "Failed to delete project.");
+}
+
+
 
 // task methods
 
