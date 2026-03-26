@@ -31,8 +31,8 @@ type ProjectContextType = {
   activeProjectId: string | null;
   activeProject: Project | null;
   setActiveProjectId: (projectId: string | null) => void;
-  // addNewProject: (project: ProjectForCreation) => Promise<void>;
-  // removeProject: (projectId: string) => Promise<void>;
+  addNewProject: (project: ProjectForCreation) => Promise<void>;
+  removeProject: (projectId: string) => Promise<void>;
   refreshProjects: () => Promise<void>;
 };
 
@@ -48,9 +48,13 @@ export function ProjectProvider({ children }: ProjectProviderProps) {
   const [error, setError] = useState<string | null>(null);
   const [activeProjectId, setActiveProjectId] = useState<string | null>(null);
 
-  // const addNewProject = async (project: ProjectForCreation) => {
-  //   addProject()
-  // }
+  const addNewProject = async ({name, description}: ProjectForCreation) => {
+    await addProject(name, description);
+  }
+
+  const removeProject = async (projectId: string) => {
+    await deleteProject(projectId);
+  }
 
   const refreshProjects = useCallback(async () => {
     try {
@@ -113,8 +117,8 @@ export function ProjectProvider({ children }: ProjectProviderProps) {
       activeProjectId,
       activeProject,
       setActiveProjectId,
-      // addNewProject,
-      // removeProject,
+      addNewProject,
+      removeProject,
       refreshProjects,
     }),
     [projects, loading, error, activeProjectId, activeProject, refreshProjects]
