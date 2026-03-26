@@ -12,7 +12,7 @@ interface AddNewProjectProps {
 
 export default function AddNewProject({ onClose }: AddNewProjectProps) {
   const router = useRouter();
-  const { refreshProjects } = useProjects();
+  const { addNewProject, refreshProjects } = useProjects();
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -41,13 +41,13 @@ export default function AddNewProject({ onClose }: AddNewProjectProps) {
 
       setName("");
       setDescription("");
-
       router.refresh();
     } catch (err) {
       console.error("Failed to add project:", err);
       setError("Unable to create project. Please try again.");
     } finally {
       setIsSubmitting(false);
+      await refreshProjects();
       onClose();
     }
   };
