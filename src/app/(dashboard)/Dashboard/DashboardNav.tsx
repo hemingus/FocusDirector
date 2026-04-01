@@ -3,9 +3,14 @@
 import { useAuth } from "@/context/AuthContext";
 import styles from "../../../components/Navbar/Navbar.module.scss";
 import Link from "next/link";
+import { useEffect } from "react";
 
 const DashboardNav = () => {
-  const { user, loading, logout } = useAuth();
+  const { user, loading, logout, refreshUser } = useAuth();
+
+  useEffect(() => {
+    refreshUser();
+  }, [])
 
   if (loading) {
     return (
